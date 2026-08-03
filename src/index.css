@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+:root {
+  --color-primary: #192B3C;
+  --color-accent: #b88a1a;
+  --color-text: #222222;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-background: #ffffff;
+
+  --container-width: 1280px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Geist", sans-serif;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
