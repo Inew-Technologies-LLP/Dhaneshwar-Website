@@ -38,3 +38,10 @@ a {
 button {
   cursor: pointer;
 }
+
+input,
+button {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+}
