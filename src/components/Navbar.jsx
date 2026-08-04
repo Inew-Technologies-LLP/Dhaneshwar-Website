@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import Container from "./Container";
-import logo from "../assets/logo/logo.png";
+// import logo from "../assets/logo/logo.png";
 
 const navLinks = [
     {
@@ -30,7 +30,7 @@ const Navbar = () => {
                     {/* Logo */}
 
                     <img
-                        src={logo}
+                        // src={logo}
                         alt="Dhaneshwar Realty"
                         className="h-10 w-auto"
                     />
