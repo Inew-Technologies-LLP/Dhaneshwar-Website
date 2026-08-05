@@ -1,30 +1,42 @@
 import { X } from "lucide-react";
-import { useState } from "react";
-
-import projects from "../data/projects";
 import ProjectCard from "./ProjectCard";
 
-const Projects = () => {
-     const [selected, setSelected] = useState(null);
+const ProjectSection = ({
+     title = "Our Projects",
+     subtitle,
+     centered = true,
+     projectsData,
+     selected,
+     setSelected,
+}) => {
 
      return (
-          <section className="px-9 py-24">
+          <section className="px-9 py-4">
 
                <div className="mx-auto max-w-[1440px]">
 
                     <div className="relative mb-14">
 
-                         <h2 className="text-center text-[50px] font-medium text-[#192B3C]">
-                              Our Projects
-                         </h2>
+                         <div className="mb-14">
+
+                              <h2 className={`text-[50px] font-medium text-[#192B3C] ${centered ? "text-center" : "text-left"}`}>
+                                   {title}
+                              </h2>
+
+                              {subtitle && (
+                                   <p className={`mt-2 text-[18px] text-gray-500 ${centered ? "text-center" : "text-left"}`}>
+                                        {subtitle}
+                                   </p>
+                              )}
+
+                         </div>
                     </div>
 
                     <>
 
                          {!selected ? (
                               <div className="grid gap-8 lg:grid-cols-3">
-                                   {projects.map((project) => (
-
+                                   {projectsData.map((project) => (
                                         <ProjectCard
                                              key={project.id}
                                              project={project}
@@ -145,4 +157,4 @@ const Projects = () => {
      );
 };
 
-export default Projects;
+export default ProjectSection;
