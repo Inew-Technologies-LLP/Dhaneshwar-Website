@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Container from "./Container";
+import { useState } from "react";
+import InquiryModal from "./InquiryModal";
 // import logo from "../assets/logo/logo.png";
 
 const navLinks = [
@@ -22,6 +24,8 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+    const [showInquiry, setShowInquiry] = useState(false);
+
     return (
         <header className="fixed top-0 left-0 z-50 w-full bg-[#192B3C]">
             <Container>
@@ -56,10 +60,17 @@ const Navbar = () => {
                             ))}
                         </ul>
 
-                        <button className="h-8 rounded-sm bg-[#B08A1E] px-8 text-sm font-medium text-white transition hover:brightness-105">
+                        <button
+                            onClick={() => setShowInquiry(true)}
+                            className="h-8 rounded-sm bg-[#B08A1E] px-8 text-sm font-medium text-white transition hover:brightness-105"
+                        >
                             Inquire
                         </button>
 
+                        <InquiryModal
+                            open={showInquiry}
+                            onClose={() => setShowInquiry(false)}
+                        />
                     </div>
                 </nav>
             </Container>
