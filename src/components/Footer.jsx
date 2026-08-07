@@ -119,11 +119,13 @@ const Footer = () => {
 
                 {/* Bottom Row */}
 
-                <div className="mt-16 grid items-start gap-10 lg:grid-cols-[220px_1fr_220px]">
+                {/* Bottom Row */}
 
-                    {/* Icons */}
+                <div className="mt-16 flex items-end justify-between">
 
-                    <div className="flex gap-4 pt-[58px]">
+                    {/* Social Icons */}
+
+                    <div className="flex gap-4">
 
                         {[FaFacebookF, FaXTwitter, FaInstagram].map((Icon, index) => (
 
@@ -138,52 +140,9 @@ const Footer = () => {
 
                     </div>
 
-                    {/* Newsletter */}
-
-                    <div className="max-w-[470px]">
-
-                        <h3 className="mb-5 text-[30px] font-normal">
-                            Subscribe for news updates
-                        </h3>
-
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            className="
-            h-[42px]
-            w-full
-            border
-            border-[#D6D6D6]
-            bg-[#EFEFEF]
-            px-4
-            text-[15px]
-            text-[#192B3C]
-            placeholder:text-[#8F8F8F]
-            outline-none
-        "
-                        />
-
-                        <button
-                            className="
-            mt-4
-            h-[40px]
-            border
-            border-[#D6D6D6]
-            bg-[#EFEFEF]
-            px-7
-            text-[15px]
-            text-[#192B3C]
-            transition
-            hover:bg-[#E4E4E4]
-        "
-                        >
-                            Subscribe
-                        </button>
-
-                    </div>
                     {/* Logo */}
 
-                    <div className="flex justify-end pt-5">
+                    <div>
 
                         <img
                             // src={logo}
@@ -202,7 +161,6 @@ const Footer = () => {
                     ©2026 Dhaneshwar Realty. All rights reserved.
 
                 </div>
-
             </div>
 
         </footer>
