@@ -1,20 +1,16 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 
 import Layout from "../components/Layout";
 import PageHero from "../components/PageHero";
 import ProjectFilters from "../components/ProjectFilters";
 import ProjectSection from "../components/ProjectSection";
+
 import projects from "../data/projects";
 
 const Projects = () => {
 
     const [type, setType] = useState("All");
     const [status, setStatus] = useState("All");
-    const [selected, setSelected] = useState(null);
-
-    useEffect(() => {
-        setSelected(null);
-    }, [type, status]);
 
     const filteredProjects = useMemo(() => {
 
@@ -31,8 +27,8 @@ const Projects = () => {
         });
 
     }, [type, status]);
-    return (
 
+    return (
         <Layout>
 
             <PageHero
@@ -49,7 +45,11 @@ const Projects = () => {
             />
 
             <ProjectSection
-                title={type === "All" ? "Our Projects" : type}
+                title={
+                    type === "All"
+                        ? "Our Projects"
+                        : type
+                }
                 subtitle={
                     status === "All"
                         ? "All Projects"
@@ -57,14 +57,10 @@ const Projects = () => {
                 }
                 centered={false}
                 projectsData={filteredProjects}
-                selected={selected}
-                setSelected={setSelected}
             />
 
         </Layout>
-
     );
-
 };
 
 export default Projects;

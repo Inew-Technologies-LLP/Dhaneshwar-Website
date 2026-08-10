@@ -1,15 +1,32 @@
-const ProjectCard = ({ project, onClick }) => {
+const ProjectCard = ({ project }) => {
      return (
           <div
-               onClick={onClick}
-               className="group cursor-pointer overflow-hidden bg-white transition-all duration-300 hover:-translate-y-2"
+               className="
+                    group
+                    cursor-pointer
+                    overflow-hidden
+                    bg-white
+                    transition-all
+                    duration-300
+                    hover:-translate-y-2
+               "
           >
+
                <div className="overflow-hidden">
+
                     <img
                          src={project.image}
                          alt={project.name}
-                         className="h-[590px] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                         className="
+                              h-[590px]
+                              w-full
+                              object-cover
+                              transition-transform
+                              duration-500
+                              group-hover:scale-[1.04]
+                         "
                     />
+
                </div>
 
                <div className="bg-[#192B3C] px-8 py-6 text-white">
@@ -21,11 +38,15 @@ const ProjectCard = ({ project, onClick }) => {
                          </p>
 
                          <button
-                              onClick={(e) => {
-                                   e.stopPropagation();
-                                   onClick();
-                              }}
-                              className="bg-[#B38B17] px-4 py-1 text-xs transition duration-300 hover:bg-[#c89a19]"
+                              className="
+                                   bg-[#B38B17]
+                                   px-4
+                                   py-1
+                                   text-xs
+                                   transition
+                                   duration-300
+                                   hover:bg-[#c89a19]
+                              "
                          >
                               Learn More
                          </button>
@@ -43,15 +64,19 @@ const ProjectCard = ({ project, onClick }) => {
                     <div className="mt-6 flex justify-between">
 
                          <div>
+
                               <p className="text-sm text-white/60">
                                    INR
                               </p>
 
-                              <p>{project.price}</p>
+                              <p>
+                                   {project.price}
+                              </p>
 
                               <p className="mt-2 text-white/60">
                                    {project.configuration}
                               </p>
+
                          </div>
 
                          <div>
@@ -60,7 +85,9 @@ const ProjectCard = ({ project, onClick }) => {
                                    Possession Date
                               </p>
 
-                              <p>{project.possession}</p>
+                              <p>
+                                   {project.possession}
+                              </p>
 
                          </div>
 
