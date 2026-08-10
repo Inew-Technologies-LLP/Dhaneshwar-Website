@@ -254,22 +254,39 @@ const InquiryModal = ({ open, onClose }) => {
                     {/* Consent */}
 
                     <label className="flex items-start gap-3 text-[13px] leading-5 text-gray-600">
-
                         <input
                             type="checkbox"
                             name="consent"
                             checked={formData.consent}
                             onChange={handleChange}
                             required
-                            className="mt-1 h-4 w-4"
+                            className="peer sr-only"
+                        />
+
+                        <span
+                            className="
+            mt-0.5
+            flex
+            h-4
+            w-4
+            shrink-0
+            items-center
+            justify-center
+            border
+            border-[#192B3C]
+            bg-white
+            text-[11px]
+            text-white
+            transition
+            peer-checked:bg-[#192B3C]
+            peer-checked:after:content-['✓']
+        "
                         />
 
                         <span>
-                            By checking this box, you agree to our Privacy
-                            Policy and consent to be contacted with relevant
-                            updates.
+                            I agree to the Privacy Policy and consent to being contacted
+                            regarding my inquiry.
                         </span>
-
                     </label>
 
                     {/* Error */}
