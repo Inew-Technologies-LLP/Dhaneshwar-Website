@@ -1,336 +1,132 @@
 import { useState } from "react";
+import { X, Send } from "lucide-react";
 
-import Modal from "./Modal";
-import projects from "../data/projects";
-import { submitLead } from "../api/leads";
-
-const initialFormData = {
+const InquiryModal = ({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState({
     name: "",
-    email: "",
-    country: "India",
-    city: "",
     phone: "",
-    project: "",
-    consent: false,
-};
+    email: "",
+    config: "2BHK",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
 
-const InquiryModal = ({ open, onClose }) => {
-    const [formData, setFormData] = useState(initialFormData);
-    const [status, setStatus] = useState("idle");
+  if (!isOpen) return null;
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      onClose();
+    }, 2000);
+  };
 
-        setFormData((prev) => ({
-            ...prev,
-            [name]: type === "checkbox" ? checked : value,
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!formData.consent) {
-            return;
-        }
-
-        setStatus("submitting");
-
-        try {
-            await submitLead({
-                type: "inquiry",
-                name: formData.name,
-                email: formData.email,
-                country: formData.country,
-                city: formData.city,
-                phone: formData.phone,
-                project: formData.project,
-            });
-
-            setStatus("success");
-            setFormData(initialFormData);
-        } catch (error) {
-            console.error("Inquiry submission failed:", error);
-            setStatus("error");
-        }
-    };
-
-    const handleClose = () => {
-        if (status === "submitting") {
-            return;
-        }
-
-        setStatus("idle");
-        onClose();
-    };
-
-    return (
-        <Modal
-            open={open}
-            onClose={handleClose}
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div className="bg-white rounded-xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100">
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition-colors"
         >
-            <h2 className="mb-14 text-center text-[36px] font-medium text-[#192B3C]">
-                Request a call back
-            </h2>
+          <X size={20} />
+        </button>
 
-            {status === "success" ? (
+        {submitted ? (
+          <div className="text-center py-8 space-y-3">
+            <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
+              ✓
+            </div>
+            <h3 className="text-xl font-bold text-slate-800">Inquiry Received!</h3>
+            <p className="text-sm text-slate-600">
+              Thank you for contacting Altura. Our sales team will get back to you shortly.
+            </p>
+          </div>
+        ) : (
+          <>
+            <h3 className="text-2xl font-extrabold text-[#1D65AD] mb-1">
+              Inquire About Altura
+            </h3>
+            <p className="text-xs text-slate-500 mb-6">
+              Fill out your details to receive pricing, floor plans, and site visit schedule.
+            </p>
 
-                <div className="py-10 text-center">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter your name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
+                />
+              </div>
 
-                    <h3 className="text-[24px] font-medium text-[#192B3C]">
-                        Thank you!
-                    </h3>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Phone Number</label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="Enter mobile number"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
+                />
+              </div>
 
-                    <p className="mt-4 text-[16px] text-gray-600">
-                        We've received your request and will get back to you
-                        shortly.
-                    </p>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter email address"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
+                />
+              </div>
 
-                    <button
-                        type="button"
-                        onClick={handleClose}
-                        className="
-                            mt-8
-                            h-[42px]
-                            w-[120px]
-                            bg-[#2C3148]
-                            text-white
-                        "
-                    >
-                        Close
-                    </button>
-
-                </div>
-
-            ) : (
-
-                <form
-                    onSubmit={handleSubmit}
-                    className="space-y-6"
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Interested Configuration</label>
+                <select
+                  value={formData.config}
+                  onChange={(e) => setFormData({ ...formData, config: e.target.value })}
+                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none bg-white"
                 >
+                  <option value="1BHK">1 BHK Residence</option>
+                  <option value="2BHK">2 BHK Residence</option>
+                  <option value="3BHK">3 BHK Residence</option>
+                  <option value="Penthouse">Penthouse / Custom</option>
+                </select>
+              </div>
 
-                    {/* Name */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Message (Optional)</label>
+                <textarea
+                  rows={3}
+                  placeholder="Any specific query or preferred time for call..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
+                />
+              </div>
 
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Name"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
-
-                    {/* Email */}
-
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="E-mail ID"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
-
-                    {/* Country */}
-
-                    <select
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            bg-white
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                        "
-                    >
-                        <option value="India">
-                            India
-                        </option>
-                    </select>
-
-                    {/* City */}
-
-                    <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        placeholder="City"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
-
-                    {/* Project */}
-
-                    <select
-                        name="project"
-                        value={formData.project}
-                        onChange={handleChange}
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            bg-white
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                        "
-                    >
-                        <option value="">
-                            Select Project
-                        </option>
-
-                        {projects.map((project) => (
-                            <option
-                                key={project.id}
-                                value={project.name}
-                            >
-                                {project.name}
-                            </option>
-                        ))}
-                    </select>
-
-                    {/* Phone */}
-
-                    <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="+91 Enter Mobile Number*"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
-
-                    {/* Consent */}
-
-                    <label className="flex items-start gap-3 text-[13px] leading-5 text-gray-600">
-                        <input
-                            type="checkbox"
-                            name="consent"
-                            checked={formData.consent}
-                            onChange={handleChange}
-                            required
-                            className="peer sr-only"
-                        />
-
-                        <span
-                            className="
-            mt-0.5
-            flex
-            h-4
-            w-4
-            shrink-0
-            items-center
-            justify-center
-            border
-            border-[#192B3C]
-            bg-white
-            text-[11px]
-            text-white
-            transition
-            peer-checked:bg-[#192B3C]
-            peer-checked:after:content-['✓']
-        "
-                        />
-
-                        <span>
-                            I agree to the Privacy Policy and consent to being contacted
-                            regarding my inquiry.
-                        </span>
-                    </label>
-
-                    {/* Error */}
-
-                    {status === "error" && (
-                        <p className="text-center text-[14px] text-red-600">
-                            Something went wrong. Please try again.
-                        </p>
-                    )}
-
-                    {/* Submit */}
-
-                    <div className="flex justify-center pt-6">
-
-                        <button
-                            type="submit"
-                            disabled={
-                                status === "submitting" ||
-                                !formData.consent
-                            }
-                            className="
-                                h-[42px]
-                                w-[120px]
-                                bg-[#2C3148]
-                                text-white
-                                transition
-                                hover:bg-[#23273A]
-                                disabled:cursor-not-allowed
-                                disabled:opacity-50
-                            "
-                        >
-                            {status === "submitting"
-                                ? "Sending..."
-                                : "Submit"}
-                        </button>
-
-                    </div>
-
-                </form>
-
-            )}
-
-        </Modal>
-    );
+              <button
+                type="submit"
+                className="w-full bg-[#1D65AD] hover:bg-[#154E88] text-white py-3 rounded-md font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-md"
+              >
+                <Send size={16} />
+                Submit Inquiry
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default InquiryModal;

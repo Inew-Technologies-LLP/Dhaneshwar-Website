@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --color-primary: #192B3C;
-  --color-accent: #b88a1a;
-  --color-text: #222222;
-  --color-muted: #6b7280;
-  --color-border: #e5e7eb;
-  --color-background: #ffffff;
+  --color-primary: #1D65AD;
+  --color-primary-dark: #124578;
+  --color-accent: #2B78C6;
+  --color-bg-light: #EBF4FD;
+  --color-bg-subtle: #F4F9FF;
+  --color-text-dark: #1E293B;
+  --color-text-muted: #64748B;
+  --color-border-light: #CBD5E1;
 
   --container-width: 1280px;
 }
@@ -17,9 +20,20 @@ html {
 
 body {
   margin: 0;
-  font-family: "Geist", sans-serif;
-  color: var(--color-text);
-  background: var(--color-background);
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 400;
+  color: var(--color-text-dark);
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 500;
+}
+
+p, span, li, a, button, input, textarea {
+  font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 * {
@@ -33,6 +47,7 @@ img {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 button {
@@ -40,7 +55,7 @@ button {
 }
 
 input,
-button {
-    -webkit-appearance: none;
-    appearance: none;
+button,
+textarea {
+  font-family: inherit;
 }
