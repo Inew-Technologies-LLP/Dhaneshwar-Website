@@ -131,7 +131,7 @@ const Footer = () => {
 
                             <button
                                 key={index}
-                                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#192B3C] transition hover:scale-105"
+                                className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#192B3C] transition-all duration-300 hover:scale-115 hover:-translate-y-0.5 hover:shadow-md"
                             >
                                 <Icon size={18} />
                             </button>

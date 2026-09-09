@@ -41,29 +41,29 @@ const Specification = ({ onOpenInquiry }) => {
           <div className="hidden md:block absolute top-1/2 -translate-y-1/2 left-[calc(50%+12px)] right-4 h-px bg-slate-300" />
 
           {/* 4 Quadrants Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-12 md:gap-y-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-y-8 md:gap-y-16">
             {quadrants.map((spec) => (
               <div 
                 key={spec.id} 
-                className="px-4 sm:px-8 md:px-12 py-4"
+                className="px-2 sm:px-8 md:px-12 py-4"
               >
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 tracking-tight">
+                <h3 className="text-lg sm:text-2xl font-bold text-slate-900 mb-4 sm:mb-6 tracking-tight">
                   {spec.title}
                 </h3>
-                <div className="grid grid-cols-2 gap-6 sm:gap-10 md:gap-14">
-                  <ul className="space-y-3.5">
+                <div className="grid grid-cols-2 gap-2 sm:gap-10 md:gap-14">
+                  <ul className="space-y-2.5 sm:space-y-3.5">
                     {specsList.map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-sm sm:text-base font-normal text-slate-600">
-                        <span className="w-2.5 h-2.5 rounded-full bg-slate-600 shrink-0" />
-                        <span>{item}</span>
+                      <li key={i} className="flex items-center gap-2 sm:gap-3 text-xs sm:text-base font-normal text-slate-600 group/item cursor-default">
+                        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-600 shrink-0 transition-transform duration-300 group-hover/item:scale-125 group-hover/item:bg-[#1D65AD]" />
+                        <span className="break-words transition-colors duration-300 group-hover/item:text-slate-900">{item}</span>
                       </li>
                     ))}
                   </ul>
-                  <ul className="space-y-3.5">
+                  <ul className="space-y-2.5 sm:space-y-3.5">
                     {specsList.map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-sm sm:text-base font-normal text-slate-600">
-                        <span className="w-2.5 h-2.5 rounded-full bg-slate-600 shrink-0" />
-                        <span>{item}</span>
+                      <li key={i} className="flex items-center gap-2 sm:gap-3 text-xs sm:text-base font-normal text-slate-600 group/item cursor-default">
+                        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-slate-600 shrink-0 transition-transform duration-300 group-hover/item:scale-125 group-hover/item:bg-[#1D65AD]" />
+                        <span className="break-words transition-colors duration-300 group-hover/item:text-slate-900">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -77,9 +77,9 @@ const Specification = ({ onOpenInquiry }) => {
         <div className="text-center">
           <button
             onClick={onOpenInquiry}
-            className="inline-flex items-center gap-2 bg-[#1D65AD] hover:bg-[#154E88] text-white px-8 py-3.5 rounded-md text-sm font-semibold transition-all shadow-md hover:shadow-lg"
+            className="group inline-flex items-center gap-2 bg-[#1D65AD] hover:bg-[#154E88] text-white px-8 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
           >
-            <Download size={18} />
+            <Download size={18} className="transition-transform duration-300 group-hover:translate-y-0.5" />
             Download Brochure
           </button>
         </div>

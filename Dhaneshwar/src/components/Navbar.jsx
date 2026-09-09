@@ -46,27 +46,32 @@ const Navbar = () => {
                     {/* Right Side */}
 
                     <div className="ml-auto flex items-center gap-4 md:gap-14">
-                        <ul className={`${menuOpen ? "flex" : "hidden"} absolute left-0 right-0 top-[82px] flex-col gap-5 bg-[#192B3C] px-5 py-6 md:static md:flex md:flex-row md:items-center md:gap-12 md:bg-transparent md:p-0`}>
+                        <ul className={`${menuOpen ? "flex animate-fade-in shadow-xl" : "hidden"} absolute left-0 right-0 top-[82px] flex-col gap-5 bg-[#192B3C] px-5 py-6 md:static md:flex md:flex-row md:items-center md:gap-12 md:bg-transparent md:p-0 md:shadow-none`}>
                             {navLinks.map((item) => (
                                 <li key={item.title}>
                                     <NavLink
                                         to={item.href}
                                         onClick={() => setMenuOpen(false)}
                                         className={({ isActive }) =>
-                                            `text-[16px] font-normal transition-colors ${isActive
+                                            `relative text-[16px] font-normal transition-all duration-300 group py-1 ${isActive
                                                 ? "text-[#BFECE8]"
                                                 : "text-white hover:text-[#BFECE8]"
                                             }`
                                         }
                                     >
-                                        {item.title}
+                                        {({ isActive }) => (
+                                            <>
+                                                {item.title}
+                                                <span className={`absolute bottom-0 left-0 h-[2px] bg-[#BFECE8] transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`} />
+                                            </>
+                                        )}
                                     </NavLink>
                                 </li>
                             ))}
                         </ul>
 
                         <button
-                            className="h-10 rounded-sm bg-[#B08A1E] px-3 text-xs font-medium text-white transition hover:brightness-105 sm:px-5 sm:text-sm md:h-8 md:px-8"
+                            className="h-10 rounded-sm bg-[#B08A1E] px-3 text-xs font-medium text-white transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 shadow-sm hover:shadow-md active:translate-y-0 sm:px-5 sm:text-sm md:h-8 md:px-8"
                             onClick={() => setShowInquiry(true)}
                         >
                             Inquire
@@ -75,10 +80,10 @@ const Navbar = () => {
                         <button
                             type="button"
                             aria-label={menuOpen ? "Close menu" : "Open menu"}
-                            className="text-white md:hidden"
+                            className="text-white md:hidden transition-transform duration-300 hover:scale-110"
                             onClick={() => setMenuOpen((open) => !open)}
                         >
-                            {menuOpen ? <X size={25} /> : <Menu size={25} />}
+                            {menuOpen ? <X size={25} className="rotate-90 transition-transform duration-300" /> : <Menu size={25} className="transition-transform duration-300" />}
                         </button>
 
                         <InquiryModal

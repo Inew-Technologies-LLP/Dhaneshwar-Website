@@ -23,8 +23,8 @@ const InquiryModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-      <div className="bg-white rounded-xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-slate-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+      <div className="bg-white rounded-xl max-w-md w-full p-4 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[92vh] overflow-y-auto my-auto">
         {/* Close Button */}
         <button
           onClick={onClose}

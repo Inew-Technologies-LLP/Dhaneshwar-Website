@@ -25,7 +25,7 @@ const Footer = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Main Section Header */}
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-[#000000] mb-12 tracking-tight">
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-[#000000] mb-8 sm:mb-12 tracking-tight">
           Get in Touch
         </h2>
 
@@ -40,7 +40,7 @@ const Footer = () => {
             </p>
             <div className="text-xs text-[#000000]/90 space-y-1 pt-1">
               <p className="font-medium">Contact us</p>
-              <p>email: aaaaaaaaaaa@gmail.com</p>
+              <p className="break-all">email: aaaaaaaaaaa@gmail.com</p>
               <p>Phone: +91-0000000000</p>
             </div>
 
@@ -137,8 +137,8 @@ const Footer = () => {
           </div>
 
           {/* ALTURA Wave Logo (Right Side) */}
-          <div className="md:col-span-5 flex justify-start md:justify-end items-center">
-            <AlturaLogo textClassName="text-4xl sm:text-5xl tracking-[0.25em]" />
+          <div className="md:col-span-5 flex justify-start md:justify-end items-center max-w-full overflow-hidden">
+            <AlturaLogo textClassName="text-2xl sm:text-4xl lg:text-5xl tracking-[0.15em] sm:tracking-[0.25em]" />
           </div>
         </div>
 

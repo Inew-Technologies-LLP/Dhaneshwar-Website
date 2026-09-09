@@ -28,12 +28,12 @@ const ProjectOverview = () => {
             return (
               <div
                 key={item.id}
-                className="relative flex flex-col items-center justify-center h-[229px] p-6 text-center"
+                className="relative flex flex-col items-center justify-center h-[229px] p-6 text-center group cursor-pointer"
               >
-                <div className="p-4 bg-[#EBF4FD] text-[#1D65AD] rounded-xl mb-4 shadow-sm border border-[#D0E5FB]">
-                  <IconComponent size={38} strokeWidth={1.5} />
+                <div className="p-4 bg-[#EBF4FD] text-[#1D65AD] rounded-xl mb-4 shadow-sm border border-[#D0E5FB] transition-all duration-300 ease-out group-hover:-translate-y-2 group-hover:bg-[#D5E8FD] group-hover:shadow-md group-hover:border-[#1D65AD]">
+                  <IconComponent size={38} strokeWidth={1.5} className="transition-transform duration-300 group-hover:scale-110" />
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-[#1D65AD]">
+                <h3 className="text-sm sm:text-base font-semibold text-[#1D65AD] transition-colors duration-300 group-hover:text-[#154E88]">
                   {item.title}
                 </h3>
 

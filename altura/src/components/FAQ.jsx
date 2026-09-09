@@ -64,22 +64,22 @@ const FAQ = () => {
               return (
                 <div
                   key={idx}
-                  className="rounded-lg overflow-hidden transition-all border border-[#C5E1FA] shadow-2xs"
+                  className="rounded-lg overflow-hidden transition-all duration-300 border border-[#C5E1FA] shadow-2xs hover:border-[#1D65AD]/50 hover:shadow-xs"
                 >
                   <button
                     onClick={() => toggleFAQ(idx)}
-                    className="w-full bg-[#CBE3FB] hover:bg-[#B8D9FA] text-[#1D65AD] px-6 py-3.5 text-left font-semibold text-sm sm:text-base flex items-center justify-between transition-colors"
+                    className="w-full bg-[#CBE3FB] hover:bg-[#B8D9FA] text-[#1D65AD] px-6 py-3.5 text-left font-semibold text-sm sm:text-base flex items-center justify-between transition-colors duration-300"
                   >
                     <span>{item.q}</span>
                     <ChevronDown
                       size={20}
-                      className={`text-[#1D65AD] transition-transform duration-300 ${
+                      className={`text-[#1D65AD] transition-transform duration-300 ease-in-out ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   {isOpen && (
-                    <div className="bg-[#F2F8FF] px-6 py-4 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-[#D5E8FC]">
+                    <div className="bg-[#F2F8FF] px-6 py-4 text-xs sm:text-sm text-slate-700 leading-relaxed border-t border-[#D5E8FC] animate-fade-in">
                       {item.a}
                     </div>
                   )}

@@ -98,7 +98,7 @@ const LocationHighlights = () => {
         </h2>
 
         {/* Tab Row Container (Title Strip) - Left Aligned */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 max-w-[1050px] h-[49px] bg-[#CBE3F9] mb-12 rounded-none overflow-hidden">
+        <div className="flex sm:grid sm:grid-cols-6 max-w-[1050px] min-h-[49px] bg-[#CBE3F9] mb-8 sm:mb-12 rounded-none overflow-x-auto scrollbar-hide">
           {categories.map((cat, idx) => {
             const isSeparatorVisible =
               idx !== categories.length - 1 &&
@@ -106,10 +106,10 @@ const LocationHighlights = () => {
               activeTab !== categories[idx + 1]?.id;
 
             return (
-              <div key={cat.id} className="relative h-full flex items-center justify-center">
+              <div key={cat.id} className="relative shrink-0 sm:shrink flex-1 h-[49px] flex items-center justify-center">
                 <button
                   onClick={() => setActiveTab(cat.id)}
-                  className={`w-full h-full px-2 text-xs sm:text-sm font-medium transition-colors text-center flex items-center justify-center ${
+                  className={`w-full h-full px-3 sm:px-2 text-xs sm:text-sm font-medium transition-colors text-center flex items-center justify-center whitespace-nowrap ${
                     activeTab === cat.id
                       ? "bg-[#1D65AD] text-white"
                       : "text-[#1D65AD] hover:bg-[#B7D8F7]"

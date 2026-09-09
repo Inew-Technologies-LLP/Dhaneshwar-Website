@@ -2,7 +2,7 @@ const AlturaLogo = ({ className = "", textClassName = "" }) => {
   return (
     <div className={`relative inline-flex items-center select-none ${className}`}>
       {/* ALTURA Text */}
-      <span className={`text-2xl sm:text-3xl font-serif tracking-[0.2em] font-medium text-[#1A3561] relative z-10 ${textClassName}`}>
+      <span className={`text-lg min-[360px]:text-2xl sm:text-3xl font-serif tracking-[0.15em] min-[360px]:tracking-[0.2em] font-medium text-[#1A3561] relative z-10 ${textClassName}`}>
         ALTURA
       </span>
 

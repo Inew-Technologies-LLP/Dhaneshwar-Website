@@ -25,19 +25,19 @@ const FlatConfig = () => {
           {configs.map((item, idx) => (
             <div
               key={item.type}
-              className="relative flex flex-col items-center justify-center h-[229px] p-6 text-center group"
+              className="relative flex flex-col items-center justify-center h-[229px] p-6 text-center group cursor-pointer transition-all duration-300"
             >
               {/* Apartment Image Box (149 x 149) - Seamless white background */}
-              <div className="w-[149px] h-[149px] mb-4 relative flex items-center justify-center bg-white">
+              <div className="w-[149px] h-[149px] mb-4 relative flex items-center justify-center bg-white transition-transform duration-500 ease-out group-hover:-translate-y-1.5">
                 <img
                   src={item.image}
                   alt={`${item.type} Layout`}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain transition-all duration-300 group-hover:drop-shadow-md"
                 />
               </div>
 
               {/* Title Badge in Black Light Font (20px) */}
-              <h3 className="text-[20px] font-light text-black tracking-wide">
+              <h3 className="text-[20px] font-light text-black tracking-wide transition-colors duration-300 group-hover:text-[#1D65AD]">
                 {item.type}
               </h3>
 

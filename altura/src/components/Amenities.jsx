@@ -26,16 +26,16 @@ const Amenities = () => {
         </h2>
 
         {/* 4x3 Amenities Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 sm:gap-10 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-10 max-w-5xl mx-auto">
           {amenitiesList.map((item) => (
             <div
               key={item.id}
-              className="w-[188px] h-[188px] mx-auto flex flex-col items-center justify-center text-center group"
+              className="w-full max-w-[188px] aspect-square mx-auto flex flex-col items-center justify-center text-center group p-2 cursor-pointer transition-all duration-300 hover:-translate-y-2"
             >
-              <div className="text-black mb-4 group-hover:text-[#1D65AD] transition-colors">
-                <Activity size={64} strokeWidth={1.5} />
+              <div className="text-black mb-2 sm:mb-4 group-hover:text-[#1D65AD] transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-3">
+                <Activity className="w-10 h-10 sm:w-16 sm:h-16 transition-transform duration-300" strokeWidth={1.5} />
               </div>
-              <p className="text-sm font-medium text-slate-800 group-hover:text-[#1D65AD] transition-colors">
+              <p className="text-xs sm:text-sm font-medium text-slate-800 group-hover:text-[#1D65AD] transition-colors duration-300">
                 {item.title}
               </p>
             </div>

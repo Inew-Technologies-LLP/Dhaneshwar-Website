@@ -50,11 +50,11 @@ const ProjectSection = ({
                                    id={`project-${project.id}`}
                                    className="grid overflow-hidden bg-white shadow-sm lg:grid-cols-[1.15fr_0.85fr]"
                               >
-                                   <div className={`relative overflow-hidden ${index % 2 === 0 ? "lg:order-1" : "lg:order-2"}`}>
+                                   <div className={`group relative overflow-hidden ${index % 2 === 0 ? "lg:order-1" : "lg:order-2"}`}>
                                         <img
                                              src={project.image}
                                              alt={project.name}
-                                             className="h-[320px] w-full object-cover sm:h-[460px] lg:h-[560px]"
+                                             className="h-[320px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[460px] lg:h-[560px]"
                                         />
 
                                         <div className="absolute inset-x-0 bottom-0 bg-[#192B3C] px-5 py-5 text-white sm:px-8">

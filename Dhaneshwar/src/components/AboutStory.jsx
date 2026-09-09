@@ -24,11 +24,13 @@ const AboutStory = () => {
 
                 </div>
 
-                <img
-                    src={photo8}
-                    alt="Our Story"
-                    className="mt-10 h-[360px] w-full object-cover sm:mt-16 sm:h-[560px]"
-                />
+                <div className="group overflow-hidden mt-10 sm:mt-16">
+                    <img
+                        src={photo8}
+                        alt="Our Story"
+                        className="h-[360px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[560px]"
+                    />
+                </div>
 
             </div>
 

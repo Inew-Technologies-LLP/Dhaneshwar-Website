@@ -67,7 +67,7 @@ const Gallery = () => {
           <div className="relative w-full h-[340px] sm:h-[450px] lg:h-[522px] rounded-none overflow-hidden border border-slate-200 shadow-lg bg-slate-900 group">
             {/* Background Image */}
             <div
-              className="absolute inset-0 bg-cover transition-all duration-500"
+              className="absolute inset-0 bg-cover transition-transform duration-700 ease-out group-hover:scale-105"
               style={{
                 backgroundImage: `url('${items[activeIndex].url}')`,
                 backgroundPosition: customPositions[items[activeIndex].filename] || "center"
