@@ -16,6 +16,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
 }
 
 body {
@@ -43,6 +44,7 @@ p, span, li, a, button, input, textarea {
 img {
   display: block;
   max-width: 100%;
+  border-radius: 0 !important;
 }
 
 a {

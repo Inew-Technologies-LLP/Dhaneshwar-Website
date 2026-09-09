@@ -98,20 +98,33 @@ const LocationHighlights = () => {
         </h2>
 
         {/* Tab Row Container (Title Strip) - Left Aligned */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 max-w-[1050px] h-[49px] bg-[#CBE3F9] mb-12 rounded-none overflow-hidden divide-x divide-[#A2CFF7]">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveTab(cat.id)}
-              className={`h-full px-2 text-xs sm:text-sm font-medium transition-colors text-center flex items-center justify-center ${
-                activeTab === cat.id
-                  ? "bg-[#1D65AD] text-white"
-                  : "text-[#1D65AD] hover:bg-[#B7D8F7]"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+        <div className="grid grid-cols-3 sm:grid-cols-6 max-w-[1050px] h-[49px] bg-[#CBE3F9] mb-12 rounded-none overflow-hidden">
+          {categories.map((cat, idx) => {
+            const isSeparatorVisible =
+              idx !== categories.length - 1 &&
+              activeTab !== cat.id &&
+              activeTab !== categories[idx + 1]?.id;
+
+            return (
+              <div key={cat.id} className="relative h-full flex items-center justify-center">
+                <button
+                  onClick={() => setActiveTab(cat.id)}
+                  className={`w-full h-full px-2 text-xs sm:text-sm font-medium transition-colors text-center flex items-center justify-center ${
+                    activeTab === cat.id
+                      ? "bg-[#1D65AD] text-white"
+                      : "text-[#1D65AD] hover:bg-[#B7D8F7]"
+                  }`}
+                >
+                  {cat.label}
+                </button>
+
+                {/* Darkened Vertical Separator cut slightly top/bottom, hidden around active tab */}
+                {isSeparatorVisible && (
+                  <div className="absolute right-0 top-2 bottom-2 w-[1px] bg-[#1D65AD]/70 z-10 pointer-events-none" />
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* 2 Column Highlights Table - Centered */}

@@ -1,14 +1,14 @@
-import { LayoutGrid } from "lucide-react";
+import apartmentImg from "../images/apartment.png";
 
 const FlatConfig = () => {
   const configs = [
-    { type: "1BHK", area: "480 - 520 sq.ft.", desc: "Thoughtfully crafted 1 BHK residences for young professionals and couples." },
-    { type: "2BHK", area: "750 - 840 sq.ft.", desc: "Spacious 2 BHK layouts with dual balconies and optimal ventilation." },
-    { type: "3BHK", area: "1050 - 1200 sq.ft.", desc: "Luxury 3 BHK master suites with panoramic city views and premium fittings." },
+    { type: "1BHK", image: apartmentImg },
+    { type: "2BHK", image: apartmentImg },
+    { type: "3BHK", image: apartmentImg },
   ];
 
   return (
-    <section id="flat-config" className="py-16 bg-[#F8FAFC]">
+    <section id="flat-config" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-12">
@@ -20,33 +20,31 @@ const FlatConfig = () => {
           </p>
         </div>
 
-        {/* 3 Column Grid with Vertical Dividers */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+        {/* 3 Column Grid with Vertical Dividers matching Project Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 py-6">
           {configs.map((item, idx) => (
             <div
               key={item.type}
-              className={`flex flex-col items-center text-center p-6 transition-all hover:bg-[#F0F7FF] rounded-lg group ${
-                idx !== configs.length - 1 ? "md:border-r md:border-slate-200" : ""
-              }`}
+              className="relative flex flex-col items-center justify-center h-[229px] p-6 text-center group"
             >
-              {/* Floor Plan Icon / Image Placeholder Box */}
-              <div className="w-full max-w-[220px] aspect-[4/3] bg-[#EBF4FD] border-2 border-dashed border-[#B8D7FA] rounded-lg flex flex-col items-center justify-center p-4 mb-6 group-hover:border-[#1D65AD] transition-colors relative">
-                <LayoutGrid size={48} className="text-[#1D65AD] mb-2" strokeWidth={1.5} />
-                <span className="text-xs font-semibold text-[#1D65AD] bg-white px-2.5 py-1 rounded shadow-xs border border-[#D0E5FB]">
-                  Floor Plan Placeholder
-                </span>
+              {/* Apartment Image Box (149 x 149) - Seamless white background */}
+              <div className="w-[149px] h-[149px] mb-4 relative flex items-center justify-center bg-white">
+                <img
+                  src={item.image}
+                  alt={`${item.type} Layout`}
+                  className="w-full h-full object-contain"
+                />
               </div>
 
-              {/* Title Badge */}
-              <h3 className="text-xl font-bold text-[#1D65AD] mb-2">
+              {/* Title Badge in Black Light Font (20px) */}
+              <h3 className="text-[20px] font-light text-black tracking-wide">
                 {item.type}
               </h3>
-              <p className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">
-                {item.area}
-              </p>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xs">
-                {item.desc}
-              </p>
+
+              {/* 229px Vertical Divider matching Project Overview */}
+              {idx !== configs.length - 1 && (
+                <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-[229px] w-[1px] bg-slate-400" />
+              )}
             </div>
           ))}
         </div>
