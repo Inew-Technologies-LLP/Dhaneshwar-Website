@@ -55,7 +55,7 @@ const Gallery = () => {
   };
 
   return (
-    <section id="gallery" className="py-16 bg-white border-b border-gray-100">
+    <section id="gallery" className="py-16 bg-white">
       <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
         {/* Section Title */}
         <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] text-center mb-10 tracking-tight">
@@ -64,7 +64,7 @@ const Gallery = () => {
 
         <div className="max-w-[1274px] mx-auto space-y-4">
           {/* Main Large Image Container (1274 x 522) */}
-          <div className="relative w-full h-[340px] sm:h-[450px] lg:h-[522px] rounded-sm overflow-hidden border border-slate-200 shadow-lg bg-slate-900 group">
+          <div className="relative w-full h-[340px] sm:h-[450px] lg:h-[522px] rounded-none overflow-hidden border border-slate-200 shadow-lg bg-slate-900 group">
             {/* Background Image */}
             <div
               className="absolute inset-0 bg-cover transition-all duration-500"
@@ -104,7 +104,7 @@ const Gallery = () => {
                   setActiveIndex(idx);
                   scrollToThumbnail(idx);
                 }}
-                className={`relative shrink-0 w-[180px] sm:w-[226px] aspect-[226/149] rounded-sm overflow-hidden border-2 transition-all group snap-start ${
+                className={`relative shrink-0 w-[180px] sm:w-[226px] aspect-[226/149] rounded-none overflow-hidden border-2 transition-all group snap-start ${
                   activeIndex === idx
                     ? "border-[#1D65AD] ring-2 ring-[#1D65AD]/30 scale-[1.02] z-10"
                     : "border-transparent opacity-60 hover:opacity-100"

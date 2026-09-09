@@ -9,7 +9,7 @@ const ProjectOverview = () => {
   ];
 
   return (
-    <section className="py-14 bg-white border-b border-gray-100">
+    <section className="py-14 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading */}
         <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] mb-4 tracking-tight">
@@ -21,16 +21,14 @@ const ProjectOverview = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
         </p>
 
-        {/* 4 Column Features Grid with Vertical Dividers */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-y border-gray-200">
+        {/* 4 Column Features Grid with Vertical Dividers (229px height) */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 py-6">
           {features.map((item, idx) => {
             const IconComponent = item.icon;
             return (
               <div
                 key={item.id}
-                className={`flex flex-col items-center justify-center p-6 text-center ${
-                  idx !== features.length - 1 ? "md:border-r md:border-gray-200" : ""
-                }`}
+                className="relative flex flex-col items-center justify-center h-[229px] p-6 text-center"
               >
                 <div className="p-4 bg-[#EBF4FD] text-[#1D65AD] rounded-xl mb-4 shadow-sm border border-[#D0E5FB]">
                   <IconComponent size={38} strokeWidth={1.5} />
@@ -38,6 +36,11 @@ const ProjectOverview = () => {
                 <h3 className="text-sm sm:text-base font-semibold text-[#1D65AD]">
                   {item.title}
                 </h3>
+
+                {/* 229px Vertical Divider */}
+                {idx !== features.length - 1 && (
+                  <div className="hidden md:block absolute right-0 top-0 h-[229px] w-[1px] bg-slate-400" />
+                )}
               </div>
             );
           })}

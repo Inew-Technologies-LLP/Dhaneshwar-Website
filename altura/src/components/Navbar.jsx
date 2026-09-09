@@ -19,32 +19,31 @@ const Navbar = ({ onOpenInquiry }) => {
         background: "linear-gradient(90deg, #F3F8FC 0%, #BADFFB 30%, #72BFF8 60%, #BADFFB 85%, #F3F8FC 100%)"
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-20 flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 h-24 flex items-center justify-between">
         {/* Brand Logo with Wave Curve */}
         <a href="#home" className="flex items-center">
           <AlturaLogo />
         </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className={`text-sm font-medium transition-colors py-1 ${
-                link.active ? "text-black font-bold" : "text-[#1A3561] hover:text-[#0A5E9D]"
-              }`}
-            >
-              {link.name}
-            </a>
-          ))}
-        </nav>
+        {/* Desktop Navigation & CTA Button (Right Aligned) */}
+        <div className="hidden md:flex items-center space-x-8 lg:space-x-12">
+          <nav className="flex items-center space-x-8 lg:space-x-12">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className={`text-sm font-medium transition-colors py-1 ${
+                  link.active ? "text-black font-bold" : "text-[#1A3561] hover:text-[#0A5E9D]"
+                }`}
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center">
           <button
             onClick={onOpenInquiry}
-            className="bg-[#0A5E9D] hover:bg-[#084B7E] text-white px-7 py-2.5 rounded-md text-sm font-medium transition-all shadow-sm hover:shadow-md"
+            className="w-[132px] h-[38px] flex items-center justify-center bg-[#0A5E9D] hover:bg-[#084B7E] text-white rounded-sm text-sm font-medium transition-all shadow-sm hover:shadow-md"
           >
             Inquire
           </button>
@@ -54,7 +53,7 @@ const Navbar = ({ onOpenInquiry }) => {
         <div className="flex md:hidden items-center gap-3">
           <button
             onClick={onOpenInquiry}
-            className="bg-[#0A5E9D] text-white px-4 py-1.5 rounded-md text-xs font-medium"
+            className="bg-[#0A5E9D] text-white px-4 py-1.5 rounded-sm text-xs font-medium"
           >
             Inquire
           </button>

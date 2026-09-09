@@ -18,7 +18,7 @@ const Amenities = () => {
   ];
 
   return (
-    <section className="py-16 bg-[#F8FAFC]">
+    <section id="amenities" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading */}
         <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] text-center mb-12 tracking-tight">

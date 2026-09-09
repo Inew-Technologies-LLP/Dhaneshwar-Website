@@ -6,7 +6,7 @@ const Hero = () => {
     <section id="home" className="py-6 bg-white overflow-hidden">
       <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
         {/* Main Hero Container matching 1314 x 607 aspect ratio */}
-        <div className="relative w-full h-[480px] sm:h-[560px] lg:h-[607px] rounded-lg overflow-hidden border border-slate-200 shadow-lg group">
+        <div className="relative w-full h-[480px] sm:h-[560px] lg:h-[607px] rounded-none overflow-hidden border border-slate-200 shadow-lg group">
           
           {/* Full Hero Render Image */}
           <img
@@ -28,7 +28,7 @@ const Hero = () => {
 
           {/* Bottom-Right QR Code and RERA Box */}
           <div className="absolute bottom-3 right-3 z-20 bg-[#0A5E9D] text-white px-6 py-5 rounded-none flex items-center gap-4 shadow-2xl">
-            <div className="bg-white p-2 rounded shadow-xs">
+            <div className="bg-white p-2 rounded-none shadow-xs">
               <QrCode size={44} className="text-[#0A5E9D]" />
             </div>
             <div className="text-left leading-tight">

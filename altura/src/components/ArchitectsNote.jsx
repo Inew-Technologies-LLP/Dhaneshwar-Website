@@ -1,6 +1,6 @@
 const ArchitectsNote = () => {
   return (
-    <section id="architect-note" className="py-14 bg-white border-b border-gray-100">
+    <section id="architect-note" className="py-14 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Main Section Heading */}
         <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] mb-3 tracking-tight">

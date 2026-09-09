@@ -4,7 +4,7 @@ const FeatureBanner = () => {
   return (
     <section className="py-8 bg-white">
       <div className="max-w-[1347px] mx-auto px-4 sm:px-6">
-        <div className="relative w-full h-[320px] sm:h-[400px] lg:h-[547px] rounded-xl overflow-hidden border border-slate-200 shadow-md group">
+        <div className="relative w-full h-[320px] sm:h-[400px] lg:h-[547px] rounded-none overflow-hidden border border-slate-200 shadow-md group">
           {/* Full Feature Render Image */}
           <img
             src={streetPhoto}
