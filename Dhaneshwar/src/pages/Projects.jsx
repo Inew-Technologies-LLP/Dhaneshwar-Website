@@ -35,8 +35,39 @@ const Projects = () => {
     useEffect(() => {
         if (!selectedProjectId) return;
 
-        const projectElement = document.getElementById(`project-${selectedProjectId}`);
-        projectElement?.scrollIntoView({ behavior: "smooth", block: "start" });
+        let cancelled = false;
+
+        const scrollToProject = async () => {
+            const projectElement = document.getElementById(`project-${selectedProjectId}`);
+
+            if (!projectElement) return;
+
+            const images = Array.from(projectElement.querySelectorAll("img"));
+            await Promise.all(images.map((image) => image.decode().catch(() => undefined)));
+
+            if (document.fonts?.ready) {
+                await document.fonts.ready;
+            }
+
+            requestAnimationFrame(() => {
+                if (cancelled) return;
+
+                const header = document.querySelector("header");
+                const headerHeight = header?.getBoundingClientRect().height ?? 0;
+                const targetTop = window.scrollY + projectElement.getBoundingClientRect().top;
+
+                window.scrollTo({
+                    top: Math.max(0, targetTop - headerHeight),
+                    behavior: "smooth",
+                });
+            });
+        };
+
+        scrollToProject();
+
+        return () => {
+            cancelled = true;
+        };
     }, [selectedProjectId, filteredProjects]);
 
     return (
