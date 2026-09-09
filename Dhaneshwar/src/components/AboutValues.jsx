@@ -1,3 +1,5 @@
+import photo9 from "../images/photo9.png";
+
 const stats = [
     "50+",
     "50+",
@@ -10,10 +12,10 @@ const AboutValues = () => {
 
         <section className="px-9 pb-24">
 
-            <div className="relative mx-auto h-[620px] max-w-[1440px] overflow-hidden">
+            <div className="relative mx-auto h-[828px] max-w-[1440px] overflow-hidden">
 
                 <img
-                    // src="https://images.unsplash.com/photo-1460317442991-0ec209397118?w=1800"
+                    src={photo9}
                     alt=""
                     className="absolute inset-0 h-full w-full object-cover"
                 />

@@ -1,3 +1,7 @@
+import photo2 from "../images/photo2.png";
+import photo3 from "../images/photo3.png";
+import photo4 from "../images/photo4.png";
+
 const projects = [
     {
         id: 1,
@@ -6,7 +10,7 @@ const projects = [
         price: "1.6 Cr. onwards",
         possession: "Dec 2026",
         configuration: "2 & 3 bhk",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200",
+        image: photo2,
         description:
             "Skyline Residency is thoughtfully designed for modern urban living with spacious homes, premium amenities and excellent connectivity.",
         status: "Ongoing",
@@ -19,7 +23,7 @@ const projects = [
         price: "1.6 Cr. onwards",
         possession: "Dec 2026",
         configuration: "2 & 3 bhk",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200",
+        image: photo3,
         description:
             "Altura combines timeless architecture with carefully crafted living spaces that elevate everyday life.",
         status: "Completed",
@@ -32,7 +36,7 @@ const projects = [
         price: "1.6 Cr. onwards",
         possession: "Dec 2026",
         configuration: "2 & 3 bhk",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200",
+        image: photo4,
         description:
             "A premium residential development offering panoramic city views and world-class amenities.",
         status: "Upcoming",

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import Container from "./Container";
 import { useState } from "react";
 import InquiryModal from "./InquiryModal";
-// import logo from "../assets/logo/logo.png";
+import logo from "../images/topbarlogo.png";
 
 const navLinks = [
     {
@@ -33,11 +33,13 @@ const Navbar = () => {
 
                     {/* Logo */}
 
-                    <img
-                        // src={logo}
-                        alt="Dhaneshwar Realty"
-                        className="h-10 w-auto"
-                    />
+                    <NavLink to="/">
+                        <img
+                            src={logo}
+                            alt="Dhaneshwar Realty"
+                            className="h-10 w-auto object-contain"
+                        />
+                    </NavLink>
 
                     {/* Right Side */}
 

@@ -2,11 +2,13 @@ const PageHero = ({
     title,
     description,
     image,
+    maxWidth = "max-w-[1440px]",
+    height = "h-[608px]",
 }) => {
     return (
         <section className="px-9 pt-6">
 
-            <div className="relative mx-auto h-[440px] max-w-[1440px] overflow-hidden">
+            <div className={`relative mx-auto ${height} ${maxWidth} overflow-hidden`}>
 
                 <img
                     src={image}

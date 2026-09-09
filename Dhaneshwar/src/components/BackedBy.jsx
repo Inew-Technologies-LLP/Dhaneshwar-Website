@@ -1,3 +1,5 @@
+import photo10 from "../images/photo10.png";
+
 const BackedBy = () => {
     return (
         <section className="px-9 py-24">
@@ -11,9 +13,9 @@ const BackedBy = () => {
                 <div className="relative overflow-hidden">
 
                     <img
-                    //     src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1800"
+                        src={photo10}
                         alt="Construction"
-                        className="h-[520px] w-full object-cover"
+                        className="h-[630px] w-full object-cover"
                     />
 
                     <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-transparent" />

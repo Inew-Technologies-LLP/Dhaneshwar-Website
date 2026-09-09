@@ -1,3 +1,5 @@
+import photo6 from "../images/photo6.png";
+
 const Promise = () => {
     return (
         <section className="px-9 py-16">
@@ -5,7 +7,7 @@ const Promise = () => {
             <div className="mx-auto grid max-w-[1440px] items-start gap-12 lg:grid-cols-[1.15fr_1fr]">
 
                 <img
-                    // src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1400"
+                    src={photo6}
                     alt="Our Promise"
                     className="h-[480px] w-full object-cover"
                 />

@@ -1,3 +1,5 @@
+import photo8 from "../images/photo8.png";
+
 const AboutStory = () => {
     return (
         <section className="px-9 py-24">
@@ -23,7 +25,7 @@ const AboutStory = () => {
                 </div>
 
                 <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1800"
+                    src={photo8}
                     alt="Our Story"
                     className="mt-16 h-[560px] w-full object-cover"
                 />

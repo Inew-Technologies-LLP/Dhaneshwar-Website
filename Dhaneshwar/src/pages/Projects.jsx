@@ -6,6 +6,7 @@ import ProjectFilters from "../components/ProjectFilters";
 import ProjectSection from "../components/ProjectSection";
 
 import projects from "../data/projects";
+import photo14 from "../images/photo14.png";
 
 const Projects = () => {
 
@@ -34,7 +35,7 @@ const Projects = () => {
             <PageHero
                 title="Our Projects"
                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
-                image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1800"
+                image={photo14}
             />
 
             <ProjectFilters

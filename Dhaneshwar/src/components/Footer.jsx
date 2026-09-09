@@ -4,7 +4,7 @@ import {
     FaXTwitter,
 } from "react-icons/fa6";
 
-// import logo from "../assets/logo/logo.png";
+import logo from "../images/footerlogo.png";
 
 const Footer = () => {
     return (
@@ -145,9 +145,9 @@ const Footer = () => {
                     <div>
 
                         <img
-                            // src={logo}
+                            src={logo}
                             alt="Dhaneshwar Realty"
-                            className="w-[170px]"
+                            className="w-[170px] h-auto object-contain"
                         />
 
                     </div>

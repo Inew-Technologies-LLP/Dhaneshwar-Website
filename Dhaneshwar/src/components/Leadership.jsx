@@ -1,21 +1,22 @@
+import photo11 from "../images/photo11.png";
+import photo12 from "../images/photo12.png";
+import photo13 from "../images/photo13.png";
+
 const leaders = [
     {
         name: "Name",
         role: "Position",
-        image:
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800",
+        image: photo11,
     },
     {
         name: "Name",
         role: "Position",
-        image:
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800",
+        image: photo12,
     },
     {
         name: "Name",
         role: "Position",
-        image:
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800",
+        image: photo13,
     },
 ];
 
@@ -39,7 +40,7 @@ const Leadership = () => {
                             <img
                                 src={leader.image}
                                 alt={leader.name}
-                                className="h-[520px] w-full object-cover"
+                                className="h-[484px] w-full object-cover"
                             />
 
                             <h3 className="mt-6 text-[36px] font-medium text-[#192B3C]">
