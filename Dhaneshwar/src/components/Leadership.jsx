@@ -23,11 +23,11 @@ const leaders = [
 const Leadership = () => {
     return (
 
-        <section className="px-9 pb-24">
+        <section className="px-4 pb-16 sm:px-6 sm:pb-24 lg:px-9">
 
             <div className="mx-auto max-w-[1440px]">
 
-                <h2 className="mb-14 text-[50px] font-medium text-[#192B3C]">
+                <h2 className="mb-10 text-4xl font-medium text-[#192B3C] sm:mb-14 sm:text-[50px]">
                     Leadership
                 </h2>
 
@@ -40,10 +40,10 @@ const Leadership = () => {
                             <img
                                 src={leader.image}
                                 alt={leader.name}
-                                className="h-[484px] w-full object-cover"
+                                className="h-[380px] w-full object-cover sm:h-[484px]"
                             />
 
-                            <h3 className="mt-6 text-[36px] font-medium text-[#192B3C]">
+                            <h3 className="mt-6 text-3xl font-medium text-[#192B3C] sm:text-[36px]">
                                 {leader.name}
                             </h3>
 

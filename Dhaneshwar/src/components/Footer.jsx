@@ -10,17 +10,17 @@ const Footer = () => {
     return (
         <footer className="mt-20 bg-[#192B3C] text-white">
 
-            <div className="mx-auto max-w-[1440px] px-9 py-16">
+            <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-9 sm:py-16">
 
                 {/* Heading */}
 
-                <h2 className="text-[56px] font-light leading-none">
+                <h2 className="text-4xl font-light leading-none sm:text-[56px]">
                     Get in Touch
                 </h2>
 
                 {/* Links */}
 
-                <div className="mt-14 grid grid-cols-5 gap-12">
+                <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-12 lg:mt-14 lg:grid-cols-5">
 
                     <div>
 
@@ -121,7 +121,7 @@ const Footer = () => {
 
                 {/* Bottom Row */}
 
-                <div className="mt-16 flex items-end justify-between">
+                <div className="mt-12 flex flex-col items-start gap-8 sm:mt-16 sm:flex-row sm:items-end sm:justify-between">
 
                     {/* Social Icons */}
 

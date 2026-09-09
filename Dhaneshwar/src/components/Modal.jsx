@@ -14,7 +14,10 @@ const Modal = ({ open, onClose, children }) => {
                 items-center
                 justify-center
                 bg-black/50
-                p-6
+                overflow-y-auto
+                overflow-x-hidden
+                p-3
+                sm:p-6
             "
         >
             <div
@@ -23,17 +26,23 @@ const Modal = ({ open, onClose, children }) => {
                     relative
                     w-full
                     max-w-[520px]
+                    max-h-[calc(100dvh-1.5rem)]
+                    overflow-y-auto
+                    overflow-x-hidden
                     bg-white
-                    px-14
-                    py-12
+                    px-5
+                    py-8
+                    sm:max-h-[calc(100dvh-3rem)]
+                    sm:px-14
+                    sm:py-12
                 "
             >
                 <button
                     onClick={onClose}
                     className="
                         absolute
-                        right-6
-                        top-6
+                        right-3
+                        top-3
                         flex
                         h-10
                         w-10
@@ -42,6 +51,8 @@ const Modal = ({ open, onClose, children }) => {
                         rounded-full
                         border
                         border-[#192B3C]
+                        sm:right-6
+                        sm:top-6
                     "
                 >
                     <X size={18} />

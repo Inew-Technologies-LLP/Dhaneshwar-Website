@@ -33,11 +33,11 @@ const ProjectFilters = ({
 
      return (
 
-          <section className="px-9 py-8">
+          <section className="px-4 py-6 sm:px-6 sm:py-8 lg:px-9">
 
                <div className="mx-auto max-w-[1440px]">
 
-                    <div className="flex gap-14">
+                    <div className="flex flex-col gap-6 sm:gap-8 lg:flex-row lg:gap-14">
 
                          <div>
 
@@ -45,7 +45,7 @@ const ProjectFilters = ({
                                    Projects
                               </h3>
 
-                              <div className="flex">
+                              <div className="flex flex-wrap">
 
                                    {projectTypes.map(item => (
 
@@ -69,7 +69,7 @@ const ProjectFilters = ({
                                    Status
                               </h3>
 
-                              <div className="flex">
+                              <div className="flex flex-wrap">
 
                                    {projectStatus.map(item => (
 

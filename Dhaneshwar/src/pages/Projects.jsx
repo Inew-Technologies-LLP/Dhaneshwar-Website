@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import Layout from "../components/Layout";
 import PageHero from "../components/PageHero";
@@ -12,6 +13,8 @@ const Projects = () => {
 
     const [type, setType] = useState("All");
     const [status, setStatus] = useState("All");
+    const [searchParams] = useSearchParams();
+    const selectedProjectId = searchParams.get("project");
 
     const filteredProjects = useMemo(() => {
 
@@ -28,6 +31,13 @@ const Projects = () => {
         });
 
     }, [type, status]);
+
+    useEffect(() => {
+        if (!selectedProjectId) return;
+
+        const projectElement = document.getElementById(`project-${selectedProjectId}`);
+        projectElement?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, [selectedProjectId, filteredProjects]);
 
     return (
         <Layout>
@@ -58,6 +68,7 @@ const Projects = () => {
                 }
                 centered={false}
                 projectsData={filteredProjects}
+                expanded
             />
 
         </Layout>
