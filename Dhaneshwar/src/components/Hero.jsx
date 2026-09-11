@@ -5,6 +5,7 @@ const Hero = () => {
           <section className="px-9 pt-6">
                <div
                     className="
+                         group
                          relative
                          mx-auto
                          max-w-[1440px]
@@ -19,7 +20,7 @@ const Hero = () => {
                     <img
                          src={photo1}
                          alt="Hero"
-                         className="absolute inset-0 h-full w-full object-cover"
+                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
 
                     {/* Overlay */}
@@ -28,7 +29,7 @@ const Hero = () => {
 
                     {/* Content */}
 
-                    <div className="absolute inset-0 flex items-end">
+                    <div className="absolute inset-0 flex items-end animate-fade-in">
                          <div
                               className="
                                    max-w-[620px]

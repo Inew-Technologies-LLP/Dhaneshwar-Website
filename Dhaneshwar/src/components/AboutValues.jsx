@@ -12,12 +12,12 @@ const AboutValues = () => {
 
         <section className="px-4 pb-16 sm:px-6 sm:pb-24 lg:px-9">
 
-            <div className="relative mx-auto h-[680px] max-w-[1440px] overflow-hidden sm:h-[760px] lg:h-[828px]">
+            <div className="group relative mx-auto h-[680px] max-w-[1440px] overflow-hidden sm:h-[760px] lg:h-[828px]">
 
                 <img
                     src={photo9}
                     alt=""
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#192B3C] via-[#192B3C]/20 to-transparent" />

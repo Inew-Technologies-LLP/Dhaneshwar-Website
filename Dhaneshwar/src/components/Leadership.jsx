@@ -35,15 +35,17 @@ const Leadership = () => {
 
                     {leaders.map((leader, index) => (
 
-                        <div key={index}>
+                        <div key={index} className="group cursor-pointer transition-all duration-300 hover:-translate-y-2">
 
-                            <img
-                                src={leader.image}
-                                alt={leader.name}
-                                className="h-[380px] w-full object-cover sm:h-[484px]"
-                            />
+                            <div className="overflow-hidden">
+                                <img
+                                    src={leader.image}
+                                    alt={leader.name}
+                                    className="h-[380px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[484px]"
+                                />
+                            </div>
 
-                            <h3 className="mt-6 text-3xl font-medium text-[#192B3C] sm:text-[36px]">
+                            <h3 className="mt-6 text-3xl font-medium text-[#192B3C] transition-colors duration-300 group-hover:text-[#B08A1E] sm:text-[36px]">
                                 {leader.name}
                             </h3>
 

@@ -10,12 +10,12 @@ const PageHero = ({
     return (
         <section className="px-4 pt-4 sm:px-6 sm:pt-6 lg:px-9">
 
-            <div className={`relative mx-auto h-[440px] sm:h-[520px] ${desktopHeightClass} ${maxWidth} overflow-hidden`}>
+            <div className={`group relative mx-auto h-[440px] sm:h-[520px] ${desktopHeightClass} ${maxWidth} overflow-hidden`}>
 
                 <img
                     src={image}
                     alt={title}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#192B3C] via-[#192B3C]/30 to-transparent" />

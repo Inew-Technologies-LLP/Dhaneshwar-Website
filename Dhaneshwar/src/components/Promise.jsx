@@ -6,11 +6,13 @@ const Promise = () => {
 
             <div className="mx-auto grid max-w-[1440px] items-start gap-12 lg:grid-cols-[1.15fr_1fr]">
 
-                <img
-                    src={photo6}
-                    alt="Our Promise"
-                    className="h-[480px] w-full object-cover"
-                />
+                <div className="group overflow-hidden">
+                    <img
+                        src={photo6}
+                        alt="Our Promise"
+                        className="h-[480px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                </div>
 
                 <div>
 

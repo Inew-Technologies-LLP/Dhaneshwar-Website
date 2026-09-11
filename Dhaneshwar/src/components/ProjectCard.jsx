@@ -21,8 +21,10 @@ const ProjectCard = ({ project }) => {
                     overflow-hidden
                     bg-white
                     transition-all
-                    duration-300
+                    duration-500
+                    ease-out
                     hover:-translate-y-2
+                    hover:shadow-2xl
                "
           >
 
@@ -36,8 +38,9 @@ const ProjectCard = ({ project }) => {
                               w-full
                               object-cover
                               transition-transform
-                              duration-500
-                              group-hover:scale-[1.04]
+                              duration-700
+                              ease-out
+                              group-hover:scale-[1.05]
                               sm:h-[460px]
                               lg:h-[590px]
                          "
@@ -61,9 +64,12 @@ const ProjectCard = ({ project }) => {
                                    px-3
                                    py-1
                                    text-xs
-                                   transition
+                                   transition-all
                                    duration-300
                                    hover:bg-[#c89a19]
+                                   hover:brightness-110
+                                   hover:shadow-md
+                                   hover:translate-x-0.5
                                    sm:px-4
                               "
                          >

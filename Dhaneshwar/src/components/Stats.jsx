@@ -24,14 +24,14 @@ const Stats = () => {
      return (
           <section className="px-3 sm:px-5 lg:px-9 py-16">
 
-               <div className="relative mx-auto max-w-[1440px] overflow-hidden">
+               <div className="group relative mx-auto max-w-[1440px] overflow-hidden">
 
                     {/* Background Image */}
 
                     <img
                          src={photo5}
                          alt="Stats"
-                         className="w-full h-auto block"
+                         className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-105"
                     />
 
                     {/* Top Content */}
@@ -64,9 +64,9 @@ const Stats = () => {
 
                               {stats.map((item) => (
 
-                                   <div key={item.label}>
+                                   <div key={item.label} className="transition-all duration-300 hover:-translate-y-1.5 hover:scale-105 cursor-default group">
 
-                                        <h3 className="text-2xl sm:text-4xl lg:text-[54px] font-light leading-none">
+                                        <h3 className="text-2xl sm:text-4xl lg:text-[54px] font-light leading-none transition-colors duration-300 group-hover:text-white">
 
                                              {item.value}
 
@@ -78,7 +78,7 @@ const Stats = () => {
 
                                         </h3>
 
-                                        <p className="mt-1 sm:mt-2 text-xs sm:text-sm lg:text-[17px]">
+                                        <p className="mt-1 sm:mt-2 text-xs sm:text-sm lg:text-[17px] transition-colors duration-300 group-hover:text-white/90">
                                              {item.label}
                                         </p>
 

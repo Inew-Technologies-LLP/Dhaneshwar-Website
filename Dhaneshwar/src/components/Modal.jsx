@@ -14,10 +14,12 @@ const Modal = ({ open, onClose, children }) => {
                 items-center
                 justify-center
                 bg-black/50
+                backdrop-blur-xs
                 overflow-y-auto
                 overflow-x-hidden
                 p-3
                 sm:p-6
+                animate-fade-in
             "
         >
             <div
@@ -32,6 +34,9 @@ const Modal = ({ open, onClose, children }) => {
                     bg-white
                     px-5
                     py-8
+                    shadow-2xl
+                    transition-all
+                    duration-300
                     sm:max-h-[calc(100dvh-3rem)]
                     sm:px-14
                     sm:py-12
