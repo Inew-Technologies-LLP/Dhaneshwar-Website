@@ -136,9 +136,9 @@ const Footer = () => {
             )}
           </div>
 
-          {/* ALTURA Wave Logo (Right Side) */}
+          {/* ALTURA Logo (Right Side) */}
           <div className="md:col-span-5 flex justify-start md:justify-end items-center max-w-full overflow-hidden">
-            <AlturaLogo textClassName="text-2xl sm:text-4xl lg:text-5xl tracking-[0.15em] sm:tracking-[0.25em]" />
+            <AlturaLogo />
           </div>
         </div>
 
