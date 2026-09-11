@@ -1,20 +1,22 @@
+import photo8 from "../images/photo8.png";
+
 const AboutStory = () => {
     return (
-        <section className="px-9 py-24">
+        <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-9">
 
             <div className="mx-auto max-w-[1440px]">
 
                 <div className="mx-auto max-w-[760px] text-center">
 
-                    <h2 className="text-[50px] font-medium text-[#192B3C]">
+                    <h2 className="text-4xl font-medium text-[#192B3C] sm:text-[50px]">
                         Our Story
                     </h2>
 
-                    <p className="mt-8 text-[22px] text-[#192B3C]">
+                    <p className="mt-6 text-lg text-[#192B3C] sm:mt-8 sm:text-[22px]">
                         What inspired Dhaneshwar
                     </p>
 
-                    <p className="mt-4 text-[18px] leading-9 text-gray-600">
+                    <p className="mt-4 text-base leading-8 text-gray-600 sm:text-[18px] sm:leading-9">
                         The image below will be brand pattern with an image overlay.
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                         sed do eiusmod tempor incididunt ut labore et.
@@ -22,11 +24,13 @@ const AboutStory = () => {
 
                 </div>
 
-                <img
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1800"
-                    alt="Our Story"
-                    className="mt-16 h-[560px] w-full object-cover"
-                />
+                <div className="group overflow-hidden mt-10 sm:mt-16">
+                    <img
+                        src={photo8}
+                        alt="Our Story"
+                        className="h-[360px] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 sm:h-[560px]"
+                    />
+                </div>
 
             </div>
 

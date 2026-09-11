@@ -43,23 +43,24 @@ const ContactForm = () => {
      };
 
      return (
-          <section className="px-9 py-16">
+          <section className="px-4 py-12 sm:px-6 sm:py-16 lg:px-9">
                <div className="mx-auto max-w-[1440px]">
 
                     <form
                          onSubmit={handleSubmit}
-                         className="grid grid-cols-3 gap-x-16 gap-y-10"
+                         className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-10"
                     >
 
                          {/* Name */}
 
-                         <div>
-                              <label className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                         <div className="min-w-0">
+                              <label htmlFor="contact-name" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
                                    Name
                               </label>
 
                               <input
                                    type="text"
+                                   id="contact-name"
                                    name="name"
                                    value={formData.name}
                                    onChange={handleChange}
@@ -80,13 +81,14 @@ const ContactForm = () => {
 
                          {/* Email */}
 
-                         <div>
-                              <label className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                         <div className="min-w-0">
+                              <label htmlFor="contact-email" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
                                    Email
                               </label>
 
                               <input
                                    type="email"
+                                   id="contact-email"
                                    name="email"
                                    value={formData.email}
                                    onChange={handleChange}
@@ -107,13 +109,14 @@ const ContactForm = () => {
 
                          {/* Phone */}
 
-                         <div>
-                              <label className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                         <div className="min-w-0">
+                              <label htmlFor="contact-phone" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
                                    Phone No.
                               </label>
 
                               <input
                                    type="tel"
+                                   id="contact-phone"
                                    name="phone"
                                    value={formData.phone}
                                    onChange={handleChange}
@@ -134,13 +137,14 @@ const ContactForm = () => {
 
                          {/* Project */}
 
-                         <div>
-                              <label className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                         <div className="min-w-0">
+                              <label htmlFor="contact-project" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
                                    Select Project
                               </label>
 
                               <select
                                    name="project"
+                                   id="contact-project"
                                    value={formData.project}
                                    onChange={handleChange}
                                    required
@@ -174,13 +178,14 @@ const ContactForm = () => {
 
                          {/* City */}
 
-                         <div>
-                              <label className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                         <div className="min-w-0">
+                              <label htmlFor="contact-city" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
                                    City
                               </label>
 
                               <input
                                    type="text"
+                                   id="contact-city"
                                    name="city"
                                    value={formData.city}
                                    onChange={handleChange}
@@ -201,7 +206,7 @@ const ContactForm = () => {
 
                          {/* Submit */}
 
-                         <div className="col-span-3">
+                         <div className="col-span-full">
 
                               <button
                                    type="submit"

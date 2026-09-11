@@ -2,12 +2,12 @@ const ProjectsHero = () => {
     return (
         <section className="px-9 pt-6">
 
-            <div className="relative mx-auto h-[440px] max-w-[1440px] overflow-hidden">
+            <div className="group relative mx-auto h-[440px] max-w-[1440px] overflow-hidden">
 
                 <img
                     src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1800"
                     alt="Projects"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#192B3C] via-[#192B3C]/30 to-transparent" />

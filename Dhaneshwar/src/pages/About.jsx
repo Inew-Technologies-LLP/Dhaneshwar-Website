@@ -5,6 +5,7 @@ import AboutValues from "../components/AboutValues";
 import BackedBy from "../components/BackedBy";
 import Leadership from "../components/Leadership";
 import AboutQuote from "../components/AboutQuote";
+import photo7 from "../images/photo7.png";
 
 const About = () => {
     return (
@@ -13,7 +14,8 @@ const About = () => {
             <PageHero
                 title="About Us"
                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
-                image="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?w=1800"
+                image={photo7}
+                maxWidth="max-w-[1440px]"
             />
 
             <AboutStory />

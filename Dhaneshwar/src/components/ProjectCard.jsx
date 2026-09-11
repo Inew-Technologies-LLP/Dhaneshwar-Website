@@ -1,14 +1,30 @@
+import { Link, useNavigate } from "react-router-dom";
+
 const ProjectCard = ({ project }) => {
+     const navigate = useNavigate();
+
      return (
           <div
+               id={`project-${project.id}`}
+               onClick={() => navigate(`/projects?project=${project.id}`)}
+               onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                         event.preventDefault();
+                         navigate(`/projects?project=${project.id}`);
+                    }
+               }}
+               role="link"
+               tabIndex={0}
                className="
                     group
                     cursor-pointer
                     overflow-hidden
                     bg-white
                     transition-all
-                    duration-300
+                    duration-500
+                    ease-out
                     hover:-translate-y-2
+                    hover:shadow-2xl
                "
           >
 
@@ -18,18 +34,21 @@ const ProjectCard = ({ project }) => {
                          src={project.image}
                          alt={project.name}
                          className="
-                              h-[590px]
+                              h-[360px]
                               w-full
                               object-cover
                               transition-transform
-                              duration-500
-                              group-hover:scale-[1.04]
+                              duration-700
+                              ease-out
+                              group-hover:scale-[1.05]
+                              sm:h-[460px]
+                              lg:h-[590px]
                          "
                     />
 
                </div>
 
-               <div className="bg-[#192B3C] px-8 py-6 text-white">
+               <div className="bg-[#192B3C] px-5 py-6 text-white sm:px-8 lg:px-8">
 
                     <div className="mb-4 flex items-center justify-between">
 
@@ -37,31 +56,37 @@ const ProjectCard = ({ project }) => {
                               {project.city}
                          </p>
 
-                         <button
+                         <Link
+                              to={`/projects?project=${project.id}`}
+                              onClick={(event) => event.stopPropagation()}
                               className="
                                    bg-[#B38B17]
-                                   px-4
+                                   px-3
                                    py-1
                                    text-xs
-                                   transition
+                                   transition-all
                                    duration-300
                                    hover:bg-[#c89a19]
+                                   hover:brightness-110
+                                   hover:shadow-md
+                                   hover:translate-x-0.5
+                                   sm:px-4
                               "
                          >
                               Learn More
-                         </button>
+                         </Link>
 
                     </div>
 
-                    <h3 className="text-[24px] font-medium">
+                    <h3 className="text-2xl font-medium">
                          {project.name}
                     </h3>
 
-                    <p className="mt-1 text-[16px]">
+                    <p className="mt-1 text-base">
                          {project.status}
                     </p>
 
-                    <div className="mt-6 flex justify-between">
+                    <div className="mt-6 flex justify-between gap-4">
 
                          <div>
 

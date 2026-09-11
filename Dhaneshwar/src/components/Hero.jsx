@@ -1,24 +1,26 @@
+import photo1 from "../images/photo1.png";
+
 const Hero = () => {
      return (
-          <section className="bg-white pt-3">
+          <section className="px-9 pt-6">
                <div
                     className="
+                         group
                          relative
-                         mx-3
-                         sm:mx-5
-                         lg:mx-9
-                         h-[calc(100vh-94px)]
-                         min-h-[500px]
-                         lg:min-h-[650px]
+                         mx-auto
+                         max-w-[1440px]
+                         h-[700px]
+                         sm:h-[740px]
+                         lg:h-[780px]
                          overflow-hidden
                     "
                >
                     {/* Background Image */}
 
                     <img
-                         // src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1800"
+                         src={photo1}
                          alt="Hero"
-                         className="absolute inset-0 h-full w-full object-cover"
+                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
 
                     {/* Overlay */}
@@ -27,7 +29,7 @@ const Hero = () => {
 
                     {/* Content */}
 
-                    <div className="absolute inset-0 flex items-end">
+                    <div className="absolute inset-0 flex items-end animate-fade-in">
                          <div
                               className="
                                    max-w-[620px]

@@ -1,19 +1,21 @@
+import photo10 from "../images/photo10.png";
+
 const BackedBy = () => {
     return (
-        <section className="px-9 py-24">
+        <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-9">
 
             <div className="mx-auto max-w-[1440px]">
 
-                <h2 className="mb-16 text-center text-[50px] font-medium text-[#192B3C]">
+                <h2 className="mb-10 text-center text-4xl font-medium text-[#192B3C] sm:mb-16 sm:text-[50px]">
                     Backed by
                 </h2>
 
                 <div className="relative overflow-hidden">
 
                     <img
-                    //     src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=1800"
+                        src={photo10}
                         alt="Construction"
-                        className="h-[520px] w-full object-cover"
+                        className="h-[360px] w-full object-cover sm:h-[630px]"
                     />
 
                     <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-transparent" />
