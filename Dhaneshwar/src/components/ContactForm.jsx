@@ -43,18 +43,18 @@ const ContactForm = () => {
      };
 
      return (
-          <section className="px-4 py-12 sm:px-6 sm:py-16 lg:px-9">
+          <section className="px-3 py-8 sm:px-6 sm:py-14 lg:px-9">
                <div className="mx-auto max-w-[1440px]">
 
                     <form
                          onSubmit={handleSubmit}
-                         className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-10"
+                         className="grid grid-cols-1 gap-y-5 sm:gap-x-8 sm:gap-y-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-10"
                     >
 
                          {/* Name */}
 
                          <div className="min-w-0">
-                              <label htmlFor="contact-name" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                              <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    Name
                               </label>
 
@@ -66,12 +66,13 @@ const ContactForm = () => {
                                    onChange={handleChange}
                                    required
                                    className="
-                                h-[44px]
+                                h-11
                                 w-full
                                 border
                                 border-[#192B3C]
-                                px-3
-                                text-[15px]
+                                px-3.5
+                                text-sm
+                                sm:text-[15px]
                                 outline-none
                                 transition
                                 focus:border-[#B38B17]
@@ -82,7 +83,7 @@ const ContactForm = () => {
                          {/* Email */}
 
                          <div className="min-w-0">
-                              <label htmlFor="contact-email" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                              <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    Email
                               </label>
 
@@ -94,12 +95,13 @@ const ContactForm = () => {
                                    onChange={handleChange}
                                    required
                                    className="
-                                h-[44px]
+                                h-11
                                 w-full
                                 border
                                 border-[#192B3C]
-                                px-3
-                                text-[15px]
+                                px-3.5
+                                text-sm
+                                sm:text-[15px]
                                 outline-none
                                 transition
                                 focus:border-[#B38B17]
@@ -110,7 +112,7 @@ const ContactForm = () => {
                          {/* Phone */}
 
                          <div className="min-w-0">
-                              <label htmlFor="contact-phone" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                              <label htmlFor="contact-phone" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    Phone No.
                               </label>
 
@@ -122,12 +124,13 @@ const ContactForm = () => {
                                    onChange={handleChange}
                                    required
                                    className="
-                                h-[44px]
+                                h-11
                                 w-full
                                 border
                                 border-[#192B3C]
-                                px-3
-                                text-[15px]
+                                px-3.5
+                                text-sm
+                                sm:text-[15px]
                                 outline-none
                                 transition
                                 focus:border-[#B38B17]
@@ -138,7 +141,7 @@ const ContactForm = () => {
                          {/* Project */}
 
                          <div className="min-w-0">
-                              <label htmlFor="contact-project" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                              <label htmlFor="contact-project" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    Select Project
                               </label>
 
@@ -149,13 +152,14 @@ const ContactForm = () => {
                                    onChange={handleChange}
                                    required
                                    className="
-                                h-[44px]
+                                h-11
                                 w-full
                                 border
                                 border-[#192B3C]
                                 bg-white
-                                px-3
-                                text-[15px]
+                                px-3.5
+                                text-sm
+                                sm:text-[15px]
                                 outline-none
                                 transition
                                 focus:border-[#B38B17]
@@ -179,7 +183,7 @@ const ContactForm = () => {
                          {/* City */}
 
                          <div className="min-w-0">
-                              <label htmlFor="contact-city" className="mb-2 block text-[16px] font-medium text-[#192B3C]">
+                              <label htmlFor="contact-city" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    City
                               </label>
 
@@ -191,12 +195,13 @@ const ContactForm = () => {
                                    onChange={handleChange}
                                    required
                                    className="
-                                h-[44px]
+                                h-11
                                 w-full
                                 border
                                 border-[#192B3C]
-                                px-3
-                                text-[15px]
+                                px-3.5
+                                text-sm
+                                sm:text-[15px]
                                 outline-none
                                 transition
                                 focus:border-[#B38B17]
@@ -206,22 +211,23 @@ const ContactForm = () => {
 
                          {/* Submit */}
 
-                         <div className="col-span-full">
+                         <div className="col-span-full pt-2">
 
                               <button
                                    type="submit"
                                    disabled={status === "submitting"}
                                    className="
-                                mt-0
-                                h-[42px]
-                                w-[115px]
-                                rounded
-                                bg-[#7B7B7B]
-                                text-[15px]
+                                h-11
+                                w-full
+                                sm:w-[140px]
+                                bg-[#192B3C]
+                                hover:bg-[#B38B17]
+                                text-sm
+                                sm:text-[15px]
                                 font-medium
                                 text-white
-                                transition
-                                hover:bg-[#686868]
+                                transition-colors
+                                duration-300
                                 disabled:cursor-not-allowed
                                 disabled:opacity-60
                             "
@@ -232,13 +238,13 @@ const ContactForm = () => {
                               </button>
 
                               {status === "success" && (
-                                   <p className="mt-4 text-[15px] text-green-600">
+                                   <p className="mt-4 text-sm sm:text-[15px] text-green-600">
                                         Thank you! We will get back to you shortly.
                                    </p>
                               )}
 
                               {status === "error" && (
-                                   <p className="mt-4 text-[15px] text-red-600">
+                                   <p className="mt-4 text-sm sm:text-[15px] text-red-600">
                                         Something went wrong. Please try again.
                                    </p>
                               )}

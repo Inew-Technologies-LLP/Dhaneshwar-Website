@@ -19,33 +19,38 @@ const ProjectFilters = ({
 }) => {
 
      const buttonStyle = (active) => `
-        h-10
+        h-9
+        sm:h-10
         border
         border-[#192B3C]
-        px-6
-        text-[14px]
-        transition
+        px-3.5
+        sm:px-6
+        text-xs
+        sm:text-[14px]
+        font-medium
+        transition-all
+        duration-200
         ${active
-               ? "bg-[#192B3C] text-white"
-               : "bg-white text-[#192B3C]"
+               ? "bg-[#192B3C] text-white shadow-sm"
+               : "bg-white text-[#192B3C] hover:bg-[#192B3C]/5"
           }
     `;
 
      return (
 
-          <section className="px-4 py-6 sm:px-6 sm:py-8 lg:px-9">
+          <section className="px-3 py-5 sm:px-6 sm:py-8 lg:px-9">
 
                <div className="mx-auto max-w-[1440px]">
 
-                    <div className="flex flex-col gap-6 sm:gap-8 lg:flex-row lg:gap-14">
+                    <div className="flex flex-col gap-5 sm:gap-8 lg:flex-row lg:gap-14">
 
                          <div>
 
-                              <h3 className="mb-3 font-semibold">
-                                   Projects
+                              <h3 className="mb-2 sm:mb-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#192B3C]/80">
+                                   Project Type
                               </h3>
 
-                              <div className="flex flex-wrap">
+                              <div className="flex flex-wrap gap-2">
 
                                    {projectTypes.map(item => (
 
@@ -65,11 +70,11 @@ const ProjectFilters = ({
 
                          <div>
 
-                              <h3 className="mb-3 font-semibold">
+                              <h3 className="mb-2 sm:mb-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#192B3C]/80">
                                    Status
                               </h3>
 
-                              <div className="flex flex-wrap">
+                              <div className="flex flex-wrap gap-2">
 
                                    {projectStatus.map(item => (
 
@@ -89,7 +94,7 @@ const ProjectFilters = ({
 
                     </div>
 
-                    <div className="mt-8 border-b border-gray-300" />
+                    <div className="mt-6 sm:mt-8 border-b border-gray-200" />
 
                </div>
 
