@@ -1,57 +1,91 @@
-import { Sun, BatteryCharging, Zap, ShieldCheck } from "lucide-react";
+import swimmingPoolImg from "../images/amenities/2_swimming_pool 1.png";
+import gymnasiumImg from "../images/amenities/1_gymnasium 1.png";
+import skydeckImg from "../images/amenities/skydeck.png";
+import multipurposeCourtImg from "../images/amenities/multipurposecourt.png";
 
 const ProjectOverview = () => {
   const features = [
-    { id: 1, title: "Solar Panels", icon: Sun },
-    { id: 2, title: "Solar Panels", icon: BatteryCharging },
-    { id: 3, title: "Solar Panels", icon: Zap },
-    { id: 4, title: "Solar Panels", icon: ShieldCheck },
+    {
+      id: 1,
+      title: "Swimming Pool & Deck",
+      caption: "Unwind. Refresh. Recharge.",
+      icon: swimmingPoolImg,
+    },
+    {
+      id: 2,
+      title: "Gymnasium",
+      caption: "Designed for an active everyday.",
+      icon: gymnasiumImg,
+    },
+    {
+      id: 3,
+      title: "Skydeck",
+      caption: "Open skies. Elevated moments.",
+      icon: skydeckImg,
+    },
+    {
+      id: 4,
+      title: "Multipurpose Court",
+      caption: "Space to play, move and connect",
+      icon: multipurposeCourtImg,
+      scale: "scale-110",
+    },
   ];
 
   return (
     <section className="py-14 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading */}
-        <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] mb-4 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-normal text-[#1D65AD] mb-4 tracking-tight">
           Project Overview
         </h2>
 
         {/* Paragraph Text */}
-        <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-4xl mb-12">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+        <p className="text-slate-600 text-sm sm:text-base font-light leading-relaxed max-w-4xl mb-12">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscin
         </p>
 
-        {/* 4 Column Features Grid with Vertical Dividers (229px height) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 py-6">
-          {features.map((item, idx) => {
-            const IconComponent = item.icon;
-            return (
-              <div
-                key={item.id}
-                className="relative flex flex-col items-center justify-center h-[229px] p-6 text-center group cursor-pointer"
-              >
-                <div className="p-4 bg-[#EBF4FD] text-[#1D65AD] rounded-xl mb-4 shadow-sm border border-[#D0E5FB] transition-all duration-300 ease-out group-hover:-translate-y-2 group-hover:bg-[#D5E8FD] group-hover:shadow-md group-hover:border-[#1D65AD]">
-                  <IconComponent size={38} strokeWidth={1.5} className="transition-transform duration-300 group-hover:scale-110" />
+        {/* 4 Column Features Grid with Vertical Dividers */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-8 md:gap-y-0 relative py-4">
+          {features.map((item, idx) => (
+            <div
+              key={item.id}
+              className="relative flex flex-col justify-between px-4 sm:px-6 lg:px-8 group"
+            >
+              <div>
+                {/* Icon Container */}
+                <div className="h-20 sm:h-24 flex items-end mb-5">
+                  <img
+                    src={item.icon}
+                    alt={item.title}
+                    className={`max-h-16 sm:max-h-20 max-w-full object-contain [filter:brightness(0)_saturate(100%)] transition-transform duration-300 group-hover:scale-105 ${item.scale || ""}`}
+                    loading="lazy"
+                  />
                 </div>
-                <h3 className="text-sm sm:text-base font-semibold text-[#1D65AD] transition-colors duration-300 group-hover:text-[#154E88]">
-                  {item.title}
-                </h3>
 
-                {/* 229px Vertical Divider */}
-                {idx !== features.length - 1 && (
-                  <div className="hidden md:block absolute right-0 top-0 h-[229px] w-[1px] bg-slate-400" />
-                )}
+                {/* Title & Caption */}
+                <div>
+                  <h3 className="text-sm sm:text-base font-medium text-slate-900 mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-light text-slate-500">
+                    {item.caption}
+                  </p>
+                </div>
               </div>
-            );
-          })}
+
+              {/* Vertical Divider */}
+              {idx !== features.length - 1 && (
+                <div className="hidden md:block absolute right-0 top-2 bottom-2 w-px bg-slate-300" />
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* Project Key Details Footer Line */}
-        <div className="mt-8 text-xs sm:text-sm text-slate-500 space-y-1">
-          <p className="font-semibold text-slate-700">Key Features / Specification of the project:</p>
-          <p className="leading-relaxed">
-            <span className="font-semibold text-slate-800">Structure:</span> 22 Storey Residential Development &nbsp;|&nbsp; <span className="font-semibold text-slate-800">Configuration:</span> 2, 3 & 4 BHK Homes &nbsp;|&nbsp; <span className="font-semibold text-slate-800">RERA Registration Number:</span> P521000xx, P521000xx
-          </p>
+        {/* Project Key Details Footer Lines */}
+        <div className="mt-14 space-y-2 text-sm sm:text-base font-light text-slate-700">
+          <p>2 Ground Floors | Common Terrace | Riverside Development | 2, 3 BHK &amp; Duplex Homes</p>
+          <p>MahaRERA Registration Number: P52100052298, PR1261012502532</p>
         </div>
       </div>
     </section>

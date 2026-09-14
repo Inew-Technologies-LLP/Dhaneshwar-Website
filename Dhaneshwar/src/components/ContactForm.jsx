@@ -1,6 +1,7 @@
 import { useState } from "react";
 import projects from "../data/projects";
-import { submitLead } from "../api/leads";
+
+const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
 const initialFormData = {
      name: "",
@@ -13,9 +14,14 @@ const initialFormData = {
 const ContactForm = () => {
      const [formData, setFormData] = useState(initialFormData);
      const [status, setStatus] = useState("idle");
+     const [errorMessage, setErrorMessage] = useState("");
 
      const handleChange = (e) => {
           const { name, value } = e.target;
+
+          if (status !== "idle") {
+               setStatus("idle");
+          }
 
           setFormData((prev) => ({
                ...prev,
@@ -26,12 +32,35 @@ const ContactForm = () => {
      const handleSubmit = async (e) => {
           e.preventDefault();
 
+          const name = formData.name.trim();
+          const email = formData.email.trim();
+          const phone = formData.phone.trim();
+          const project = formData.project.trim();
+          const city = formData.city.trim();
+
+          if (!name || !email || !phone || !project || !city) {
+               setStatus("error");
+               setErrorMessage("Please fill in all required fields.");
+               return;
+          }
+
           setStatus("submitting");
+          setErrorMessage("");
 
           try {
-               await submitLead({
-                    type: "contact",
-                    ...formData,
+               await fetch(GOOGLE_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                         "Content-Type": "text/plain;charset=utf-8",
+                    },
+                    body: JSON.stringify({
+                         name,
+                         email,
+                         phone,
+                         project,
+                         city,
+                    }),
                });
 
                setStatus("success");
@@ -39,6 +68,7 @@ const ContactForm = () => {
           } catch (error) {
                console.error("Contact form submission failed:", error);
                setStatus("error");
+               setErrorMessage("Something went wrong. Please try again.");
           }
      };
 
@@ -239,13 +269,13 @@ const ContactForm = () => {
 
                               {status === "success" && (
                                    <p className="mt-4 text-sm sm:text-[15px] text-green-600">
-                                        Thank you! We will get back to you shortly.
+                                        Submitted Successfully! Thank you, we will get back to you shortly.
                                    </p>
                               )}
 
                               {status === "error" && (
                                    <p className="mt-4 text-sm sm:text-[15px] text-red-600">
-                                        Something went wrong. Please try again.
+                                        {errorMessage || "Something went wrong. Please try again."}
                                    </p>
                               )}
 
