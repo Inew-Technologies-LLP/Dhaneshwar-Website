@@ -1,18 +1,17 @@
 const AboutQuote = () => {
     return (
 
-        <section className="px-4 py-16 sm:px-6 sm:py-24 lg:px-9">
+        <section className="px-4 py-12 sm:px-6 sm:py-20 lg:px-9 lg:py-24">
 
             <div className="mx-auto max-w-[900px] text-center">
 
-                <h2 className="text-4xl font-medium leading-tight text-[#192B3C] sm:text-[58px] sm:leading-[78px]">
+                <h2 className="text-xl font-medium leading-snug text-[#192B3C] sm:text-3xl md:text-4xl lg:text-[54px] sm:leading-tight lg:leading-[74px]">
 
-                    One liner about beliefs/
-                    vision/ aim
+                    Building lasting trust through superior craftsmanship,
 
-                    <br />
+                    <br className="hidden sm:inline" />{" "}
 
-                    Lorem ipsum dolor sit amet
+                    timeless design, and an unwavering focus on you.
 
                 </h2>
 

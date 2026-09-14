@@ -2,15 +2,16 @@ import photo1 from "../images/photo1.png";
 
 const Hero = () => {
      return (
-          <section className="px-9 pt-6">
+          <section className="px-3 pt-3 sm:px-6 sm:pt-6 lg:px-9">
                <div
                     className="
                          group
                          relative
                          mx-auto
                          max-w-[1440px]
-                         h-[700px]
-                         sm:h-[740px]
+                         h-[520px]
+                         sm:h-[640px]
+                         md:h-[700px]
                          lg:h-[780px]
                          overflow-hidden
                     "
@@ -23,18 +24,18 @@ const Hero = () => {
                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
 
-                    {/* Overlay */}
+                    {/* Contrast Gradient Overlay for Readability */}
 
-                    <div className="absolute inset-0 bg-black/15" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/15" />
 
                     {/* Content */}
 
                     <div className="absolute inset-0 flex items-end animate-fade-in">
                          <div
                               className="
-                                   max-w-[620px]
-                                   px-6
-                                   pb-8
+                                   max-w-[640px]
+                                   px-4
+                                   pb-6
                                    sm:px-10
                                    sm:pb-10
                                    md:px-14
@@ -45,11 +46,12 @@ const Hero = () => {
                          >
                               <h1
                                    className="
-                                        mb-4
-                                        text-3xl
+                                        mb-3
+                                        text-2xl
                                         font-medium
                                         leading-tight
                                         text-white
+                                        sm:mb-4
                                         sm:text-4xl
                                         md:text-[42px]
                                         md:leading-[50px]
@@ -63,9 +65,9 @@ const Hero = () => {
                               <p
                                    className="
                                         max-w-[580px]
-                                        text-sm
-                                        leading-7
-                                        text-white
+                                        text-xs
+                                        leading-relaxed
+                                        text-white/90
                                         sm:text-base
                                         md:text-[17px]
                                         md:leading-[28px]

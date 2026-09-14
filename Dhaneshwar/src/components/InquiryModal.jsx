@@ -69,19 +69,19 @@ const InquiryModal = ({ open, onClose }) => {
             open={open}
             onClose={handleClose}
         >
-            <h2 className="mb-14 text-center text-[36px] font-medium text-[#192B3C]">
+            <h2 className="mb-6 sm:mb-12 text-center text-2xl sm:text-[32px] md:text-[36px] font-medium text-[#192B3C]">
                 Request a call back
             </h2>
 
             {status === "success" ? (
 
-                <div className="py-10 text-center">
+                <div className="py-8 sm:py-10 text-center">
 
-                    <h3 className="text-[24px] font-medium text-[#192B3C]">
+                    <h3 className="text-xl sm:text-[24px] font-medium text-[#192B3C]">
                         Thank you!
                     </h3>
 
-                    <p className="mt-4 text-[16px] text-gray-600">
+                    <p className="mt-3 sm:mt-4 text-sm sm:text-[16px] text-gray-600">
                         We've received your request and will get back to you
                         shortly.
                     </p>
@@ -90,11 +90,13 @@ const InquiryModal = ({ open, onClose }) => {
                         type="button"
                         onClick={handleClose}
                         className="
-                            mt-8
+                            mt-6 sm:mt-8
                             h-[42px]
                             w-[120px]
                             bg-[#2C3148]
                             text-white
+                            transition-colors
+                            hover:bg-[#192B3C]
                         "
                     >
                         Close
@@ -106,7 +108,7 @@ const InquiryModal = ({ open, onClose }) => {
 
                 <form
                     onSubmit={handleSubmit}
-                    className="space-y-6"
+                    className="space-y-4 sm:space-y-6"
                 >
 
                     {/* Name */}
