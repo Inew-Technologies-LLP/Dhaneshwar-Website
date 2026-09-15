@@ -48,9 +48,10 @@ const ContactForm = () => {
           setErrorMessage("");
 
           try {
-               await fetch(GOOGLE_SCRIPT_URL, {
+               const submissionPromise = fetch(GOOGLE_SCRIPT_URL, {
                     method: "POST",
                     mode: "no-cors",
+                    keepalive: true,
                     headers: {
                          "Content-Type": "text/plain;charset=utf-8",
                     },
@@ -62,6 +63,11 @@ const ContactForm = () => {
                          city,
                     }),
                });
+
+               await Promise.race([
+                    submissionPromise,
+                    new Promise((resolve) => setTimeout(resolve, 1000)),
+               ]);
 
                setStatus("success");
                setFormData(initialFormData);
