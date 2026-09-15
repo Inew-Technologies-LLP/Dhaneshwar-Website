@@ -37,40 +37,51 @@ const InquiryModal = ({ isOpen, onClose }) => {
     setErrorMessage("");
 
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
+      const payload = {
+        name,
+        fullName: name,
+        "full name": name,
+        "Full Name": name,
+
+        phone,
+        phoneNumber: phone,
+        "phone number": phone,
+        "Phone Number": phone,
+
+        email,
+        emailAddress: email,
+        "email address": email,
+        "Email Address": email,
+
+        config,
+        configuration: config,
+        interestedConfig: config,
+        "interested config": config,
+        "Interested Config": config,
+        "interested configuration": config,
+        "Interested Configuration": config,
+
+        message,
+        project: "Altura",
+      };
+
+      const submissionPromise = fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
+        keepalive: true,
         headers: {
           "Content-Type": "text/plain;charset=utf-8",
         },
-        body: JSON.stringify({
-          name,
-          fullName: name,
-          "full name": name,
-          "Full Name": name,
-
-          phone,
-          phoneNumber: phone,
-          "phone number": phone,
-          "Phone Number": phone,
-
-          email,
-          emailAddress: email,
-          "email address": email,
-          "Email Address": email,
-
-          config,
-          configuration: config,
-          interestedConfig: config,
-          "interested config": config,
-          "Interested Config": config,
-          "interested configuration": config,
-          "Interested Configuration": config,
-
-          message,
-          project: "Altura",
-        }),
+        body: JSON.stringify(payload),
       });
+
+      // Google Apps Script can take 15-25s to finish its cold start.
+      // With keepalive: true, the browser network stack reliably sends the request in the background.
+      // Cap the user's UI wait to ~1 second for an instant, responsive experience.
+      await Promise.race([
+        submissionPromise,
+        new Promise((resolve) => setTimeout(resolve, 1000)),
+      ]);
 
       setSubmitted(true);
       setFormData(initialFormData);
