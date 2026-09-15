@@ -1,4 +1,4 @@
-import apartmentImg from "../images/apartment.png";
+import apartmentImg from "../images/apartment.webp";
 
 const FlatConfig = () => {
   const configs = [

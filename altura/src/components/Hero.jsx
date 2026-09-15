@@ -1,5 +1,5 @@
 import { QrCode } from "lucide-react";
-import heroBg from "../images/AlturaHomePage.png";
+import heroBg from "../images/AlturaHomePage.webp";
 
 const Hero = () => {
   return (

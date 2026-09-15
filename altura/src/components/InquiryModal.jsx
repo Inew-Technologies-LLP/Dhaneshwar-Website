@@ -1,25 +1,89 @@
 import { useState } from "react";
 import { X, Send } from "lucide-react";
 
+const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+
+const initialFormData = {
+  name: "",
+  phone: "",
+  email: "",
+  config: "2BHK",
+  message: "",
+};
+
 const InquiryModal = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    config: "2BHK",
-    message: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      onClose();
-    }, 2000);
+
+    const name = formData.name.trim();
+    const phone = formData.phone.trim();
+    const email = formData.email.trim();
+    const config = formData.config;
+    const message = formData.message.trim();
+
+    if (!name || !phone || !email) {
+      setErrorMessage("Please fill in all required fields.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify({
+          name,
+          fullName: name,
+          "full name": name,
+          "Full Name": name,
+
+          phone,
+          phoneNumber: phone,
+          "phone number": phone,
+          "Phone Number": phone,
+
+          email,
+          emailAddress: email,
+          "email address": email,
+          "Email Address": email,
+
+          config,
+          configuration: config,
+          interestedConfig: config,
+          "interested config": config,
+          "Interested Config": config,
+          "interested configuration": config,
+          "Interested Configuration": config,
+
+          message,
+          project: "Altura",
+        }),
+      });
+
+      setSubmitted(true);
+      setFormData(initialFormData);
+      setTimeout(() => {
+        setSubmitted(false);
+        onClose();
+      }, 2500);
+    } catch (error) {
+      console.error("Altura inquiry submission failed:", error);
+      setErrorMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -38,7 +102,7 @@ const InquiryModal = ({ isOpen, onClose }) => {
             <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
               ✓
             </div>
-            <h3 className="text-xl font-bold text-slate-800">Inquiry Received!</h3>
+            <h3 className="text-xl font-bold text-slate-800">Submitted Successfully!</h3>
             <p className="text-sm text-slate-600">
               Thank you for contacting Altura. Our sales team will get back to you shortly.
             </p>
@@ -116,11 +180,18 @@ const InquiryModal = ({ isOpen, onClose }) => {
 
               <button
                 type="submit"
-                className="w-full bg-[#1D65AD] hover:bg-[#154E88] text-white py-3 rounded-md font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-md"
+                disabled={isSubmitting}
+                className="w-full bg-[#1D65AD] hover:bg-[#154E88] text-white py-3 rounded-md font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-md disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Send size={16} />
-                Submit Inquiry
+                {isSubmitting ? "Submitting..." : "Submit Inquiry"}
               </button>
+
+              {errorMessage && (
+                <p className="text-xs text-red-600 text-center mt-2">
+                  {errorMessage}
+                </p>
+              )}
             </form>
           </>
         )}

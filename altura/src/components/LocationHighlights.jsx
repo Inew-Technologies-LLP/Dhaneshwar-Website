@@ -1,93 +1,88 @@
 import { useState } from "react";
 
 const LocationHighlights = () => {
-  const [activeTab, setActiveTab] = useState("Transport");
+  const [activeTab, setActiveTab] = useState("Connectivity");
 
   const categories = [
-    { id: "Transport", label: "Transport" },
+    { id: "Connectivity", label: "Connectivity" },
     { id: "Hospitals", label: "Hospitals" },
     { id: "Malls", label: "Malls" },
-    { id: "Multiplex", label: "Multiplex" },
-    { id: "Parks", label: "Parks" },
+    { id: "Employment Hub", label: "Employment Hub" },
+    { id: "Landmarks", label: "Landmarks" },
     { id: "Schools", label: "Schools" },
   ];
 
   const highlightsData = {
-    Transport: {
+    Connectivity: {
       left: [
-        { name: "ABC bus stand", distance: "1 km" },
-        { name: "Abc Metro Station", distance: "2 km" },
-        { name: "Abc Airport", distance: "2 km" },
+        { name: "Dehu Alandi Road", distance: "0.5-1 km" },
+        { name: "Pune Nashik Highway", distance: "2 -3 km" },
+        { name: "Spine Road", distance: "3-4 km" },
+        { name: "Moshi Chowk", distance: "3-4 km" },
       ],
       right: [
-        { name: "ABC bus stand", distance: "1 km" },
-        { name: "Abc Metro Station", distance: "2 km" },
-        { name: "Abc Airport", distance: "2 km" },
-      ]
+        { name: "Chinchwad Railway Station", distance: "12-14 km" },
+        { name: "Pune Mumbai Highway", distance: "10-12 km" },
+        { name: "Pune International Airport", distance: "14-16 km" },
+        { name: "Upcoming Bharatmata Moshi Metro Station", distance: "1 km" },
+      ],
     },
     Hospitals: {
       left: [
-        { name: "City Care Super-speciality", distance: "1.2 km" },
-        { name: "Lifeline Multispeciality Clinic", distance: "2.0 km" },
-        { name: "Apollo Medical Center", distance: "3.5 km" },
+        { name: "Shree Multispeciality / nearby Dudulgaon hospital", distance: "1 km" },
+        { name: "Sainath Hospital", distance: "3 km" },
+        { name: "Accord Hospitals", distance: "3-4 km" },
+        { name: "Moshi Hospital", distance: "3-4 km" },
       ],
-      right: [
-        { name: "City Care Super-speciality", distance: "1.2 km" },
-        { name: "Lifeline Multispeciality Clinic", distance: "2.0 km" },
-        { name: "Apollo Medical Center", distance: "3.5 km" },
-      ]
+      right: [],
     },
     Malls: {
       left: [
-        { name: "Phoenix Marketcity", distance: "2.5 km" },
-        { name: "Central Shopping Arcade", distance: "3.0 km" },
-        { name: "Nexus Westend Mall", distance: "4.2 km" },
+        { name: "Moshi Market Yard", distance: "4-5 km" },
+        { name: "D Mart, Moshi", distance: "5-6 km" },
+        { name: "Spine City Mall", distance: "6-7 km" },
+        { name: "Ankushrao Landge Natyagruha", distance: "5-6 km" },
       ],
-      right: [
-        { name: "Phoenix Marketcity", distance: "2.5 km" },
-        { name: "Central Shopping Arcade", distance: "3.0 km" },
-        { name: "Nexus Westend Mall", distance: "4.2 km" },
-      ]
+      right: [],
     },
-    Multiplex: {
+    "Employment Hub": {
       left: [
-        { name: "PVR Cinemas IMAX", distance: "1.8 km" },
-        { name: "Cinepolis VIP Multiplex", distance: "2.5 km" },
-        { name: "INOX Leisure Multiplex", distance: "3.2 km" },
+        { name: "Bhosari MIDC", distance: "6-8 km" },
+        { name: "Markal MIDC", distance: "8-10 km" },
+        { name: "Talawade IT Park", distance: "9-12 km" },
+        { name: "Chakan MIDC", distance: "10-12 km" },
       ],
       right: [
-        { name: "PVR Cinemas IMAX", distance: "1.8 km" },
-        { name: "Cinepolis VIP Multiplex", distance: "2.5 km" },
-        { name: "INOX Leisure Multiplex", distance: "3.2 km" },
-      ]
+        { name: "Hinjewadi IT Park", distance: "22-24 km" },
+        { name: "Kharadi / EON IT Park", distance: "20-24 km" },
+      ],
     },
-    Parks: {
+    Landmarks: {
       left: [
-        { name: "Central Botanical Park", distance: "0.8 km" },
-        { name: "Joggers Eco Park", distance: "1.4 km" },
-        { name: "Greenfield Children Park", distance: "2.1 km" },
+        { name: "Alandi", distance: "2-3 km" },
+        { name: "Gajanan Maharaj Mandir", distance: "1 km" },
+        { name: "Sai Baba Mandir", distance: "3-4 km" },
+        { name: "Sant Dnyaneshwar Maharaj Samadhi Mandir", distance: "3-4 km" },
       ],
-      right: [
-        { name: "Central Botanical Park", distance: "0.8 km" },
-        { name: "Joggers Eco Park", distance: "1.4 km" },
-        { name: "Greenfield Children Park", distance: "2.1 km" },
-      ]
+      right: [],
     },
     Schools: {
       left: [
-        { name: "St. Mary's High School", distance: "1.0 km" },
-        { name: "Vibgyor International School", distance: "2.2 km" },
-        { name: "Orchid Public School", distance: "3.1 km" },
+        { name: "MIT Alandi Campus", distance: "2.5-3 km" },
+        { name: "DnyanBhakti International School", distance: "2 km" },
+        { name: "Rajmata Jijau / RJSPM College", distance: "2 km" },
+        { name: "Sharadchandra Pawar College", distance: "1 km" },
       ],
       right: [
-        { name: "St. Mary's High School", distance: "1.0 km" },
-        { name: "Vibgyor International School", distance: "2.2 km" },
-        { name: "Orchid Public School", distance: "3.1 km" },
-      ]
+        { name: "City Pride School", distance: "4 km" },
+        { name: "Sri Sri Ravishankar Vidya Mandir", distance: "5-6 km" },
+        { name: "COEP Chikali Campus", distance: "8 km" },
+        { name: "SNBP Internation School and College, Chikali", distance: "4-5 km" },
+      ],
     },
   };
 
-  const currentData = highlightsData[activeTab] || highlightsData.Transport;
+  const currentData = highlightsData[activeTab] || highlightsData.Connectivity;
 
   return (
     <section className="py-16 bg-white">
@@ -109,10 +104,10 @@ const LocationHighlights = () => {
               <div key={cat.id} className="relative shrink-0 sm:shrink flex-1 h-[49px] flex items-center justify-center">
                 <button
                   onClick={() => setActiveTab(cat.id)}
-                  className={`w-full h-full px-3 sm:px-2 text-xs sm:text-sm font-medium transition-colors text-center flex items-center justify-center whitespace-nowrap ${
+                  className={`w-full h-full px-3 sm:px-2 text-xs sm:text-sm transition-colors text-center flex items-center justify-center whitespace-nowrap ${
                     activeTab === cat.id
-                      ? "bg-[#1D65AD] text-white"
-                      : "text-[#1D65AD] hover:bg-[#B7D8F7]"
+                      ? "bg-[#1D65AD] text-white font-normal"
+                      : "text-slate-700 font-light hover:bg-[#B7D8F7]"
                   }`}
                 >
                   {cat.label}
@@ -137,8 +132,8 @@ const LocationHighlights = () => {
                   key={index}
                   className="flex items-center justify-between"
                 >
-                  <span className="text-base font-medium text-slate-800">{item.name}</span>
-                  <span className="text-base font-normal text-slate-500">{item.distance}</span>
+                  <span className="text-sm sm:text-base font-light text-slate-600 tracking-wide">{item.name}</span>
+                  <span className="text-sm sm:text-base font-light text-slate-500 shrink-0 ml-4">{item.distance}</span>
                 </div>
               ))}
             </div>
@@ -153,8 +148,8 @@ const LocationHighlights = () => {
                   key={index}
                   className="flex items-center justify-between"
                 >
-                  <span className="text-base font-medium text-slate-800">{item.name}</span>
-                  <span className="text-base font-normal text-slate-500">{item.distance}</span>
+                  <span className="text-sm sm:text-base font-light text-slate-600 tracking-wide">{item.name}</span>
+                  <span className="text-sm sm:text-base font-light text-slate-500 shrink-0 ml-4">{item.distance}</span>
                 </div>
               ))}
             </div>

@@ -1,4 +1,4 @@
-import streetPhoto from "../images/streetPhoto.png";
+import streetPhoto from "../images/streetPhoto.webp";
 
 const FeatureBanner = () => {
   return (

@@ -1,9 +1,17 @@
 import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Use Vite's import.meta.glob to automatically import all images from the gallary folder
-const imageModules = import.meta.glob('../images/gallary/*.{png,jpg,jpeg}', { eager: true, import: 'default' });
+// Use Vite's import.meta.glob to automatically import all images from the webp gallary folder
+const imageModules = import.meta.glob('../images/webp gallary/*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' });
 const customPositions = {
+  "01_Altura1.webp": "center 30%",
+  "02_Altura.webp": "center 30%",
+  "03_Altura.webp": "center 70%",
+  "04_Altura.webp": "center 90%",
+  "05_Altura.webp": "center 90%",
+  "07_Altura.webp": "center 70%",
+  "13_Altura.webp": "center 90%",
+  "15_Altura.webp": "center 90%",
   "01_Altura1.png": "center 30%",
   "02_Altura.png": "center 30%",
   "03_Altura.png": "center 70%",
