@@ -22,7 +22,7 @@ const Navbar = ({ onOpenInquiry }) => {
       <div className="max-w-[1440px] mx-auto px-2.5 sm:px-6 lg:px-10 h-16 sm:h-24 flex items-center justify-between">
         {/* Brand Logo with Wave Curve */}
         <a href="#home" className="flex items-center shrink-0">
-          <AlturaLogo />
+          <AlturaLogo className="w-[125px] sm:w-[180px] md:w-[232px] h-auto" />
         </a>
 
         {/* Desktop Navigation & CTA Button (Right Aligned) */}

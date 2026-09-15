@@ -1,13 +1,13 @@
 import alturaLogo from "../images/altura_logo.webp";
 
-const AlturaLogo = ({ className = "", style = {} }) => {
+const AlturaLogo = ({ className = "w-[130px] sm:w-[180px] md:w-[232px] h-auto", style = {} }) => {
   return (
     <img
       src={alturaLogo}
       alt="Altura Logo"
       width={232}
       height={41}
-      className={`w-[232px] h-[41px] max-w-full object-contain ${className}`}
+      className={`max-w-full object-contain ${className}`}
       style={style}
     />
   );
