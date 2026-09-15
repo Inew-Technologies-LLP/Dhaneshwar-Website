@@ -25,14 +25,20 @@ export const submitLead = async (lead) => {
           date: new Date().toISOString(),
      };
 
-     await fetch(GOOGLE_SCRIPT_URL, {
+     const submissionPromise = fetch(GOOGLE_SCRIPT_URL, {
           method: "POST",
           mode: "no-cors",
+          keepalive: true,
           headers: {
                "Content-Type": "text/plain;charset=utf-8",
           },
           body: JSON.stringify(payload),
      });
+
+     await Promise.race([
+          submissionPromise,
+          new Promise((resolve) => setTimeout(resolve, 1000)),
+     ]);
 
      return { success: true };
 };
