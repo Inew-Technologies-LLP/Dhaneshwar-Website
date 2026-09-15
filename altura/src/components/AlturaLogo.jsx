@@ -1,4 +1,4 @@
-import alturaLogo from "../images/altura_logo.png";
+import alturaLogo from "../images/altura_logo.webp";
 
 const AlturaLogo = ({ className = "", style = {} }) => {
   return (
