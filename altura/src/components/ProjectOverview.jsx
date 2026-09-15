@@ -45,30 +45,30 @@ const ProjectOverview = () => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscin
         </p>
 
-        {/* 4 Column Features Grid with Vertical Dividers */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-y-8 md:gap-y-0 relative py-4">
+        {/* 2 Column (Phone) / 4 Column (Desktop) Features Grid with Vertical Dividers */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-8 md:gap-y-0 relative py-4">
           {features.map((item, idx) => (
             <div
               key={item.id}
-              className="relative flex flex-col justify-between px-4 sm:px-6 lg:px-8 group"
+              className="relative flex flex-col justify-between px-2 sm:px-4 lg:px-8 group"
             >
               <div>
                 {/* Icon Container */}
-                <div className="h-20 sm:h-24 flex items-end mb-5">
+                <div className="h-16 sm:h-20 md:h-24 flex items-end mb-3 sm:mb-5">
                   <img
                     src={item.icon}
                     alt={item.title}
-                    className={`max-h-16 sm:max-h-20 max-w-full object-contain [filter:brightness(0)_saturate(100%)] transition-transform duration-300 group-hover:scale-105 ${item.scale || ""}`}
+                    className={`max-h-12 sm:max-h-16 md:max-h-20 max-w-full object-contain [filter:brightness(0)_saturate(100%)] transition-transform duration-300 group-hover:scale-105 ${item.scale || ""}`}
                     loading="lazy"
                   />
                 </div>
 
                 {/* Title & Caption */}
                 <div>
-                  <h3 className="text-sm sm:text-base font-medium text-slate-900 mb-1">
+                  <h3 className="text-xs sm:text-sm md:text-base font-medium text-slate-900 mb-1 leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm font-light text-slate-500">
+                  <p className="text-[11px] sm:text-xs md:text-sm font-light text-slate-500 leading-normal">
                     {item.caption}
                   </p>
                 </div>

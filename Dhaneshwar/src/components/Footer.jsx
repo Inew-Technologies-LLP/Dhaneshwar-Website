@@ -117,11 +117,11 @@ const Footer = () => {
 
                 {/* Bottom Row */}
 
-                <div className="mt-10 flex flex-col items-start gap-6 sm:mt-16 sm:flex-row sm:items-end sm:justify-between border-t border-white/10 pt-8">
+                <div className="mt-10 flex flex-col items-center gap-6 sm:mt-16 sm:flex-row sm:items-end sm:justify-between border-t border-white/10 pt-8">
 
                     {/* Social Icons */}
 
-                    <div className="flex gap-3 sm:gap-4">
+                    <div className="flex gap-3 sm:gap-4 justify-center">
 
                         {[FaFacebookF, FaXTwitter, FaInstagram].map((Icon, index) => (
 
@@ -139,7 +139,7 @@ const Footer = () => {
 
                     {/* Logo */}
 
-                    <div>
+                    <div className="flex justify-center">
 
                         <img
                             src={logo}
