@@ -1,4 +1,5 @@
 import photo5 from "../images/photo5.png";
+import design from "../images/design.png";
 
 const stats = [
      {
@@ -18,7 +19,7 @@ const stats = [
           value: "100%",
           label: "Commitment to Quality",
      },
-];
+ ];
 
 const Stats = () => {
      return (
@@ -37,6 +38,14 @@ const Stats = () => {
                     {/* Mobile readability contrast overlays */}
                     <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-transparent to-black/85 md:hidden" />
 
+                    {/* Decorative Pattern Overlay */}
+                    <img
+                         src={design}
+                         alt=""
+                         aria-hidden="true"
+                         className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
+                    />
+
                     {/* Top Content */}
 
                     <div className="absolute left-0 top-0 w-full p-5 sm:p-10 lg:p-14">
@@ -44,15 +53,16 @@ const Stats = () => {
                          <div className="max-w-[520px]">
 
                               <h2 className="text-xl sm:text-3xl lg:text-[48px] font-medium leading-snug lg:leading-[56px] text-[#192B3C]">
-                                   Designed with Purpose.
-                                   Built with Trust.
+                                   <span className="block whitespace-nowrap">
+                                        Designed with Purpose.
+                                   </span>
+                                   <span className="block whitespace-nowrap">
+                                        Built with Trust.
+                                   </span>
                               </h2>
 
                               <p className="mt-2 sm:mt-4 lg:mt-6 text-xs sm:text-sm lg:text-[17px] leading-relaxed lg:leading-[32px] text-[#192B3C] font-normal">
-                                   From exceptional locations to uncompromising quality,
-                                   every Dhaneshwar Realty development is crafted to
-                                   elevate everyday living. We believe a home should
-                                   offer comfort, confidence, and enduring value.
+                                   We believe good development begins with understanding how people live. From thoughtful layouts and natural light to meaningful amenities and enduring materials, every decision is made with purpose—to create places that make everyday life better.
                               </p>
 
                          </div>

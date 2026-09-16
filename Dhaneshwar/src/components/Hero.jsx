@@ -1,4 +1,5 @@
 import photo1 from "../images/photo1.png";
+import design from "../images/design.png";
 
 const Hero = () => {
      return (
@@ -27,6 +28,14 @@ const Hero = () => {
                     {/* Contrast Gradient Overlay for Readability */}
 
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/15" />
+
+                    {/* Decorative Pattern Overlay */}
+                    <img
+                         src={design}
+                         alt=""
+                         aria-hidden="true"
+                         className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
+                    />
 
                     {/* Content */}
 
@@ -59,7 +68,7 @@ const Hero = () => {
                                         lg:leading-[60px]
                                    "
                               >
-                                   Crafting Landmarks for Modern Living
+                                   Spaces designed for better living.                              
                               </h1>
 
                               <p
@@ -75,11 +84,7 @@ const Hero = () => {
                                         lg:leading-[30px]
                                    "
                               >
-                                   Discover thoughtfully designed residential
-                                   spaces where contemporary architecture,
-                                   premium amenities, and exceptional
-                                   craftsmanship come together to create homes
-                                   that inspire every day.
+                                   We create thoughtfully planned environments where architecture, functionality, nature and craftsmanship come together to elevate everyday life
                               </p>
                          </div>
                     </div>
