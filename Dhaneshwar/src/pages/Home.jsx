@@ -10,7 +10,7 @@ const Home = () => {
           <Layout>
                <Hero />
                <ProjectSection
-                    projectsData={projects.slice(0, 3)}
+                    projectsData={projects.slice(0, 2)}
                />
                <Stats />
                <Promise />

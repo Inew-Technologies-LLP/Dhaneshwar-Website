@@ -5,12 +5,21 @@ import {
 } from "react-icons/fa6";
 
 import logo from "../images/footerlogo.png";
+import design from "../images/design.png";
 
 const Footer = () => {
     return (
-        <footer className="mt-12 sm:mt-16 lg:mt-20 bg-[#192B3C] text-white">
+        <footer className="relative mt-12 sm:mt-16 lg:mt-20 bg-[#192B3C] text-white overflow-hidden">
 
-            <div className="mx-auto max-w-[1440px] px-4 py-10 sm:px-9 sm:py-16">
+            {/* Decorative Pattern Overlay */}
+            <img
+                src={design}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
+            />
+
+            <div className="relative z-10 mx-auto max-w-[1440px] px-4 py-10 sm:px-9 sm:py-16">
 
                 {/* Heading */}
 
@@ -57,9 +66,18 @@ const Footer = () => {
 
                         <div className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white/70">
 
-                            <p className="transition hover:text-white cursor-pointer">Altura</p>
+                            <a
+                                href="https://altura.dhaneshwarrealty.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block transition hover:text-white"
+                            >
+                                Altura
+                            </a>
 
-                            <p className="transition hover:text-white cursor-pointer">Skyline Residency</p>
+                            <p className="pt-6 text-base font-medium text-white sm:text-lg">
+                                Subscribe for news updates
+                            </p>
 
                         </div>
 
@@ -105,9 +123,9 @@ const Footer = () => {
 
                         <div className="space-y-2 sm:space-y-3 text-sm sm:text-base text-white/70">
 
-                            <p className="transition hover:text-white cursor-pointer">Privacy Policy</p>
+                            <p className="transition hover:text-white cursor-pointer">Privacy &amp; Policy</p>
 
-                            <p className="transition hover:text-white cursor-pointer">Terms & Conditions</p>
+                            <p className="transition hover:text-white cursor-pointer">Terms &amp; Condition</p>
 
                         </div>
 
@@ -117,7 +135,7 @@ const Footer = () => {
 
                 {/* Bottom Row */}
 
-                <div className="mt-10 flex flex-col items-center gap-6 sm:mt-16 sm:flex-row sm:items-end sm:justify-between border-t border-white/10 pt-8">
+                <div className="mt-10 flex flex-col items-center gap-6 sm:mt-16 sm:flex-row sm:items-end sm:justify-between pt-8">
 
                     {/* Social Icons */}
 

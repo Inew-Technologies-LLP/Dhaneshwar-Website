@@ -71,14 +71,15 @@ const Gallery = () => {
         </h2>
 
         <div className="max-w-[1274px] mx-auto space-y-4">
-          {/* Main Large Image Container (1274 x 522) */}
-          <div className="relative w-full h-[340px] sm:h-[450px] lg:h-[522px] rounded-none overflow-hidden border border-slate-200 shadow-lg bg-slate-900 group">
-            {/* Background Image */}
-            <div
-              className="absolute inset-0 bg-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          {/* Main Large Image Container */}
+          <div className="relative w-full h-[380px] sm:h-[550px] lg:h-[680px] rounded-none overflow-hidden border border-slate-200 shadow-lg bg-slate-100 group">
+            {/* Main Image */}
+            <img
+              src={items[activeIndex].url}
+              alt={`Gallery Image ${activeIndex + 1}`}
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               style={{
-                backgroundImage: `url('${items[activeIndex].url}')`,
-                backgroundPosition: customPositions[items[activeIndex].filename] || "center"
+                objectPosition: customPositions[items[activeIndex].filename] || "center"
               }}
             />
 

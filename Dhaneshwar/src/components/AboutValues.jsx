@@ -1,4 +1,5 @@
 import photo9 from "../images/photo9.png";
+import design from "../images/design.png";
 
 const stats = [
     "50+",
@@ -23,17 +24,22 @@ const AboutValues = () => {
                 {/* Gradient overlays for dual contrast: top light and bottom dark */}
                 <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-[#192B3C] via-[#192B3C]/30" />
 
+                <img
+                    src={design}
+                    alt=""
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
+                />
+
                 {/* Top Left */}
 
-                <div className="absolute left-4 top-6 max-w-[calc(100%-2rem)] sm:left-10 sm:top-10 lg:left-12 sm:max-w-xl">
+                <div className="absolute left-6 top-6 max-w-[calc(100%-2rem)] sm:left-10 sm:top-10 lg:left-12 sm:max-w-xl">
 
-                    <h2 className="text-xl sm:text-3xl lg:text-[48px] font-medium leading-snug text-[#192B3C]">
-                        Values vision and mission of the company
-                    </h2>
-
-                    <p className="mt-2 text-sm sm:text-lg lg:text-[22px] font-medium text-[#192B3C]/80">
-                        Brand pillars
-                    </p>
+                    <div className="text-lg sm:text-2xl lg:text-[32px] font-normal leading-tight text-[#192B3C]">
+                        <p>Values vision and mission</p>
+                        <p>of the company</p>
+                        <p>Brand pillars</p>
+                    </div>
 
                 </div>
 

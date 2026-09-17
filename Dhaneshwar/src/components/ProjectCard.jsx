@@ -1,16 +1,26 @@
 import { Link, useNavigate } from "react-router-dom";
+import design from "../images/design.png";
 
 const ProjectCard = ({ project }) => {
      const navigate = useNavigate();
 
+     const handleNavigation = (event) => {
+          if (project.externalLink) {
+               event?.stopPropagation();
+               window.open(project.externalLink, "_blank", "noopener,noreferrer");
+          } else {
+               navigate(`/projects?project=${project.id}`);
+          }
+     };
+
      return (
           <div
                id={`project-${project.id}`}
-               onClick={() => navigate(`/projects?project=${project.id}`)}
+               onClick={handleNavigation}
                onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                          event.preventDefault();
-                         navigate(`/projects?project=${project.id}`);
+                         handleNavigation(event);
                     }
                }}
                role="link"
@@ -28,7 +38,7 @@ const ProjectCard = ({ project }) => {
                "
           >
 
-               <div className="overflow-hidden">
+               <div className="relative overflow-hidden">
 
                     <img
                          src={project.image}
@@ -46,6 +56,13 @@ const ProjectCard = ({ project }) => {
                          "
                     />
 
+                    <img
+                         src={design}
+                         alt=""
+                         aria-hidden="true"
+                         className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
+                    />
+
                </div>
 
                <div className="bg-[#192B3C] px-4 py-5 text-white sm:px-8 sm:py-6">
@@ -56,27 +73,53 @@ const ProjectCard = ({ project }) => {
                               {project.city}
                          </p>
 
-                         <Link
-                              to={`/projects?project=${project.id}`}
-                              onClick={(event) => event.stopPropagation()}
-                              className="
-                                   bg-[#B38B17]
-                                   px-3
-                                   py-1
-                                   text-xs
-                                   font-medium
-                                   transition-all
-                                   duration-300
-                                   hover:bg-[#c89a19]
-                                   hover:brightness-110
-                                   hover:shadow-md
-                                   hover:translate-x-0.5
-                                   sm:px-4
-                                   sm:py-1.5
-                              "
-                         >
-                              Learn More
-                         </Link>
+                         {project.externalLink ? (
+                              <a
+                                   href={project.externalLink}
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   onClick={(event) => event.stopPropagation()}
+                                   className="
+                                        bg-[#B38B17]
+                                        px-3
+                                        py-1
+                                        text-xs
+                                        font-medium
+                                        transition-all
+                                        duration-300
+                                        hover:bg-[#c89a19]
+                                        hover:brightness-110
+                                        hover:shadow-md
+                                        hover:translate-x-0.5
+                                        sm:px-4
+                                        sm:py-1.5
+                                   "
+                              >
+                                   Learn More
+                              </a>
+                         ) : (
+                              <Link
+                                   to={`/projects?project=${project.id}`}
+                                   onClick={(event) => event.stopPropagation()}
+                                   className="
+                                        bg-[#B38B17]
+                                        px-3
+                                        py-1
+                                        text-xs
+                                        font-medium
+                                        transition-all
+                                        duration-300
+                                        hover:bg-[#c89a19]
+                                        hover:brightness-110
+                                        hover:shadow-md
+                                        hover:translate-x-0.5
+                                        sm:px-4
+                                        sm:py-1.5
+                                   "
+                              >
+                                   Learn More
+                              </Link>
+                         )}
 
                     </div>
 
@@ -90,35 +133,23 @@ const ProjectCard = ({ project }) => {
 
                     <div className="mt-4 flex justify-between gap-4 sm:mt-6">
 
-                         <div>
+                         <div className="flex items-center gap-6">
 
-                              <p className="text-xs text-white/60 sm:text-sm">
-                                   INR
+                              <p className="text-xs font-medium text-white sm:text-sm">
+                                   {project.dateLabel}
                               </p>
 
-                              <p className="text-sm font-medium sm:text-base">
-                                   {project.price}
-                              </p>
-
-                              <p className="mt-1 text-xs text-white/60 sm:mt-2 sm:text-sm">
-                                   {project.configuration}
-                              </p>
-
-                         </div>
-
-                         <div className="text-right">
-
-                              <p className="text-xs text-white/60 sm:text-sm">
-                                   Possession Date
-                              </p>
-
-                              <p className="text-sm font-medium sm:text-base">
+                              <p className="text-xs text-white sm:text-sm">
                                    {project.possession}
                               </p>
 
                          </div>
 
                     </div>
+
+                    <p className="mt-3 text-xs text-white/60 sm:text-sm">
+                         {project.configuration}
+                    </p>
 
                </div>
 
