@@ -1,4 +1,7 @@
-import photo10 from "../images/photo10.png";
+import backedby1_img from "../images/backedby_1.png";
+import backedby2_img from "../images/backedby_2.png";
+import backedby3_img from "../images/backedby_3.png";
+import dhaneshwarconstruction from "../images/dhaneshwarconstruction.png";
 
 const BackedBy = () => {
     return (
@@ -12,26 +15,49 @@ const BackedBy = () => {
 
                 <div className="relative overflow-hidden">
 
-                    <img
-                        src={photo10}
-                        alt="Dhaneshwar Construction"
-                        className="h-[240px] w-full object-cover sm:h-[450px] lg:h-[630px]"
-                    />
+                    <div className="relative z-20 space-y-2 sm:space-y-3">
 
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-transparent" />
+                        {/* Top Row: 2 Images */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
 
-                    <div className="absolute left-4 top-4 sm:left-10 sm:top-10">
+                            {/* Image 1 with Dhaneshwar Construction Logo */}
+                            <div className="relative overflow-hidden group">
+                                <img
+                                    src={backedby1_img}
+                                    alt="Shivaji Maharaj Monument"
+                                    className="w-full h-auto block object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                />
 
-                        <div className="rounded bg-white/85 px-4 py-3 backdrop-blur shadow-sm sm:px-6 sm:py-5">
+                                {/* Dhaneshwar Construction Logo */}
+                                <div className="absolute left-4 top-4 z-30 sm:left-8 sm:top-8">
+                                    <img
+                                        src={dhaneshwarconstruction}
+                                        alt="Dhaneshwar Construction Pvt Ltd"
+                                        className="h-10 sm:h-16 lg:h-20 w-auto object-contain drop-shadow-lg"
+                                    />
+                                </div>
+                            </div>
 
-                            <h3 className="text-base font-semibold text-[#192B3C] sm:text-2xl lg:text-[28px] leading-tight">
-                                DHANESHWAR
-                            </h3>
+                            {/* Image 2 */}
+                            <div className="overflow-hidden group">
+                                <img
+                                    src={backedby2_img}
+                                    alt="Bridge Project"
+                                    className="w-full h-auto block object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                />
+                            </div>
 
-                            <p className="mt-0.5 text-xs text-[#192B3C]/80 sm:mt-1 sm:text-sm lg:text-[15px] tracking-wider">
-                                CONSTRUCTION PVT LTD
-                            </p>
+                        </div>
 
+                        {/* Bottom Row: Image 3 kept unstretched at original aspect ratio */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
+                            <div className="overflow-hidden group">
+                                <img
+                                    src={backedby3_img}
+                                    alt="Flyover and Railway Infrastructure"
+                                    className="w-full h-auto block object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                />
+                            </div>
                         </div>
 
                     </div>
