@@ -18,6 +18,8 @@ export const submitLead = async (lead) => {
           "Project": lead.project,
           city: lead.city,
           "City": lead.city,
+          message: lead.message || "",
+          "Message": lead.message || "",
           country: lead.country || "India",
           "Country": lead.country || "India",
           type: lead.type || "inquiry",

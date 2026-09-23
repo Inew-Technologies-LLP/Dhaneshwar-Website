@@ -7,7 +7,7 @@ import ProjectFilters from "../components/ProjectFilters";
 import ProjectSection from "../components/ProjectSection";
 
 import projects from "../data/projects";
-import photo14 from "../images/photo14.png";
+import photo3 from "../images/photo3.png";
 
 const Projects = () => {
 
@@ -75,8 +75,10 @@ const Projects = () => {
 
             <PageHero
                 title="Our Projects"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
-                image={photo14}
+                description="A portfolio of our completed and ongoing developments."
+                image={photo3}
+                objectFit="object-fill"
+                height="h-[500px] sm:h-[680px] lg:h-[800px]"
             />
 
             <ProjectFilters

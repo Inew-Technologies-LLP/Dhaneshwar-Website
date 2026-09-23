@@ -3,7 +3,7 @@ import design from "../images/design.png";
 
 const Promise = () => {
     return (
-        <section className="px-3 py-10 sm:px-6 sm:py-16 lg:px-9 lg:py-20">
+        <section className="px-3 pt-2 pb-6 sm:px-6 sm:pt-4 sm:pb-8 lg:px-9 lg:pt-6 lg:pb-10">
 
             <div className="mx-auto grid max-w-[1440px] items-center gap-6 sm:gap-10 lg:gap-12 lg:grid-cols-[1.15fr_1fr]">
 

@@ -3,7 +3,7 @@ import design from "../images/design.png";
 
 const AboutStory = () => {
     return (
-        <section className="px-3 py-10 sm:px-6 sm:py-16 lg:py-24 lg:px-9">
+        <section className="px-3 pt-6 pb-6 sm:px-6 sm:pt-10 sm:pb-8 lg:pt-14 lg:pb-10 lg:px-9">
 
             <div className="mx-auto max-w-[1440px]">
 
@@ -23,7 +23,7 @@ const AboutStory = () => {
 
                 </div>
 
-                <div className="group relative overflow-hidden mt-6 sm:mt-12 lg:mt-16">
+                <div className="group relative overflow-hidden mt-4 sm:mt-8 lg:mt-10">
                     <img
                         src={photo8}
                         alt="Our Story"

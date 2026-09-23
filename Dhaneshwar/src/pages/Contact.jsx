@@ -9,10 +9,10 @@ const Contact = () => {
         <Layout>
 
             <PageHero
-                title="Start the Conversation"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et."
+                title="Start a Conversation"
+                description="Connect with our experts to turn your real estate aspirations into reality"
                 image={photo15}
-                height="h-[720px]"
+                height="h-[460px] sm:h-[560px] lg:h-[640px]"
             />
 
             <ContactForm />

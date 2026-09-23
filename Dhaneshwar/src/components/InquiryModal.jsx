@@ -11,6 +11,7 @@ const initialFormData = {
     city: "",
     phone: "",
     project: "",
+    message: "",
     consent: false,
 };
 
@@ -45,6 +46,7 @@ const InquiryModal = ({ open, onClose }) => {
                 city: formData.city,
                 phone: formData.phone,
                 project: formData.project,
+                message: formData.message,
             });
 
             setStatus("success");
@@ -250,6 +252,28 @@ const InquiryModal = ({ open, onClose }) => {
                             outline-none
                             transition
                             focus:border-[#192B3C]
+                        "
+                    />
+
+                    {/* Message (Optional) */}
+
+                    <textarea
+                        name="message"
+                        rows={2}
+                        value={formData.message}
+                        onChange={handleChange}
+                        placeholder="Message (Optional)"
+                        className="
+                            w-full
+                            border-b
+                            border-gray-400
+                            pb-2
+                            text-[15px]
+                            text-[#192B3C]
+                            outline-none
+                            transition
+                            focus:border-[#192B3C]
+                            resize-none
                         "
                     />
 
