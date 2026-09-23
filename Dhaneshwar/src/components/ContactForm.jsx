@@ -9,6 +9,7 @@ const initialFormData = {
      phone: "",
      project: "",
      city: "",
+     message: "",
 };
 
 const ContactForm = () => {
@@ -37,6 +38,7 @@ const ContactForm = () => {
           const phone = formData.phone.trim();
           const project = formData.project.trim();
           const city = formData.city.trim();
+          const message = formData.message.trim();
 
           if (!name || !email || !phone || !project || !city) {
                setStatus("error");
@@ -61,6 +63,7 @@ const ContactForm = () => {
                          phone,
                          project,
                          city,
+                         message,
                     }),
                });
 
@@ -79,7 +82,7 @@ const ContactForm = () => {
      };
 
      return (
-          <section className="px-3 py-8 sm:px-6 sm:py-14 lg:px-9">
+          <section className="px-3 py-4 sm:px-6 sm:py-8 lg:px-9 lg:py-10">
                <div className="mx-auto max-w-[1440px]">
 
                     <form
@@ -236,6 +239,34 @@ const ContactForm = () => {
                                 border
                                 border-[#192B3C]
                                 px-3.5
+                                text-sm
+                                sm:text-[15px]
+                                outline-none
+                                transition
+                                focus:border-[#B38B17]
+                            "
+                              />
+                         </div>
+
+                         {/* Message (Optional) */}
+
+                         <div className="col-span-full">
+                              <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
+                                   Message <span className="text-gray-400 font-normal">(Optional)</span>
+                              </label>
+
+                              <textarea
+                                   id="contact-message"
+                                   name="message"
+                                   rows={3}
+                                   value={formData.message}
+                                   onChange={handleChange}
+                                   placeholder="Any specific query or preferred time for call..."
+                                   className="
+                                w-full
+                                border
+                                border-[#192B3C]
+                                p-3.5
                                 text-sm
                                 sm:text-[15px]
                                 outline-none

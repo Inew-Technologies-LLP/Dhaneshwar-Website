@@ -43,6 +43,11 @@ const Hero = () => {
                          <div
                               className="
                                    max-w-[640px]
+                                   w-full
+                                   mx-auto
+                                   sm:mx-0
+                                   text-center
+                                   sm:text-left
                                    px-4
                                    pb-6
                                    sm:px-10
@@ -74,6 +79,8 @@ const Hero = () => {
                               <p
                                    className="
                                         max-w-[580px]
+                                        mx-auto
+                                        sm:mx-0
                                         text-xs
                                         leading-relaxed
                                         text-white/90
