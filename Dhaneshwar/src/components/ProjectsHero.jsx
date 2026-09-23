@@ -21,7 +21,7 @@ const ProjectsHero = () => {
                     className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
                 />
 
-                <div className="absolute bottom-6 left-4 right-4 max-w-md sm:bottom-10 sm:left-10 sm:right-auto lg:bottom-12 lg:left-12">
+                <div className="absolute bottom-6 left-4 right-4 max-w-md mx-auto sm:mx-0 sm:bottom-10 sm:left-10 sm:right-auto lg:bottom-12 lg:left-12 text-center sm:text-left">
 
                     <h1 className="text-2xl font-medium leading-tight text-white sm:text-4xl lg:text-[52px]">
                         Our Projects

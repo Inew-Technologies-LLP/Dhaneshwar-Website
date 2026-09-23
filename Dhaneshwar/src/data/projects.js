@@ -28,7 +28,7 @@ const projects = [
         description:
             "Altura combines timeless architecture with carefully crafted living spaces that elevate everyday life.",
         status: "Ongoing",
-        type: "Commercial",
+        type: "Residential",
         externalLink: "https://altura.dhaneshwarrealty.com/"
     }
 ];

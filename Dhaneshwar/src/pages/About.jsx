@@ -14,6 +14,7 @@ const About = () => {
                 title="About Us"
                 image={photo7}
                 maxWidth="max-w-[1440px]"
+                height="h-[460px] sm:h-[560px] lg:h-[660px]"
             />
 
             <AboutStory />

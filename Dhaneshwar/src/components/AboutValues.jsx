@@ -1,74 +1,54 @@
 import photo9 from "../images/photo9.png";
-import design from "../images/design.png";
-
-const stats = [
-    "50+",
-    "50+",
-    "50+",
-    "50+",
-];
 
 const AboutValues = () => {
     return (
+        <section className="px-3 pb-0 sm:px-6 sm:pb-0 lg:px-9 lg:pb-0">
+            <div className="mx-auto max-w-[1440px]">
+                <div className="group relative overflow-hidden">
+                    {/* Full Background Image */}
+                    <img
+                        src={photo9}
+                        alt="Values and Vision"
+                        className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
 
-        <section className="px-3 pb-12 sm:px-6 sm:pb-20 lg:px-9 lg:pb-24">
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 flex flex-col justify-center items-center px-4 text-center sm:px-8 lg:px-12 -translate-y-4 sm:-translate-y-6 lg:-translate-y-10">
+                        <div className="max-w-3xl space-y-4 sm:space-y-6 lg:space-y-8">
+                            {/* Vision */}
+                            <div>
+                                <h3 className="text-xl sm:text-2xl lg:text-[30px] font-semibold text-black mb-1 sm:mb-2">
+                                    Vision
+                                </h3>
+                                <p className="text-base sm:text-xl lg:text-[24px] font-normal leading-relaxed text-black max-w-2xl mx-auto">
+                                    Creating environments that help people live better, grow further and contribute positively to their communities.
+                                </p>
+                            </div>
 
-            <div className="group relative mx-auto h-[520px] sm:h-[660px] lg:h-[828px] max-w-[1440px] overflow-hidden">
+                            {/* Mission */}
+                            <div>
+                                <h3 className="text-xl sm:text-2xl lg:text-[30px] font-semibold text-black mb-1 sm:mb-2">
+                                    Mission
+                                </h3>
+                                <p className="text-base sm:text-xl lg:text-[24px] font-normal leading-relaxed text-black max-w-2xl mx-auto">
+                                    Creating purposeful places where architecture, functionality, nature and craftsmanship come together to elevate everyday life.
+                                </p>
+                            </div>
 
-                <img
-                    src={photo9}
-                    alt="Values and Vision"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-
-                {/* Gradient overlays for dual contrast: top light and bottom dark */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-[#192B3C] via-[#192B3C]/30" />
-
-                <img
-                    src={design}
-                    alt=""
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
-                />
-
-                {/* Top Left */}
-
-                <div className="absolute left-6 top-6 max-w-[calc(100%-2rem)] sm:left-10 sm:top-10 lg:left-12 sm:max-w-xl">
-
-                    <div className="text-lg sm:text-2xl lg:text-[32px] font-normal leading-tight text-[#192B3C]">
-                        <p>Values vision and mission</p>
-                        <p>of the company</p>
-                        <p>Brand pillars</p>
-                    </div>
-
-                </div>
-
-                {/* Bottom Stats */}
-
-                <div className="absolute bottom-6 left-0 right-0 grid grid-cols-2 gap-y-4 px-5 sm:bottom-12 sm:grid-cols-4 sm:gap-y-0 sm:px-10 lg:px-16">
-
-                    {stats.map((item, index) => (
-
-                        <div key={index}>
-
-                            <h3 className="text-3xl font-light text-white sm:text-5xl lg:text-[60px] leading-none">
-                                {item}
-                            </h3>
-
-                            <p className="mt-1 text-xs text-white/90 sm:mt-2 sm:text-base lg:text-[22px]">
-                                trusted brands
-                            </p>
-
+                            {/* Values */}
+                            <div>
+                                <h3 className="text-xl sm:text-2xl lg:text-[30px] font-semibold text-white mb-1 sm:mb-2">
+                                    Values
+                                </h3>
+                                <p className="text-xs sm:text-lg lg:text-[24px] font-normal text-white whitespace-nowrap">
+                                    Thoughtfulness • Purpose • Responsibility • Craftsmanship
+                                </p>
+                            </div>
                         </div>
-
-                    ))}
-
+                    </div>
                 </div>
-
             </div>
-
         </section>
-
     );
 };
 
