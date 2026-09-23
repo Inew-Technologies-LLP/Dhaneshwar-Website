@@ -1,20 +1,7 @@
-import { useState } from "react";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import AlturaLogo from "./AlturaLogo";
 
 const Footer = () => {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubscribed(true);
-      setEmail("");
-      setTimeout(() => setSubscribed(false), 4000);
-    }
-  };
-
   return (
     <footer
       id="contact-us"
@@ -31,8 +18,8 @@ const Footer = () => {
 
         {/* Columns Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 pb-12 items-start">
-          {/* Column 1: Pune & Contact Info (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
+          {/* Column 1: Pune & Contact Info (6 cols) */}
+          <div className="lg:col-span-6 space-y-4">
             <h3 className="font-bold text-base text-[#000000]">Pune</h3>
             <p className="text-xs font-semibold text-[#000000]/90">Address</p>
             <div className="text-xs text-[#000000]/80 space-y-2.5 leading-relaxed max-w-sm">
@@ -76,14 +63,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Column 2: Projects (2 cols - text removed per request) */}
-          <div className="lg:col-span-2 space-y-2">
-            <h3 className="font-bold text-sm text-[#000000]">Projects</h3>
-            <ul className="space-y-1.5 text-xs text-[#000000]/80">
-            </ul>
-          </div>
-
-          {/* Column 3: Our Company (2 cols) */}
+          {/* Column 2: Our Company (2 cols) */}
           <div className="lg:col-span-2 space-y-2">
             <h3 className="font-bold text-sm text-[#000000]">Our Company</h3>
             <ul className="space-y-1.5 text-xs text-[#000000]/80">
@@ -92,7 +72,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 4: Media (2 cols) */}
+          {/* Column 3: Media (2 cols) */}
           <div className="lg:col-span-2 space-y-2">
             <h3 className="font-bold text-sm text-[#000000]">Media</h3>
             <ul className="space-y-1.5 text-xs text-[#000000]/80">
@@ -101,7 +81,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 5: Legal (2 cols) */}
+          {/* Column 4: Legal (2 cols) */}
           <div className="lg:col-span-2 space-y-2">
             <h3 className="font-bold text-sm text-[#000000]">Legal</h3>
             <ul className="space-y-1.5 text-xs text-[#000000]/80 font-medium">
@@ -111,43 +91,9 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Middle / Bottom Row: Subscribe Form & ALTURA Wave Logo */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pb-12">
-          {/* Subscribe Block (Left / Center) */}
-          <div className="md:col-span-7 space-y-3">
-            <h3 className="font-bold text-base text-[#000000]">
-              Subscribe for news updates
-            </h3>
-            {subscribed ? (
-              <div className="text-xs bg-white text-emerald-700 p-2.5 rounded-md font-semibold max-w-md shadow-xs">
-                ✓ Thank you for subscribing!
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="space-y-2 max-w-md">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email"
-                  required
-                  className="w-full bg-white px-4 py-2.5 text-xs rounded-none border border-slate-300 text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#0A5E9D] shadow-2xs"
-                />
-                <div>
-                  <button
-                    type="submit"
-                    className="bg-[#75777A] hover:bg-[#5A5C5E] text-white px-6 py-2 text-xs font-medium rounded-sm transition-colors shadow-xs"
-                  >
-                    Subscribe
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-
-          {/* ALTURA Logo (Right Side) */}
-          <div className="md:col-span-5 flex justify-start md:justify-end items-center max-w-full overflow-hidden">
-            <AlturaLogo className="w-[220px] sm:w-[320px] md:w-[400px] lg:w-[460px] h-auto" />
-          </div>
+        {/* Bottom Row: ALTURA Wave Logo */}
+        <div className="flex justify-start md:justify-end items-center pb-8 pt-4 max-w-full overflow-hidden">
+          <AlturaLogo className="w-[220px] sm:w-[320px] md:w-[400px] lg:w-[460px] h-auto" />
         </div>
 
         {/* Bottom Copyright Line */}

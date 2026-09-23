@@ -85,7 +85,7 @@ const LocationHighlights = () => {
   const currentData = highlightsData[activeTab] || highlightsData.Connectivity;
 
   return (
-    <section className="py-6 sm:py-8 bg-white">
+    <section className="pt-6 pb-12 sm:pt-8 sm:pb-24 bg-white">
       <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
         {/* Section Heading - Left Aligned */}
         <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] text-left mb-4 sm:mb-6 tracking-tight">

@@ -35,6 +35,8 @@ const galleryItems = Object.entries(imageModules)
 
 const Gallery = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   const thumbnailsRef = useRef(null);
 
   // Fallback if no images found
@@ -52,6 +54,26 @@ const Gallery = () => {
     scrollToThumbnail(activeIndex === items.length - 1 ? 0 : activeIndex + 1);
   };
 
+  const handleTouchStart = (e) => {
+    setTouchEnd(0);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 40;
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+  };
+
   const scrollToThumbnail = (index) => {
     if (thumbnailsRef.current) {
       const thumbnailWidth = 226 + 24; // width + gap (gap-6 is 24px)
@@ -64,7 +86,7 @@ const Gallery = () => {
 
   return (
     <section id="gallery" className="py-6 sm:py-8 bg-white">
-      <div className="max-w-[1314px] lg:max-w-none mx-auto px-4 sm:px-6 lg:px-0">
+      <div className="max-w-[1314px] lg:max-w-none mx-auto px-0 sm:px-6 lg:px-0">
         {/* Section Title */}
         <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] text-center mb-4 sm:mb-6 tracking-tight px-4">
           Gallery
@@ -72,12 +94,17 @@ const Gallery = () => {
 
         <div className="max-w-[1274px] lg:max-w-none mx-auto space-y-4 lg:space-y-6">
           {/* Main Large Image Container */}
-          <div className="relative w-full h-[380px] sm:h-[550px] lg:h-[calc(100vh-160px)] lg:min-h-[650px] rounded-none overflow-hidden border border-slate-200 lg:border-none shadow-lg lg:shadow-none bg-slate-100 group">
+          <div 
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="relative w-full h-[300px] sm:h-[550px] lg:h-[calc(100vh-160px)] lg:min-h-[650px] rounded-none overflow-hidden border-0 sm:border border-slate-200 lg:border-none shadow-lg lg:shadow-none bg-slate-100 group select-none touch-pan-y cursor-grab active:cursor-grabbing"
+          >
             {/* Main Image */}
             <img
               src={items[activeIndex].url}
               alt={`Gallery Image ${activeIndex + 1}`}
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
               style={{
                 objectPosition: customPositions[items[activeIndex].filename] || "center"
               }}

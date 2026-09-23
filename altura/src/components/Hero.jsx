@@ -3,12 +3,12 @@ import heroBg from "../images/webp gallary/02_Altura.webp";
 
 const Hero = () => {
   return (
-    <section id="home" className="relative w-full h-[calc(100vh-64px)] sm:h-[calc(100vh-96px)] min-h-[550px] overflow-hidden group">
+    <section id="home" className="relative w-full h-screen min-h-[550px] overflow-hidden group">
       {/* Full Hero Render Image */}
       <img
         src={heroBg}
         alt="Altura Architectural Building Render"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
         style={{ objectPosition: "center 30%" }}
       />
 

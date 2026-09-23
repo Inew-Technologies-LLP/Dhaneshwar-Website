@@ -1,5 +1,3 @@
-import { MapPin } from "lucide-react";
-
 const LocationDetails = () => {
   return (
     <section className="py-6 sm:py-8 bg-white">
@@ -27,17 +25,6 @@ const LocationDetails = () => {
             referrerPolicy="no-referrer-when-downgrade"
             className="w-full h-full"
           />
-
-          {/* Location Marker Overlay Card */}
-          <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-white/95 backdrop-blur-md p-2.5 sm:p-4 rounded-lg shadow-lg border border-slate-200 flex items-center gap-2.5 sm:gap-3 max-w-[calc(100%-1rem)] sm:max-w-xs z-10">
-            <div className="p-2 sm:p-2.5 bg-[#1D65AD] text-white rounded-full shrink-0">
-              <MapPin size={18} className="sm:w-[22px] sm:h-[22px]" />
-            </div>
-            <div>
-              <p className="font-bold text-slate-800 text-xs sm:text-sm">ALTURA Residences</p>
-              <p className="text-[10px] sm:text-xs text-slate-500">Prime Connectivity Sector, Pune</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
