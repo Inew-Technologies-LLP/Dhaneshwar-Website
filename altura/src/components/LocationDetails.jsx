@@ -1,15 +1,46 @@
+import { MapPin, Building2 } from "lucide-react";
+
 const LocationDetails = () => {
   return (
-    <section className="py-6 sm:py-8 bg-white">
+    <section className="py-6 sm:py-10 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading & Subtitle */}
-        <div className="text-center max-w-3xl mx-auto mb-6">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] mb-3 tracking-tight">
             Location Details
           </h2>
           <p className="text-slate-600 text-sm sm:text-base">
             Conveniently located with seamless connectivity to key infrastructure, IT hubs, and entertainment.
           </p>
+        </div>
+
+        {/* Address Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
+          {/* Site Address Card */}
+          <div className="p-5 bg-[#F3F8FC] border border-[#BADFFB]/60 flex items-start gap-4 shadow-xs">
+            <div className="p-2.5 bg-[#0A5E9D] text-white shrink-0 mt-0.5">
+              <MapPin size={22} />
+            </div>
+            <div>
+              <h3 className="font-semibold text-[#1A3561] text-base mb-1">Site Address</h3>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                S.no-50, Dudulgaon, Dehu-Alandi road, Pune -412105
+              </p>
+            </div>
+          </div>
+
+          {/* Office Address Card */}
+          <div className="p-5 bg-[#F3F8FC] border border-[#BADFFB]/60 flex items-start gap-4 shadow-xs">
+            <div className="p-2.5 bg-[#0A5E9D] text-white shrink-0 mt-0.5">
+              <Building2 size={22} />
+            </div>
+            <div>
+              <h3 className="font-semibold text-[#1A3561] text-base mb-1">Office Address</h3>
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                Sector 3, Plot 78/17,18, Indrayani Nagar Bhosari I.E., Bhosari, Pimpri Chinchwad, Pune-411026
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Map Container */}

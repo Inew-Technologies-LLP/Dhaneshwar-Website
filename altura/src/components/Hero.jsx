@@ -3,7 +3,7 @@ import heroBg from "../images/webp gallary/02_Altura.webp";
 
 const Hero = () => {
   return (
-    <section id="home" className="relative w-full h-screen min-h-[550px] overflow-hidden group">
+    <section id="home" className="relative w-full h-[calc(100vh-4rem)] sm:h-[calc(100vh-6rem)] min-h-[500px] overflow-hidden group">
       {/* Full Hero Render Image */}
       <img
         src={heroBg}
