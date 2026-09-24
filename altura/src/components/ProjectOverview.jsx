@@ -33,7 +33,7 @@ const ProjectOverview = () => {
   ];
 
   return (
-    <section className="py-14 bg-white">
+    <section className="py-6 sm:py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading */}
         <h2 className="text-2xl sm:text-3xl font-normal text-[#1D65AD] mb-4 tracking-tight">
@@ -41,7 +41,7 @@ const ProjectOverview = () => {
         </h2>
 
         {/* Paragraph Text */}
-        <p className="text-slate-600 text-sm sm:text-base font-light leading-relaxed max-w-4xl mb-12">
+        <p className="text-slate-600 text-sm sm:text-base font-light leading-relaxed max-w-4xl mb-6">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscin
         </p>
 

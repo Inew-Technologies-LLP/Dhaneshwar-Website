@@ -36,10 +36,10 @@ const amenitiesList = [
 
 const Amenities = () => {
   return (
-    <section id="amenities" className="py-16 sm:py-20 bg-white">
+    <section id="amenities" className="py-6 sm:py-8 bg-white">
       <div className="max-w-[1314px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading */}
-        <h2 className="text-3xl sm:text-4xl font-light text-[#1D65AD] text-center mb-12 sm:mb-16 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-light text-[#1D65AD] text-center mb-6 sm:mb-8 tracking-tight">
           Amenities
         </h2>
 
