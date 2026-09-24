@@ -1,4 +1,8 @@
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaXTwitter,
+} from "react-icons/fa6";
 import AlturaLogo from "./AlturaLogo";
 
 const Footer = () => {
@@ -17,7 +21,7 @@ const Footer = () => {
         </h2>
 
         {/* Columns Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 pb-2 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start">
           {/* Column 1: Pune & Contact Info (6 cols) */}
           <div className="lg:col-span-6 space-y-4">
             <h3 className="font-bold text-base text-[#000000]">Pune</h3>
@@ -36,37 +40,11 @@ const Footer = () => {
                 <p><span className="font-semibold text-[#000000]">Mobile:</span> +91 7707975737</p>
               </div>
             </div>
-
-            {/* Social Icons in White Circles */}
-            <div className="flex items-center space-x-3 pt-2">
-              <a
-                href="#facebook"
-                aria-label="Facebook"
-                className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center transition-transform hover:scale-110 shadow-sm"
-              >
-                <FaFacebookF size={13} />
-              </a>
-              <a
-                href="#twitter"
-                aria-label="Twitter"
-                className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center transition-transform hover:scale-110 shadow-sm"
-              >
-                <FaTwitter size={13} />
-              </a>
-              <a
-                href="#instagram"
-                aria-label="Instagram"
-                className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center transition-transform hover:scale-110 shadow-sm"
-              >
-                <FaInstagram size={13} />
-              </a>
-            </div>
           </div>
 
-          {/* Right Side Container (6 cols): Links + Elevated Logo */}
-          <div className="lg:col-span-6 flex flex-col justify-between h-full">
-            {/* Links Grid (Our Company, Media, Legal) */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4">
+          {/* Right Side Links (6 cols): Our Company, Media, Legal */}
+          <div className="lg:col-span-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-4">
               {/* Our Company */}
               <div className="space-y-2">
                 <h3 className="font-bold text-sm text-[#000000]">Our Company</h3>
@@ -80,8 +58,8 @@ const Footer = () => {
               <div className="space-y-2">
                 <h3 className="font-bold text-sm text-[#000000]">Media</h3>
                 <ul className="space-y-1.5 text-xs text-[#000000]/80">
-                  <li><a href="#press" className="hover:underline">Blogs</a></li>
-                  <li><a href="#news" className="hover:underline">News</a></li>
+                  <li><a href="#gallery" className="hover:underline">Blogs</a></li>
+                  <li><a href="#faq" className="hover:underline">News</a></li>
                 </ul>
               </div>
 
@@ -94,17 +72,42 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-
-            {/* ALTURA Wave Logo (Kept up in right column, with comfortable top spacing) */}
-            <div className="flex justify-start md:justify-end items-center pt-6 lg:pt-10 max-w-full overflow-hidden">
-              <AlturaLogo className="w-[200px] sm:w-[280px] md:w-[340px] lg:w-[380px] h-auto" />
-            </div>
           </div>
         </div>
 
-        {/* Bottom Copyright Line */}
-        <div className="pt-3 border-t border-[#000000]/10 text-center text-xs text-[#000000] font-semibold">
-          ©2026 Dhaneshwar Realty. All rights reserved.
+        {/* Bottom Section */}
+        <div className="mt-8 sm:mt-10 lg:mt-12 pt-4 sm:pt-6 border-t border-[#000000]/10">
+          {/* On Desktop: Left (Socials lg:order-1), Right (Logo lg:order-2). On Mobile: Logo first (order-1), Socials below logo (order-2) */}
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-5 sm:gap-6 lg:gap-8">
+            {/* Logo: order-1 on mobile, lg:order-2 on desktop */}
+            <div className="order-1 lg:order-2 flex items-center justify-center">
+              <AlturaLogo className="w-[160px] sm:w-[200px] md:w-[240px] lg:w-[280px] h-auto" />
+            </div>
+
+            {/* Social Media Icons: order-2 on mobile (below logo), lg:order-1 on desktop (left side) */}
+            <div className="order-2 lg:order-1 flex gap-2.5 items-center justify-center">
+              {[
+                { Icon: FaFacebookF, label: "Facebook" },
+                { Icon: FaXTwitter, label: "Twitter" },
+                { Icon: FaInstagram, label: "Instagram" }
+              ].map(({ Icon, label }, index) => (
+                <button
+                  key={index}
+                  aria-label={label}
+                  className="flex h-8 w-8 lg:h-10 lg:w-10 items-center justify-center rounded-full bg-white text-[#192B3C] transition-all duration-300 hover:scale-110 hover:shadow-md active:scale-95 shadow-xs cursor-pointer"
+                >
+                  <Icon className="text-[13px] lg:text-[16px]" />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Centered Copyright at bottom */}
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-xs sm:text-sm text-[#000000]/70 font-semibold">
+              ©2026 Dhaneshwar Realty. All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
