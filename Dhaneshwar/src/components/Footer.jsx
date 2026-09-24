@@ -18,11 +18,11 @@ const Footer = () => {
                 className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none opacity-40"
             />
 
-            <div className="relative z-10 mx-auto max-w-[1440px] px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16 flex flex-col justify-between min-h-[460px] lg:min-h-[520px]">
+            <div className="relative z-10 mx-auto max-w-[1440px] px-6 py-6 sm:px-10 sm:py-8 lg:px-16 lg:py-8 flex flex-col justify-between">
                 {/* Top Section */}
                 <div>
                     {/* Header */}
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-6 sm:mb-8 lg:mb-10">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
                         Get in Touch
                     </h2>
 
@@ -37,11 +37,11 @@ const Footer = () => {
                             <div className="space-y-3 text-xs sm:text-sm text-white/75 leading-relaxed">
                                 <div>
                                     <p className="font-medium text-white/90">Office address:</p>
-                                    <p>Sector 3, Plot 78/17,18, Indrayani Nagar, Bhosari I.E., Bhosari, Pimpri Chinchwad, Pune-411026</p>
+                                    <p>Sector 3, Plot 78/17,18, Indrayani Nagar Bhosari I.E., Bhosari, Pimpri Chinchwad, Pune-411026</p>
                                 </div>
                                 <div>
                                     <p className="font-medium text-white/90">Site address:</p>
-                                    <p>S. No. 50, Dudulgaon, Dehu-Alandi Road, Pune -412105</p>
+                                    <p>S.no-50, Dudulgaon, Dehu-Alandi road, Pune -412105</p>
                                 </div>
                                 <div className="pt-1 space-y-1">
                                     <p><span className="font-medium text-white/90">Email:</span> info@dhaneshwarrealty.com</p>
@@ -103,9 +103,9 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="mt-10 lg:mt-12 pt-4">
+                <div className="mt-2 lg:mt-3 pt-0">
                     {/* On Desktop: Left (Socials lg:order-1), Right (Logo lg:order-2). On Mobile: Logo first (order-1), Socials below logo (order-2) */}
-                    <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+                    <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 -mt-8 sm:-mt-12 lg:-mt-16">
                         {/* Logo: order-1 on mobile, lg:order-2 on desktop */}
                         <div className="order-1 lg:order-2 flex items-center justify-center">
                             <img
@@ -134,7 +134,7 @@ const Footer = () => {
                     </div>
 
                     {/* Centered Copyright at bottom */}
-                    <div className="mt-6 lg:mt-8 text-center">
+                    <div className="mt-3 lg:mt-4 text-center">
                         <p className="text-xs sm:text-sm text-white/60">
                             ©2026 Dhaneshwar Realty. All rights reserved.
                         </p>

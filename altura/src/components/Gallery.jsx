@@ -35,6 +35,8 @@ const galleryItems = Object.entries(imageModules)
 
 const Gallery = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   const thumbnailsRef = useRef(null);
 
   // Fallback if no images found
@@ -52,6 +54,26 @@ const Gallery = () => {
     scrollToThumbnail(activeIndex === items.length - 1 ? 0 : activeIndex + 1);
   };
 
+  const handleTouchStart = (e) => {
+    setTouchEnd(0);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 40;
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+  };
+
   const scrollToThumbnail = (index) => {
     if (thumbnailsRef.current) {
       const thumbnailWidth = 226 + 24; // width + gap (gap-6 is 24px)
@@ -63,21 +85,26 @@ const Gallery = () => {
   };
 
   return (
-    <section id="gallery" className="py-16 bg-white">
-      <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
+    <section id="gallery" className="py-6 sm:py-8 bg-white">
+      <div className="max-w-[1314px] lg:max-w-none mx-auto px-0 sm:px-6 lg:px-0">
         {/* Section Title */}
-        <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] text-center mb-10 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] text-center mb-4 sm:mb-6 tracking-tight px-4">
           Gallery
         </h2>
 
-        <div className="max-w-[1274px] mx-auto space-y-4">
+        <div className="max-w-[1274px] lg:max-w-none mx-auto space-y-4 lg:space-y-6">
           {/* Main Large Image Container */}
-          <div className="relative w-full h-[380px] sm:h-[550px] lg:h-[680px] rounded-none overflow-hidden border border-slate-200 shadow-lg bg-slate-100 group">
+          <div 
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="relative w-full h-[300px] sm:h-[550px] lg:h-[calc(100vh-160px)] lg:min-h-[650px] rounded-none overflow-hidden border-0 sm:border border-slate-200 lg:border-none shadow-lg lg:shadow-none bg-slate-100 group select-none touch-pan-y cursor-grab active:cursor-grabbing"
+          >
             {/* Main Image */}
             <img
               src={items[activeIndex].url}
               alt={`Gallery Image ${activeIndex + 1}`}
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
               style={{
                 objectPosition: customPositions[items[activeIndex].filename] || "center"
               }}
@@ -86,48 +113,50 @@ const Gallery = () => {
             {/* Navigation Arrows */}
             <button
               onClick={handlePrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#1D65AD] text-white p-3 rounded-full transition-colors z-20 backdrop-blur-xs"
+              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#1D65AD] text-white p-3 rounded-full transition-colors z-20 backdrop-blur-xs"
               aria-label="Previous image"
             >
-              <ChevronLeft size={24} />
+              <ChevronLeft size={28} />
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#1D65AD] text-white p-3 rounded-full transition-colors z-20 backdrop-blur-xs"
+              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#1D65AD] text-white p-3 rounded-full transition-colors z-20 backdrop-blur-xs"
               aria-label="Next image"
             >
-              <ChevronRight size={24} />
+              <ChevronRight size={28} />
             </button>
           </div>
 
           {/* Row of Thumbnails (226 x 149) with increased gap */}
-          <div 
-            ref={thumbnailsRef}
-            className="flex gap-6 pt-2 overflow-x-auto pb-4 snap-x scrollbar-hide"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {items.map((item, idx) => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setActiveIndex(idx);
-                  scrollToThumbnail(idx);
-                }}
-                className={`relative shrink-0 w-[180px] sm:w-[226px] aspect-[226/149] rounded-none overflow-hidden border-2 transition-all group snap-start ${
-                  activeIndex === idx
-                    ? "border-[#1D65AD] ring-2 ring-[#1D65AD]/30 scale-[1.02] z-10"
-                    : "border-transparent opacity-60 hover:opacity-100"
-                }`}
-              >
-                <div
-                  className="absolute inset-0 bg-cover"
-                  style={{ 
-                    backgroundImage: `url('${item.url}')`,
-                    backgroundPosition: customPositions[item.filename] || "center"
+          <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
+            <div 
+              ref={thumbnailsRef}
+              className="flex gap-6 pt-2 overflow-x-auto pb-4 snap-x scrollbar-hide"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {items.map((item, idx) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setActiveIndex(idx);
+                    scrollToThumbnail(idx);
                   }}
-                />
-              </button>
-            ))}
+                  className={`relative shrink-0 w-[180px] sm:w-[226px] aspect-[226/149] rounded-none overflow-hidden border-2 transition-all group snap-start ${
+                    activeIndex === idx
+                      ? "border-[#1D65AD] ring-2 ring-[#1D65AD]/30 scale-[1.02] z-10"
+                      : "border-transparent opacity-60 hover:opacity-100"
+                  }`}
+                >
+                  <div
+                    className="absolute inset-0 bg-cover"
+                    style={{ 
+                      backgroundImage: `url('${item.url}')`,
+                      backgroundPosition: customPositions[item.filename] || "center"
+                    }}
+                  />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

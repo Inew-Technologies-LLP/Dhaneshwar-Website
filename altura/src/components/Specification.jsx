@@ -95,26 +95,20 @@ const Specification = ({ onOpenInquiry }) => {
             "POP/gypsum ceiling finish as specified",
           ],
         },
-        {
-          title: "xyz",
-          items: [
-            "Lorem Ipsum",
-          ],
-        },
       ],
     },
   ];
 
   return (
-    <section id="specification" className="py-16 bg-white">
+    <section id="specification" className="py-6 sm:py-8 bg-white">
       <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
         {/* Section Heading */}
-        <h2 className="text-3xl sm:text-4xl font-light text-[#1D65AD] text-center mb-14 tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-light text-[#1D65AD] text-center mb-6 sm:mb-8 tracking-tight">
           Specification
         </h2>
 
         {/* 2x2 Grid Container with Divider Cross */}
-        <div className="max-w-[1240px] mx-auto relative mb-16">
+        <div className="max-w-[1240px] mx-auto relative mb-8">
           {/* Vertical Divider Line */}
           <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-2 bottom-2 w-px bg-slate-300" />
 

@@ -171,10 +171,9 @@ const InquiryModal = ({ isOpen, onClose }) => {
                   onChange={(e) => setFormData({ ...formData, config: e.target.value })}
                   className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none bg-white"
                 >
-                  <option value="1BHK">1 BHK Residence</option>
                   <option value="2BHK">2 BHK Residence</option>
                   <option value="3BHK">3 BHK Residence</option>
-                  <option value="Penthouse">Penthouse / Custom</option>
+                  <option value="Duplex">Duplex Residence</option>
                 </select>
               </div>
 

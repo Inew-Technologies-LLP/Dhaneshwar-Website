@@ -1,17 +1,19 @@
-import apartmentImg from "../images/apartment.webp";
+import apartment1 from "../images/apartment1.png";
+import apartment2 from "../images/apartment2.png";
+import apartment3 from "../images/apartment3.png";
 
 const FlatConfig = () => {
   const configs = [
-    { type: "1BHK", image: apartmentImg },
-    { type: "2BHK", image: apartmentImg },
-    { type: "3BHK", image: apartmentImg },
+    { type: "2BHK", image: apartment1 },
+    { type: "3BHK", image: apartment2 },
+    { type: "Duplex", image: apartment3 },
   ];
 
   return (
-    <section id="flat-config" className="py-16 bg-white">
+    <section id="flat-config" className="py-6 sm:py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Heading */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-6">
           <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] mb-4 tracking-tight">
             Flat Config
           </h2>
