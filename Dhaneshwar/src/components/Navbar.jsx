@@ -36,7 +36,10 @@ const Navbar = () => {
     });
 
     return (
-        <header className="fixed top-0 left-0 z-50 w-full bg-[#192B3C] shadow-sm">
+        <header
+            className="fixed top-0 left-0 z-50 w-full bg-[#192B3C] shadow-sm"
+            onMouseLeave={() => setShowProjects(false)}
+        >
             <Container>
                 <nav
                     className="relative flex h-[72px] sm:h-[82px] items-center"
@@ -45,7 +48,11 @@ const Navbar = () => {
 
                     {/* Logo */}
 
-                    <NavLink to="/" className="flex items-center">
+                    <NavLink
+                        to="/"
+                        className="flex items-center"
+                        onMouseEnter={() => setShowProjects(false)}
+                    >
                         <img
                             src={logo}
                             alt="Dhaneshwar Realty"
@@ -61,7 +68,7 @@ const Navbar = () => {
                                 <li
                                     key={item.title}
                                     className="relative w-fit"
-                                    onMouseEnter={() => item.title === "Projects" && setShowProjects(true)}
+                                    onMouseEnter={() => setShowProjects(item.title === "Projects")}
                                 >
                                     <NavLink
                                         to={item.href}
@@ -88,6 +95,7 @@ const Navbar = () => {
                         <div
                             className={`fixed left-0 right-0 top-[72px] z-50 hidden transition-all duration-200 md:block sm:top-[82px] ${showProjects ? "visible opacity-100" : "invisible opacity-0"}`}
                             onMouseEnter={() => setShowProjects(true)}
+                            onMouseLeave={() => setShowProjects(false)}
                         >
                             <div className="relative min-h-[529px] w-full bg-[#192B3C] px-6 py-6 shadow-2xl ring-1 ring-white/10 sm:px-10">
                                 <button
@@ -152,6 +160,7 @@ const Navbar = () => {
 
                         <button
                             className="h-9 sm:h-10 rounded-sm bg-[#B08A1E] px-3.5 text-xs font-medium text-white transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 shadow-sm hover:shadow-md active:translate-y-0 sm:px-5 sm:text-sm md:h-8 md:px-8"
+                            onMouseEnter={() => setShowProjects(false)}
                             onClick={() => setShowInquiry(true)}
                         >
                             Inquire
