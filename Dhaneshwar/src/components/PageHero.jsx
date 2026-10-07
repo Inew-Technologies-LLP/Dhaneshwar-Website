@@ -28,7 +28,7 @@ const PageHero = ({
                     src={design}
                     alt=""
                     aria-hidden="true"
-                    className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
+                    className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none opacity-30"
                 />
 
                 <div className="absolute bottom-6 left-4 right-4 max-w-xl mx-auto sm:mx-0 sm:bottom-10 sm:left-10 sm:right-auto lg:bottom-12 lg:left-12 text-center sm:text-left">

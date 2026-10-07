@@ -1,91 +1,73 @@
-import swimmingPoolImg from "../images/amenities/2_swimming_pool 1.png";
-import gymnasiumImg from "../images/amenities/1_gymnasium 1.png";
-import skydeckImg from "../images/amenities/skydeck.png";
-import multipurposeCourtImg from "../images/amenities/multipurposecourt.png";
-
 const ProjectOverview = () => {
-  const features = [
+  const highlights = [
     {
-      id: 1,
-      title: "Swimming Pool & Deck",
-      caption: "Unwind. Refresh. Recharge.",
-      icon: swimmingPoolImg,
+      title: "G + 14",
+      subtitle: "Residential Development",
     },
     {
-      id: 2,
-      title: "Gymnasium",
-      caption: "Designed for an active everyday.",
-      icon: gymnasiumImg,
+      title: "DUDULGAON",
+      subtitle: "Pune",
     },
     {
-      id: 3,
-      title: "Skydeck",
-      caption: "Open skies. Elevated moments.",
-      icon: skydeckImg,
-    },
-    {
-      id: 4,
-      title: "Multipurpose Court",
-      caption: "Space to play, move and connect",
-      icon: multipurposeCourtImg,
-      scale: "scale-110",
+      title: "JUST 65 HOMES",
+      subtitle: "A more intimate community",
     },
   ];
 
   return (
-    <section className="py-6 sm:py-8 bg-white">
+    <section id="overview" className="py-12 sm:py-16 lg:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+        {/* Super Heading */}
+        <div className="mb-2">
+          <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#0A5E9D] uppercase">
+            INTRODUCING ALTURA
+          </span>
+        </div>
+
         {/* Section Heading */}
-        <h2 className="text-2xl sm:text-3xl font-normal text-[#1D65AD] mb-4 tracking-tight">
-          Project Overview
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 mb-6 tracking-tight">
+          A Place Designed Around Life.
         </h2>
 
-        {/* Paragraph Text */}
-        <p className="text-slate-600 text-sm sm:text-base font-light leading-relaxed max-w-4xl mb-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et Lorem ipsum dolor sit amet, consectetur adipiscin
-        </p>
+        {/* Story Body Copy */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="lg:col-span-8 space-y-4 text-slate-600 text-sm sm:text-base lg:text-[17px] font-light leading-relaxed">
+            <p>
+              Altura begins with a larger idea — that a home is shaped not only by the spaces within it, but by the life that grows around it.
+            </p>
+            <p>
+              Conceived as a place for people, families and communities to flourish, Altura brings a more thoughtful approach to contemporary living — one that values well-being, connection, openness and a sense of belonging.
+            </p>
+            <p>
+              It is a place designed not simply for where life is today, but for all that it can become.
+            </p>
+            <p className="font-normal text-slate-800 pt-1">
+              A place to live well. Grow together. And belong.
+            </p>
+          </div>
 
-        {/* 2 Column (Phone) / 4 Column (Desktop) Features Grid with Vertical Dividers */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-8 md:gap-y-0 relative py-4">
-          {features.map((item, idx) => (
-            <div
-              key={item.id}
-              className="relative flex flex-col justify-between px-2 sm:px-4 lg:px-8 group"
-            >
-              <div>
-                {/* Icon Container */}
-                <div className="h-16 sm:h-20 md:h-24 flex items-end mb-3 sm:mb-5">
-                  <img
-                    src={item.icon}
-                    alt={item.title}
-                    className={`max-h-12 sm:max-h-16 md:max-h-20 max-w-full object-contain [filter:brightness(0)_saturate(100%)] transition-transform duration-300 group-hover:scale-105 ${item.scale || ""}`}
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Title & Caption */}
-                <div>
-                  <h3 className="text-xs sm:text-sm md:text-base font-medium text-slate-900 mb-1 leading-snug">
+          {/* 3 Key Highlights Sidebar / Stats */}
+          <div className="lg:col-span-4 bg-[#F4F9FD] border-l-4 border-[#0A5E9D] p-6 sm:p-8 space-y-6 rounded-r-xs">
+            {highlights.map((item, idx) => (
+              <div key={idx} className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#0A5E9D]" />
+                  <h3 className="text-lg sm:text-xl font-bold tracking-wide text-slate-900">
                     {item.title}
                   </h3>
-                  <p className="text-[11px] sm:text-xs md:text-sm font-light text-slate-500 leading-normal">
-                    {item.caption}
-                  </p>
                 </div>
+                <p className="text-xs sm:text-sm font-light text-slate-600 pl-4">
+                  {item.subtitle}
+                </p>
               </div>
-
-              {/* Vertical Divider */}
-              {idx !== features.length - 1 && (
-                <div className="hidden md:block absolute right-0 top-2 bottom-2 w-px bg-slate-300" />
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Project Key Details Footer Lines */}
-        <div className="mt-14 space-y-2 text-sm sm:text-base font-light text-slate-700">
+        <div className="mt-12 pt-6 border-t border-slate-200 text-xs sm:text-sm font-light text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <p>2 Ground Floors | Common Terrace | Riverside Development | 2, 3 BHK &amp; Duplex Homes</p>
-          <p>MahaRERA Registration Number: P52100052298, PR1261012502532</p>
+          <p>MahaRERA Registration: P52100052298, PR1261012502532</p>
         </div>
       </div>
     </section>

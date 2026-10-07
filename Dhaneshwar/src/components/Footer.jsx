@@ -15,129 +15,85 @@ const Footer = () => {
                 src={design}
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none opacity-40"
+                className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none opacity-30"
             />
 
-            <div className="relative z-10 mx-auto max-w-[1440px] px-6 py-6 sm:px-10 sm:py-8 lg:px-16 lg:py-8 flex flex-col justify-between">
-                {/* Top Section */}
-                <div>
-                    {/* Header */}
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-4 sm:mb-6">
-                        Get in Touch
-                    </h2>
+            <div className="relative z-10 mx-auto max-w-[1440px] px-6 py-10 sm:px-10 sm:py-12 lg:px-16 lg:py-14">
+                {/* Main Content Grid: Logo & Details */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    
+                    {/* Left: Brand Logo & Socials (5 cols) */}
+                    <div className="lg:col-span-5 space-y-6">
+                        <img
+                            src={logo}
+                            alt="Dhaneshwar Realty"
+                            className="w-[160px] sm:w-[190px] h-auto object-contain"
+                        />
+                        <p className="text-xs sm:text-sm text-white/75 max-w-md leading-relaxed">
+                            Creating thoughtfully designed environments where architecture, functionality, nature and craftsmanship come together to elevate everyday life.
+                        </p>
 
-                    {/* 5 Column Navigation & Details Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-10">
-                        {/* Pune / Address */}
-                        <div className="space-y-3">
-                            <h3 className="text-xl lg:text-2xl font-medium text-white mb-2">
-                                Pune
-                            </h3>
-                            <p className="text-sm font-semibold text-white/90">Address</p>
-                            <div className="space-y-3 text-xs sm:text-sm text-white/75 leading-relaxed">
-                                <div>
-                                    <p className="font-medium text-white/90">Office address:</p>
-                                    <p>Sector 3, Plot 78/17,18, Indrayani Nagar Bhosari I.E., Bhosari, Pimpri Chinchwad, Pune-411026</p>
-                                </div>
-                                <div>
-                                    <p className="font-medium text-white/90">Site address:</p>
-                                    <p>S.no-50, Dudulgaon, Dehu-Alandi road, Pune -412105</p>
-                                </div>
-                                <div className="pt-1 space-y-1">
-                                    <p><span className="font-medium text-white/90">Email:</span> info@dhaneshwarrealty.com</p>
-                                    <p><span className="font-medium text-white/90">Mobile:</span> +91 7707975737</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Projects */}
-                        <div>
-                            <h3 className="text-xl lg:text-2xl font-medium text-white mb-4">
-                                Projects
-                            </h3>
-                            <div className="space-y-2 text-xs sm:text-sm text-white/75">
+                        {/* Social Links */}
+                        <div className="flex gap-3 items-center pt-2">
+                            {[
+                                { Icon: FaFacebookF, label: "Facebook", href: "#" },
+                                { Icon: FaXTwitter, label: "Twitter", href: "#" },
+                                { Icon: FaInstagram, label: "Instagram", href: "#" }
+                            ].map(({ Icon, label, href }, index) => (
                                 <a
-                                    href="https://altura.dhaneshwarrealty.com/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block transition hover:text-white"
+                                    key={index}
+                                    href={href}
+                                    aria-label={label}
+                                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white transition-all duration-300 hover:bg-[#B08A1E] hover:text-white hover:scale-110 active:scale-95"
                                 >
-                                    Altura
+                                    <Icon className="text-sm" />
                                 </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right: Office & Site Details (7 cols) */}
+                    <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                        {/* Office Address */}
+                        <div className="space-y-2.5">
+                            <h4 className="text-xs font-semibold uppercase tracking-widest text-[#BFECE8]">
+                                Office Address
+                            </h4>
+                            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                                Sector 3, Plot 78/17,18, Indrayani Nagar Bhosari I.E., Bhosari, Pimpri Chinchwad, Pune-411026
+                            </p>
+                            <div className="pt-2 space-y-1 text-xs sm:text-sm text-white/80">
+                                <p><span className="text-white/60">Phone:</span> +91 7707975737</p>
+                                <p><span className="text-white/60">Email:</span> info@dhaneshwarrealty.com</p>
                             </div>
                         </div>
 
-                        {/* Our Company */}
-                        <div>
-                            <h3 className="text-xl lg:text-2xl font-medium text-white mb-4">
-                                Our Company
-                            </h3>
-                            <div className="space-y-2 text-xs sm:text-sm text-white/75">
-                                <a href="/about" className="block transition hover:text-white">About Us</a>
-                                <p className="transition hover:text-white cursor-pointer">Testimonials</p>
-                            </div>
-                        </div>
-
-                        {/* Media */}
-                        <div>
-                            <h3 className="text-xl lg:text-2xl font-medium text-white mb-4">
-                                Media
-                            </h3>
-                            <div className="space-y-2 text-xs sm:text-sm text-white/75">
-                                <p className="transition hover:text-white cursor-pointer">Blogs</p>
-                                <p className="transition hover:text-white cursor-pointer">News</p>
-                            </div>
-                        </div>
-
-                        {/* Legal */}
-                        <div>
-                            <h3 className="text-xl lg:text-2xl font-medium text-white mb-4">
-                                Legal
-                            </h3>
-                            <div className="space-y-2 text-xs sm:text-sm text-white/75">
-                                <p className="transition hover:text-white cursor-pointer">Privacy &amp; Policy</p>
-                                <p className="transition hover:text-white cursor-pointer">Terms &amp; Condition</p>
+                        {/* Site Address */}
+                        <div className="space-y-2.5">
+                            <h4 className="text-xs font-semibold uppercase tracking-widest text-[#BFECE8]">
+                                Site Address
+                            </h4>
+                            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+                                S.no-50, Dudulgaon, Dehu-Alandi road, Pune - 412105
+                            </p>
+                            <div className="pt-2 space-y-1 text-xs sm:text-sm text-white/80">
+                                <p><span className="text-white/60">Project:</span> Altura (Ongoing)</p>
+                                <p><span className="text-white/60">Location:</span> Dudulgaon, Pune</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Bottom Section */}
-                <div className="mt-2 lg:mt-3 pt-0">
-                    {/* On Desktop: Left (Socials lg:order-1), Right (Logo lg:order-2). On Mobile: Logo first (order-1), Socials below logo (order-2) */}
-                    <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 -mt-8 sm:-mt-12 lg:-mt-16">
-                        {/* Logo: order-1 on mobile, lg:order-2 on desktop */}
-                        <div className="order-1 lg:order-2 flex items-center justify-center">
-                            <img
-                                src={logo}
-                                alt="Dhaneshwar Realty"
-                                className="w-[130px] sm:w-[160px] lg:w-[190px] h-auto object-contain"
-                            />
-                        </div>
+                {/* Bottom Bar: Copyright & Essential Legal Links */}
+                <div className="mt-10 sm:mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/60">
+                    <p>
+                        &copy; 2026 Dhaneshwar Realty. All rights reserved.
+                    </p>
 
-                        {/* Social Media Icons: order-2 on mobile (below logo), lg:order-1 on desktop (left side) */}
-                        <div className="order-2 lg:order-1 flex gap-2.5 items-center justify-center">
-                            {[
-                                { Icon: FaFacebookF, label: "Facebook" },
-                                { Icon: FaXTwitter, label: "Twitter" },
-                                { Icon: FaInstagram, label: "Instagram" }
-                            ].map(({ Icon, label }, index) => (
-                                <button
-                                    key={index}
-                                    aria-label={label}
-                                    className="flex h-8 w-8 lg:h-10 lg:w-10 items-center justify-center rounded-full bg-white text-[#192B3C] transition-all duration-300 hover:scale-110 hover:shadow-md active:scale-95"
-                                >
-                                    <Icon className="text-[13px] lg:text-[16px]" />
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Centered Copyright at bottom */}
-                    <div className="mt-3 lg:mt-4 text-center">
-                        <p className="text-xs sm:text-sm text-white/60">
-                            ©2026 Dhaneshwar Realty. All rights reserved.
-                        </p>
+                    <div className="flex items-center gap-6">
+                        <span className="hover:text-white cursor-pointer transition">Privacy Policy</span>
+                        <span className="hover:text-white cursor-pointer transition">Terms &amp; Conditions</span>
+                        <span className="hover:text-white cursor-pointer transition">Statutory Disclaimer</span>
                     </div>
                 </div>
             </div>

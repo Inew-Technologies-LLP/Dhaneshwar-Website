@@ -1,5 +1,4 @@
 import { useState } from "react";
-import projects from "../data/projects";
 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
@@ -7,8 +6,6 @@ const initialFormData = {
      name: "",
      email: "",
      phone: "",
-     project: "",
-     city: "",
      message: "",
 };
 
@@ -36,11 +33,9 @@ const ContactForm = () => {
           const name = formData.name.trim();
           const email = formData.email.trim();
           const phone = formData.phone.trim();
-          const project = formData.project.trim();
-          const city = formData.city.trim();
           const message = formData.message.trim();
 
-          if (!name || !email || !phone || !project || !city) {
+          if (!name || !email || !phone) {
                setStatus("error");
                setErrorMessage("Please fill in all required fields.");
                return;
@@ -61,8 +56,8 @@ const ContactForm = () => {
                          name,
                          email,
                          phone,
-                         project,
-                         city,
+                         project: "General Inquiry",
+                         city: "Pune",
                          message,
                     }),
                });
@@ -82,25 +77,25 @@ const ContactForm = () => {
      };
 
      return (
-          <section className="px-3 py-4 sm:px-6 sm:py-8 lg:px-9 lg:py-10">
+          <section className="px-3 py-6 sm:px-6 sm:py-10 lg:px-9 lg:py-12">
                <div className="mx-auto max-w-[1440px]">
 
                     <form
                          onSubmit={handleSubmit}
-                         className="grid grid-cols-1 gap-y-5 sm:gap-x-8 sm:gap-y-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-10"
+                         className="grid grid-cols-1 gap-y-5 sm:gap-x-8 sm:gap-y-8 sm:grid-cols-3 lg:gap-x-12"
                     >
 
                          {/* Name */}
-
                          <div className="min-w-0">
                               <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
-                                   Name
+                                   Name <span className="text-red-500">*</span>
                               </label>
 
                               <input
                                    type="text"
                                    id="contact-name"
                                    name="name"
+                                   placeholder="Your Full Name"
                                    value={formData.name}
                                    onChange={handleChange}
                                    required
@@ -119,46 +114,17 @@ const ContactForm = () => {
                               />
                          </div>
 
-                         {/* Email */}
-
-                         <div className="min-w-0">
-                              <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
-                                   Email
-                              </label>
-
-                              <input
-                                   type="email"
-                                   id="contact-email"
-                                   name="email"
-                                   value={formData.email}
-                                   onChange={handleChange}
-                                   required
-                                   className="
-                                h-11
-                                w-full
-                                border
-                                border-[#192B3C]
-                                px-3.5
-                                text-sm
-                                sm:text-[15px]
-                                outline-none
-                                transition
-                                focus:border-[#B38B17]
-                            "
-                              />
-                         </div>
-
-                         {/* Phone */}
-
+                         {/* Mobile number */}
                          <div className="min-w-0">
                               <label htmlFor="contact-phone" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
-                                   Phone No.
+                                   Mobile Number <span className="text-red-500">*</span>
                               </label>
 
                               <input
                                    type="tel"
                                    id="contact-phone"
                                    name="phone"
+                                   placeholder="Your 10-digit Number"
                                    value={formData.phone}
                                    onChange={handleChange}
                                    required
@@ -177,60 +143,18 @@ const ContactForm = () => {
                               />
                          </div>
 
-                         {/* Project */}
-
+                         {/* Email */}
                          <div className="min-w-0">
-                              <label htmlFor="contact-project" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
-                                   Select Project
-                              </label>
-
-                              <select
-                                   name="project"
-                                   id="contact-project"
-                                   value={formData.project}
-                                   onChange={handleChange}
-                                   required
-                                   className="
-                                h-11
-                                w-full
-                                border
-                                border-[#192B3C]
-                                bg-white
-                                px-3.5
-                                text-sm
-                                sm:text-[15px]
-                                outline-none
-                                transition
-                                focus:border-[#B38B17]
-                            "
-                              >
-                                   <option value="">
-                                        Choose Project
-                                   </option>
-
-                                   {projects.map((project) => (
-                                        <option
-                                             key={project.id}
-                                             value={project.name}
-                                        >
-                                             {project.name}
-                                        </option>
-                                   ))}
-                              </select>
-                         </div>
-
-                         {/* City */}
-
-                         <div className="min-w-0">
-                              <label htmlFor="contact-city" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
-                                   City
+                              <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
+                                   Email <span className="text-red-500">*</span>
                               </label>
 
                               <input
-                                   type="text"
-                                   id="contact-city"
-                                   name="city"
-                                   value={formData.city}
+                                   type="email"
+                                   id="contact-email"
+                                   name="email"
+                                   placeholder="you@example.com"
+                                   value={formData.email}
                                    onChange={handleChange}
                                    required
                                    className="
@@ -249,19 +173,18 @@ const ContactForm = () => {
                          </div>
 
                          {/* Message (Optional) */}
-
                          <div className="col-span-full">
                               <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
-                                   Message <span className="text-gray-400 font-normal">(Optional)</span>
+                                   Message <span className="text-gray-500 font-normal">(Optional)</span>
                               </label>
 
                               <textarea
                                    id="contact-message"
                                    name="message"
-                                   rows={3}
+                                   rows={4}
                                    value={formData.message}
                                    onChange={handleChange}
-                                   placeholder="Any specific query or preferred time for call..."
+                                   placeholder="How can we help you? Any specific requirements..."
                                    className="
                                 w-full
                                 border
@@ -277,23 +200,22 @@ const ContactForm = () => {
                          </div>
 
                          {/* Submit */}
-
                          <div className="col-span-full pt-2">
-
                               <button
                                    type="submit"
                                    disabled={status === "submitting"}
                                    className="
                                 h-11
                                 w-full
-                                sm:w-[140px]
+                                sm:w-[160px]
                                 bg-[#192B3C]
                                 hover:bg-[#B38B17]
                                 text-sm
                                 sm:text-[15px]
                                 font-medium
+                                tracking-wider
                                 text-white
-                                transition-colors
+                                transition-all
                                 duration-300
                                 disabled:cursor-not-allowed
                                 disabled:opacity-60
@@ -305,17 +227,16 @@ const ContactForm = () => {
                               </button>
 
                               {status === "success" && (
-                                   <p className="mt-4 text-sm sm:text-[15px] text-green-600">
+                                   <p className="mt-4 text-sm sm:text-[15px] text-green-600 font-medium">
                                         Submitted Successfully! Thank you, we will get back to you shortly.
                                    </p>
                               )}
 
                               {status === "error" && (
-                                   <p className="mt-4 text-sm sm:text-[15px] text-red-600">
+                                   <p className="mt-4 text-sm sm:text-[15px] text-red-600 font-medium">
                                         {errorMessage || "Something went wrong. Please try again."}
                                    </p>
                               )}
-
                          </div>
 
                     </form>

@@ -1,57 +1,171 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Use Vite's import.meta.glob to automatically import all images from the webp gallary folder
-const imageModules = import.meta.glob('../images/webp gallary/*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' });
-const customPositions = {
-  "01_Altura1.webp": "center 30%",
-  "02_Altura.webp": "center 30%",
-  "03_Altura.webp": "center 70%",
-  "04_Altura.webp": "center 90%",
-  "05_Altura.webp": "center 90%",
-  "07_Altura.webp": "center 70%",
-  "13_Altura.webp": "center 90%",
-  "15_Altura.webp": "center 90%",
-  "01_Altura1.png": "center 30%",
-  "02_Altura.png": "center 30%",
-  "03_Altura.png": "center 70%",
-  "04_Altura.png": "center 90%",
-  "05_Altura.png": "center 90%",
-  "07_Altura.png": "center 70%",
-  "13_Altura.png": "center 90%",
-  "15_Altura.png": "center 90%",
-};
+// Automatically import all images from webp gallery folder
+const imageModules = import.meta.glob("../images/webp gallary/*.{webp,png,jpg,jpeg}", {
+  eager: true,
+  import: "default",
+});
 
-const galleryItems = Object.entries(imageModules)
-  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
-  .map(([path, url], idx) => {
-    const filename = path.split('/').pop();
-    return { 
-      id: idx + 1, 
-      url,
-      filename
-    };
-  });
+const galleryItemsData = [
+  {
+    id: 1,
+    num: "01",
+    filename: "01_Altura1.webp",
+    categories: ["ARCHITECTURE"],
+    position: "center 30%",
+  },
+  {
+    id: 2,
+    num: "02",
+    filename: "11_Altura.webp",
+    categories: ["AMENITIES"],
+    position: "center 50%",
+  },
+  {
+    id: 3,
+    num: "03",
+    filename: "06_Altura.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 4,
+    num: "04",
+    filename: "02_Altura.webp",
+    categories: ["ARCHITECTURE"],
+    position: "center 30%",
+  },
+  {
+    id: 5,
+    num: "05",
+    filename: "03_Altura.webp",
+    categories: ["ARCHITECTURE"],
+    position: "center 70%",
+  },
+  {
+    id: 6,
+    num: "06",
+    filename: "04_Altura.webp",
+    categories: ["ARCHITECTURE", "LIFESTYLE"],
+    position: "center 90%",
+  },
+  {
+    id: 7,
+    num: "07",
+    filename: "14_Altura.webp",
+    categories: ["LIFESTYLE", "AMENITIES"],
+    position: "center 50%",
+  },
+  {
+    id: 8,
+    num: "08",
+    filename: "10_Altura.webp",
+    categories: ["AMENITIES"],
+    position: "center 50%",
+  },
+  {
+    id: 9,
+    num: "09",
+    filename: "15_Altura.webp",
+    categories: ["LIFESTYLE"],
+    position: "center 90%",
+  },
+  {
+    id: 10,
+    num: "10",
+    filename: "07_Altura.webp",
+    categories: ["RESIDENCES"],
+    position: "center 70%",
+  },
+  {
+    id: 11,
+    num: "11",
+    filename: "08_Altura.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 12,
+    num: "12",
+    filename: "09_Altura.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 13,
+    num: "13",
+    filename: "13_Altura.webp",
+    categories: ["AMENITIES", "LIFESTYLE"],
+    position: "center 90%",
+  },
+  {
+    id: 14,
+    num: "14",
+    filename: "05_Altura.webp",
+    categories: ["ARCHITECTURE"],
+    position: "center 90%",
+  },
+];
+
+// Map with resolved image URLs
+const populatedGalleryItems = galleryItemsData.map((item) => {
+  const matchKey = Object.keys(imageModules).find((path) =>
+    path.endsWith(item.filename)
+  );
+  return {
+    ...item,
+    url: matchKey ? imageModules[matchKey] : "",
+  };
+});
+
+const filterTabs = [
+  { id: "ALL", label: "ALL" },
+  { id: "ARCHITECTURE", label: "ARCHITECTURE" },
+  { id: "RESIDENCES", label: "RESIDENCES" },
+  { id: "AMENITIES", label: "AMENITIES" },
+  { id: "LIFESTYLE", label: "LIFESTYLE" },
+];
 
 const Gallery = () => {
+  const [activeFilter, setActiveFilter] = useState("ALL");
   const [activeIndex, setActiveIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const thumbnailsRef = useRef(null);
 
-  // Fallback if no images found
-  const items = galleryItems.length > 0 ? galleryItems : [
-    { id: 1, url: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200" }
-  ];
+  const filteredItems = useMemo(() => {
+    if (activeFilter === "ALL") return populatedGalleryItems;
+    return populatedGalleryItems.filter((item) =>
+      item.categories.includes(activeFilter)
+    );
+  }, [activeFilter]);
+
+  const items = filteredItems.length > 0 ? filteredItems : populatedGalleryItems;
+
+  const currentIdx = activeIndex < items.length ? activeIndex : 0;
+  const mainItem = items[currentIdx];
+  const sideItem1 = items[(currentIdx + 1) % items.length];
+  const sideItem2 = items[(currentIdx + 2) % items.length];
+
+  const handleFilterChange = (filterId) => {
+    setActiveFilter(filterId);
+    setActiveIndex(0);
+    if (thumbnailsRef.current) {
+      thumbnailsRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
-    scrollToThumbnail(activeIndex === 0 ? items.length - 1 : activeIndex - 1);
+    const prevIdx = currentIdx === 0 ? items.length - 1 : currentIdx - 1;
+    setActiveIndex(prevIdx);
+    scrollToThumbnail(prevIdx);
   };
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
-    scrollToThumbnail(activeIndex === items.length - 1 ? 0 : activeIndex + 1);
+    const nextIdx = (currentIdx + 1) % items.length;
+    setActiveIndex(nextIdx);
+    scrollToThumbnail(nextIdx);
   };
 
   const handleTouchStart = (e) => {
@@ -66,7 +180,7 @@ const Gallery = () => {
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-    const minSwipeDistance = 40;
+    const minSwipeDistance = 45;
     if (distance > minSwipeDistance) {
       handleNext();
     } else if (distance < -minSwipeDistance) {
@@ -74,90 +188,210 @@ const Gallery = () => {
     }
   };
 
+  const handleSelectThumbnail = (index) => {
+    setActiveIndex(index);
+    scrollToThumbnail(index);
+  };
+
   const scrollToThumbnail = (index) => {
     if (thumbnailsRef.current) {
-      const thumbnailWidth = 226 + 24; // width + gap (gap-6 is 24px)
+      const itemWidth = 160 + 16;
       thumbnailsRef.current.scrollTo({
-        left: index * thumbnailWidth - (thumbnailsRef.current.clientWidth / 2) + (thumbnailWidth / 2),
-        behavior: 'smooth'
+        left:
+          index * itemWidth -
+          thumbnailsRef.current.clientWidth / 2 +
+          itemWidth / 2,
+        behavior: "smooth",
       });
     }
   };
 
   return (
-    <section id="gallery" className="py-6 sm:py-8 bg-white">
-      <div className="max-w-[1314px] lg:max-w-none mx-auto px-0 sm:px-6 lg:px-0">
-        {/* Section Title */}
-        <h2 className="text-3xl sm:text-4xl font-medium text-[#1D65AD] text-center mb-4 sm:mb-6 tracking-tight px-4">
-          Gallery
-        </h2>
+    <section id="gallery" className="py-14 sm:py-20 lg:py-24 bg-white w-full overflow-hidden">
+      {/* Full Width Wrapper */}
+      <div className="w-full px-3 sm:px-6 lg:px-10 xl:px-14">
+        {/* Centered Top Tag, Title & Subtitle */}
+        <div className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto">
+          <span className="text-xs sm:text-sm font-semibold tracking-[0.25em] text-[#0A5E9D] uppercase block mb-1">
+            GALLERY
+          </span>
+          <h2 className="font-serif-display text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 tracking-tight">
+            A Glimpse of Altura.
+          </h2>
+          <p className="text-xs sm:text-sm md:text-base text-slate-500 font-light mt-2 max-w-2xl mx-auto leading-relaxed">
+            Explore the architecture, spaces and experiences envisioned for Altura.
+          </p>
+        </div>
 
-        <div className="max-w-[1274px] lg:max-w-none mx-auto space-y-4 lg:space-y-6">
-          {/* Main Large Image Container */}
-          <div 
+        {/* Controls & Filter Bar */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 border-b border-slate-100 pb-4">
+          {/* Filter Pills with Altura Theme Blue */}
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 justify-center md:justify-start">
+            {filterTabs.map((tab) => {
+              const isActive = activeFilter === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleFilterChange(tab.id)}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+                    isActive
+                      ? "bg-[#0A5E9D] text-white shadow-xs"
+                      : "text-slate-500 hover:text-[#0A5E9D] hover:bg-[#F0F7FD]"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right-Side Carousel Controls (Counter & Arrows) */}
+          <div className="flex items-center gap-3 self-center md:self-auto">
+            <button
+              onClick={handlePrev}
+              className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-[#0A5E9D] hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer active:scale-95"
+              aria-label="Previous"
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            <span className="text-xs sm:text-sm font-medium text-slate-600 min-w-[45px] text-center tracking-wider">
+              {currentIdx + 1} / {items.length}
+            </span>
+
+            <button
+              onClick={handleNext}
+              className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-[#0A5E9D] hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer active:scale-95"
+              aria-label="Next"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* Gallery Image Display (Clean Images Without Text Overlays) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 mb-8 items-stretch w-full">
+          {/* Main Large Image (Full width on Mobile, 8 cols on Desktop) */}
+          <div
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="relative w-full h-[300px] sm:h-[550px] lg:h-[calc(100vh-160px)] lg:min-h-[650px] rounded-none overflow-hidden border-0 sm:border border-slate-200 lg:border-none shadow-lg lg:shadow-none bg-slate-100 group select-none touch-pan-y cursor-grab active:cursor-grabbing"
+            className="w-full lg:col-span-8 relative h-[300px] sm:h-[460px] md:h-[560px] lg:h-[720px] xl:h-[760px] overflow-hidden bg-slate-100 group shadow-xs touch-pan-y select-none"
           >
-            {/* Main Image */}
-            <img
-              src={items[activeIndex].url}
-              alt={`Gallery Image ${activeIndex + 1}`}
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-              style={{
-                objectPosition: customPositions[items[activeIndex].filename] || "center"
-              }}
-            />
+            {mainItem && (
+              <>
+                <img
+                  src={mainItem.url}
+                  alt={`Altura View ${currentIdx + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  style={{ objectPosition: mainItem.position }}
+                />
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={handlePrev}
-              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#1D65AD] text-white p-3 rounded-full transition-colors z-20 backdrop-blur-xs"
-              aria-label="Previous image"
-            >
-              <ChevronLeft size={28} />
-            </button>
-            <button
-              onClick={handleNext}
-              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#1D65AD] text-white p-3 rounded-full transition-colors z-20 backdrop-blur-xs"
-              aria-label="Next image"
-            >
-              <ChevronRight size={28} />
-            </button>
+                {/* Mobile Touch Swipe Arrow Overlay */}
+                <div className="lg:hidden">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrev();
+                    }}
+                    className="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#0A5E9D] text-white p-2 rounded-full backdrop-blur-xs transition-colors z-20"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNext();
+                    }}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#0A5E9D] text-white p-2 rounded-full backdrop-blur-xs transition-colors z-20"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              </>
+            )}
           </div>
 
-          {/* Row of Thumbnails (226 x 149) with increased gap */}
-          <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
-            <div 
-              ref={thumbnailsRef}
-              className="flex gap-6 pt-2 overflow-x-auto pb-4 snap-x scrollbar-hide"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {items.map((item, idx) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setActiveIndex(idx);
-                    scrollToThumbnail(idx);
-                  }}
-                  className={`relative shrink-0 w-[180px] sm:w-[226px] aspect-[226/149] rounded-none overflow-hidden border-2 transition-all group snap-start ${
-                    activeIndex === idx
-                      ? "border-[#1D65AD] ring-2 ring-[#1D65AD]/30 scale-[1.02] z-10"
-                      : "border-transparent opacity-60 hover:opacity-100"
+          {/* Right Column Stack (ONLY visible on Desktop `lg:`, hidden on mobile) */}
+          <div className="hidden lg:flex lg:col-span-4 flex-col gap-4 sm:gap-5 h-full">
+            {/* Top Right Card */}
+            {sideItem1 && (
+              <div
+                onClick={() =>
+                  handleSelectThumbnail((currentIdx + 1) % items.length)
+                }
+                className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
+              >
+                <img
+                  src={sideItem1.url}
+                  alt="Companion View 1"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  style={{ objectPosition: sideItem1.position }}
+                />
+              </div>
+            )}
+
+            {/* Bottom Right Card */}
+            {sideItem2 && (
+              <div
+                onClick={() =>
+                  handleSelectThumbnail((currentIdx + 2) % items.length)
+                }
+                className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
+              >
+                <img
+                  src={sideItem2.url}
+                  alt="Companion View 2"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  style={{ objectPosition: sideItem2.position }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Full Width Numbered Thumbnail Strip */}
+        <div
+          ref={thumbnailsRef}
+          className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 snap-x scrollbar-hide pt-2 w-full"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {items.map((item, idx) => {
+            const isSelected = currentIdx === idx;
+            return (
+              <div
+                key={`${item.id}-${idx}`}
+                onClick={() => handleSelectThumbnail(idx)}
+                className="flex-shrink-0 flex flex-col items-start cursor-pointer group snap-start"
+              >
+                <div
+                  className={`w-[130px] sm:w-[170px] md:w-[200px] lg:w-[220px] aspect-[16/10] overflow-hidden transition-all duration-200 relative ${
+                    isSelected
+                      ? "ring-2 ring-[#0A5E9D] scale-[1.02]"
+                      : "opacity-75 group-hover:opacity-100"
                   }`}
                 >
-                  <div
-                    className="absolute inset-0 bg-cover"
-                    style={{ 
-                      backgroundImage: `url('${item.url}')`,
-                      backgroundPosition: customPositions[item.filename] || "center"
-                    }}
+                  <img
+                    src={item.url}
+                    alt={`Thumbnail ${idx + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    style={{ objectPosition: item.position }}
                   />
-                </button>
-              ))}
-            </div>
-          </div>
+                </div>
+                <span
+                  className={`text-[11px] sm:text-xs mt-1.5 transition-colors ${
+                    isSelected
+                      ? "text-[#0A5E9D] font-bold"
+                      : "text-slate-400 group-hover:text-slate-600 font-light"
+                  }`}
+                >
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
