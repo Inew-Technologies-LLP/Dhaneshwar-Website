@@ -1,164 +1,199 @@
-import { Download } from "lucide-react";
+import { useState } from "react";
+import { Plus, Minus, Download } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const specCategories = [
+  {
+    num: "01",
+    title: "STRUCTURE",
+    items: [
+      "Earthquake-resistant RCC framed structure",
+      "AAC block masonry for internal and external walls",
+    ],
+  },
+  {
+    num: "02",
+    title: "FLOORING & TILING",
+    items: [
+      "1200 × 600 mm vitrified tiles in living and dining areas",
+      "1200 × 600 mm vitrified tiles in kitchen",
+      "600 × 600 mm vitrified tiles in bedrooms",
+      "Matching tile skirting",
+      "Anti-skid tiles in balconies, terraces and dry balcony",
+    ],
+  },
+  {
+    num: "03",
+    title: "KITCHEN",
+    items: [
+      "Granite kitchen platform with stainless-steel sink",
+      "Designer tile dado up to 600 mm above the platform",
+      "Provision for water purifier",
+      "Provision for ductless chimney",
+      "Convenient electrical points for kitchen appliances",
+      "Washing machine provision in utility / dry balcony",
+    ],
+  },
+  {
+    num: "04",
+    title: "BATHROOMS",
+    items: [
+      "Anti-skid tile flooring",
+      "Designer wall tiles up to lintel level",
+      "Sanitary ware and CP fittings from reputed brands",
+      "Concealed plumbing",
+      "Hot & cold water mixer",
+      "Geyser provision",
+      "Countertop wash basin with granite counter in master bathroom",
+    ],
+  },
+  {
+    num: "05",
+    title: "DOORS & WINDOWS",
+    items: [
+      "Laminated main entrance door with premium fittings",
+      "Digital lock for main entrance door*",
+      "Quality internal flush doors",
+      "Powder-coated aluminium windows",
+      "Mosquito mesh for applicable windows",
+      "Granite/stone window sills",
+      "Aluminium ventilators in bathrooms",
+    ],
+  },
+  {
+    num: "06",
+    title: "ELECTRICAL & SECURITY",
+    items: [
+      "Concealed fire-resistant copper wiring",
+      "Premium modular switches",
+      "ELCB/RCCB electrical protection",
+      "AC points in living room and bedrooms",
+      "TV points in living room and master bedroom",
+      "Exhaust fan points in bathrooms",
+      "Adequate electrical points throughout the apartment",
+      "Video door phone",
+    ],
+  },
+  {
+    num: "07",
+    title: "WALLS & FINISHES",
+    items: [
+      "Smooth internal wall finish with premium emulsion paint",
+      "POP/gypsum ceiling finish as specified",
+    ],
+  },
+];
 
 const Specification = ({ onOpenInquiry }) => {
-  const specSections = [
-    // Top-Left Quadrant
-    {
-      id: "quadrant-1",
-      columns: [
-        {
-          title: "Structure",
-          items: [
-            "Earthquake-resistant RCC framed structure",
-            "AAC block masonry for internal and external walls",
-          ],
-        },
-        {
-          title: "Flooring and Tiling",
-          items: [
-            "1200 × 600 mm vitrified tiles in living and dining areas",
-            "1200 × 600 mm vitrified tiles in kitchen",
-            "600 × 600 mm vitrified tiles in bedrooms",
-            "Matching tile skirting",
-            "Anti-skid tiles in balconies, terraces and dry balcony",
-          ],
-        },
-      ],
-    },
-    // Top-Right Quadrant
-    {
-      id: "quadrant-2",
-      columns: [
-        {
-          title: "Kitchen",
-          items: [
-            "Granite kitchen platform with stainless-steel sink",
-            "Designer tile dado up to 600 mm above the platform",
-            "Provision for water purifier",
-            "Provision for ductless chimney",
-            "Convenient electrical points for kitchen appliances",
-            "Washing machine provision in utility/dry balcony",
-          ],
-        },
-        {
-          title: "Bathrooms",
-          items: [
-            "Anti-skid tile flooring",
-            "Designer wall tiles up to lintel level",
-            "Sanitary ware and CP fittings from reputed brands",
-            "Concealed plumbing",
-            "Hot & cold water mixer",
-            "Geyser provision",
-            "Countertop wash basin with granite counter in master bathroom",
-          ],
-        },
-      ],
-    },
-    // Bottom-Left Quadrant
-    {
-      id: "quadrant-3",
-      columns: [
-        {
-          title: "Doors and Windows",
-          items: [
-            "Laminated main entrance door with premium fittings",
-            "Digital lock for main entrance door*",
-            "Quality internal flush doors",
-            "Powder-coated aluminium windows",
-            "Mosquito mesh for applicable windows",
-            "Granite/stone window sills",
-            "Aluminium ventilators in bathrooms",
-          ],
-        },
-        {
-          title: "Electrical and Security",
-          items: [
-            "Concealed fire-resistant copper wiring",
-            "Premium modular switches\nELCB/RCCB electrical protection",
-            "AC points in living room and bedrooms",
-            "TV points in living room and master bedroom",
-            "Exhaust fan points in bathrooms",
-            "Adequate electrical points throughout the apartment",
-            "Video door phone",
-          ],
-        },
-      ],
-    },
-    // Bottom-Right Quadrant
-    {
-      id: "quadrant-4",
-      columns: [
-        {
-          title: "Walls and Finishes",
-          items: [
-            "Smooth internal wall finish with premium emulsion paint",
-            "POP/gypsum ceiling finish as specified",
-          ],
-        },
-      ],
-    },
-  ];
+  const [openIndex, setOpenIndex] = useState(2); // Default open 03 KITCHEN as in mockup
+
+  const toggleSection = (idx) => {
+    setOpenIndex(openIndex === idx ? null : idx);
+  };
 
   return (
-    <section id="specification" className="py-6 sm:py-8 bg-white">
-      <div className="max-w-[1314px] mx-auto px-4 sm:px-6">
-        {/* Section Heading */}
-        <h2 className="text-3xl sm:text-4xl font-light text-[#1D65AD] text-center mb-6 sm:mb-8 tracking-tight">
-          Specification
-        </h2>
-
-        {/* 2x2 Grid Container with Divider Cross */}
-        <div className="max-w-[1240px] mx-auto relative mb-8">
-          {/* Vertical Divider Line */}
-          <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-2 bottom-2 w-px bg-slate-300" />
-
-          {/* Horizontal Divider Line */}
-          <div className="hidden lg:block absolute top-1/2 -translate-y-1/2 left-2 right-2 h-px bg-slate-300" />
-
-          {/* 4 Quadrants */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 lg:gap-y-12">
-            {specSections.map((quadrant, qIdx) => (
-              <div
-                key={quadrant.id}
-                className={`py-6 ${
-                  qIdx % 2 === 0
-                    ? "lg:pr-10 xl:pr-14"
-                    : "lg:pl-10 xl:pl-14"
-                }`}
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-6 lg:gap-8">
-                  {quadrant.columns.map((col, cIdx) => (
-                    <div key={cIdx} className="space-y-4">
-                      <h3 className="text-base sm:text-lg font-light text-slate-800 tracking-normal">
-                        {col.title}
-                      </h3>
-                      <ul className="space-y-3">
-                        {col.items.map((item, iIdx) => (
-                          <li
-                            key={iIdx}
-                            className="flex items-start gap-2.5 text-xs sm:text-sm font-light text-slate-600 leading-relaxed"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-slate-800 shrink-0 mt-1.5" />
-                            <span className="whitespace-pre-line">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+    <section id="specifications" className="py-14 sm:py-20 lg:py-24 bg-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#0A5E9D] uppercase">
+            SPECIFICATIONS
+          </span>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 mt-2 mb-4 tracking-tight">
+            Considered in Every Detail.
+          </h2>
+          <p className="text-slate-600 text-sm sm:text-base font-light leading-relaxed">
+            Thoughtfully selected materials, finishes and provisions come together to create homes designed for comfort, functionality and lasting everyday use.
+          </p>
         </div>
 
-        {/* Centered Download Brochure Button */}
+        {/* Accordion List with Framer Motion Smooth Height Animations */}
+        <div className="space-y-3 mb-12">
+          {specCategories.map((spec, idx) => {
+            const isOpen = openIndex === idx;
+            return (
+              <div
+                key={spec.num}
+                className="border-b border-slate-200 transition-colors duration-200 overflow-hidden"
+              >
+                <button
+                  onClick={() => toggleSection(idx)}
+                  className="w-full py-4.5 px-2 flex items-center justify-between text-left group cursor-pointer transition-colors select-none"
+                >
+                  <div className="flex items-center gap-4 sm:gap-6">
+                    <span className="text-xs sm:text-sm font-light text-slate-400 group-hover:text-[#0A5E9D] transition-colors">
+                      {spec.num}
+                    </span>
+                    <span className="text-sm sm:text-base font-medium tracking-wider text-slate-800 group-hover:text-[#0A5E9D] transition-colors">
+                      {spec.title}
+                    </span>
+                  </div>
+
+                  <motion.div
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-7 h-7 rounded-full border border-slate-300 group-hover:border-[#0A5E9D] flex items-center justify-center text-slate-500 group-hover:text-[#0A5E9D] transition-colors"
+                  >
+                    {isOpen ? <Minus size={14} /> : <Plus size={14} />}
+                  </motion.div>
+                </button>
+
+                {/* Animated Dropdown Height and Opacity */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key={`content-${spec.num}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                        transition: {
+                          height: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+                          opacity: { duration: 0.25, delay: 0.05 },
+                        },
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                        transition: {
+                          height: { duration: 0.25, ease: [0.16, 1, 0.3, 1] },
+                          opacity: { duration: 0.15 },
+                        },
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 sm:px-12 pb-6 pt-1">
+                        <ul className="space-y-2.5">
+                          {spec.items.map((item, itemIdx) => (
+                            <motion.li
+                              key={itemIdx}
+                              initial={{ opacity: 0, x: -6 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.2, delay: itemIdx * 0.03 }}
+                              className="flex items-start gap-3 text-xs sm:text-sm font-light text-slate-600 leading-relaxed"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#0A5E9D] shrink-0 mt-2" />
+                              <span>{item}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Download Brochure Button */}
         <div className="text-center">
           <button
-            onClick={onOpenInquiry}
-            className="group inline-flex items-center gap-2 bg-[#1D65AD] hover:bg-[#154E88] text-white px-8 py-3.5 rounded-md text-sm font-semibold transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+            onClick={() => onOpenInquiry && onOpenInquiry({ type: "brochure" })}
+            className="inline-flex items-center gap-2.5 bg-[#0A5E9D] hover:bg-[#084B7E] text-white px-8 py-3.5 text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
-            <Download size={18} className="transition-transform duration-300 group-hover:translate-y-0.5" />
-            Download Brochure
+            <Download size={16} />
+            DOWNLOAD BROCHURE
           </button>
         </div>
       </div>

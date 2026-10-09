@@ -8,19 +8,19 @@ import projects from "../data/projects";
 
 const navLinks = [
     {
-        title: "Home",
+        title: "HOME",
         href: "/",
     },
     {
-        title: "About Us",
+        title: "ABOUT US",
         href: "/about",
     },
     {
-        title: "Projects",
+        title: "PROJECTS",
         href: "/projects",
     },
     {
-        title: "Contact",
+        title: "CONTACT US",
         href: "/contact",
     },
 ];
@@ -68,15 +68,15 @@ const Navbar = () => {
                                 <li
                                     key={item.title}
                                     className="relative w-fit"
-                                    onMouseEnter={() => setShowProjects(item.title === "Projects")}
+                                    onMouseEnter={() => setShowProjects(item.href === "/projects")}
                                 >
                                     <NavLink
                                         to={item.href}
                                         onClick={() => setMenuOpen(false)}
                                         className={({ isActive }) =>
-                                            `relative inline-block text-base sm:text-[16px] font-normal transition-all duration-300 group py-1.5 md:py-1 ${isActive
-                                                ? "text-[#BFECE8] font-medium"
-                                                : "text-white hover:text-[#BFECE8]"
+                                            `relative inline-block text-xs sm:text-[13px] tracking-widest font-medium transition-all duration-300 group py-1.5 md:py-1 ${isActive
+                                                ? "text-[#BFECE8]"
+                                                : "text-white/90 hover:text-[#BFECE8]"
                                             }`
                                         }
                                     >
@@ -136,11 +136,12 @@ const Navbar = () => {
                                                     {project.city.split(",")[0]}
                                                 </p>
                                                 <p className="mt-5 max-w-[210px] text-sm leading-relaxed text-white/90">
-                                                    Description about the project, Project Image
+                                                    {project.description}
                                                 </p>
                                                 <NavLink
-                                                    to={`/projects?project=${project.id}`}
+                                                    to={project.externalLink ? project.externalLink : `/projects?project=${project.id}`}
                                                     onClick={() => setShowProjects(false)}
+                                                    {...(project.externalLink ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                                                     className="mt-5 inline-block text-sm text-white underline underline-offset-4"
                                                 >
                                                     View More
@@ -159,11 +160,12 @@ const Navbar = () => {
                         </div>
 
                         <button
-                            className="h-9 sm:h-10 rounded-sm bg-[#B08A1E] px-3.5 text-xs font-medium text-white transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 shadow-sm hover:shadow-md active:translate-y-0 sm:px-5 sm:text-sm md:h-8 md:px-8"
+                            className="h-9 sm:h-10 rounded-sm bg-[#B08A1E] px-3.5 text-xs font-medium tracking-wider text-white transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 shadow-sm hover:shadow-md active:translate-y-0 sm:px-5 sm:text-xs md:h-9 md:px-6 flex items-center gap-1.5"
                             onMouseEnter={() => setShowProjects(false)}
                             onClick={() => setShowInquiry(true)}
                         >
-                            Inquire
+                            <span>ENQUIRE</span>
+                            <span className="text-sm font-light leading-none">&rarr;</span>
                         </button>
 
                         <button

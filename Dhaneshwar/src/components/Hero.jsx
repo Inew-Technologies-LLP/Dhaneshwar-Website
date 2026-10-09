@@ -73,7 +73,7 @@ const Hero = () => {
                                         lg:leading-[60px]
                                    "
                               >
-                                   Spaces designed for better living.                              
+                                   Creating Places for Life to Flourish.                              
                               </h1>
 
                               <p
@@ -91,7 +91,26 @@ const Hero = () => {
                                         lg:leading-[30px]
                                    "
                               >
-                                   We create thoughtfully planned environments where architecture, functionality, nature and craftsmanship come together to elevate everyday life
+                                   We create thoughtfully designed environments where architecture, functionality, nature and craftsmanship come together to make everyday living better.
+                              </p>
+
+                              <p
+                                   className="
+                                        mt-3
+                                        max-w-[580px]
+                                        mx-auto
+                                        sm:mx-0
+                                        text-xs
+                                        leading-relaxed
+                                        text-white/80
+                                        sm:text-sm
+                                        md:text-[15px]
+                                        md:leading-[24px]
+                                        lg:text-[16px]
+                                        lg:leading-[26px]
+                                   "
+                              >
+                                   Our approach goes beyond creating buildings. We think about how people will live, connect and grow within the places we create.
                               </p>
                          </div>
                     </div>
