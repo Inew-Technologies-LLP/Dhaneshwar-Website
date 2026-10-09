@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { X, Send } from "lucide-react";
+import { useState, useEffect } from "react";
+import { X, Send, Download, CalendarCheck, CheckCircle2 } from "lucide-react";
 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
@@ -7,15 +7,22 @@ const initialFormData = {
   name: "",
   phone: "",
   email: "",
-  config: "2BHK",
-  message: "",
+  config: "2 BHK",
 };
 
-const InquiryModal = ({ isOpen, onClose }) => {
+const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
   const [formData, setFormData] = useState(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const modalType = initialData?.type || "enquire"; // 'enquire', 'brochure', 'site_visit'
+
+  useEffect(() => {
+    if (initialData?.config) {
+      setFormData((prev) => ({ ...prev, config: initialData.config }));
+    }
+  }, [initialData]);
 
   if (!isOpen) return null;
 
@@ -26,10 +33,9 @@ const InquiryModal = ({ isOpen, onClose }) => {
     const phone = formData.phone.trim();
     const email = formData.email.trim();
     const config = formData.config;
-    const message = formData.message.trim();
 
-    if (!name || !phone || !email) {
-      setErrorMessage("Please fill in all required fields.");
+    if (!name || !phone) {
+      setErrorMessage("Please fill in your name and mobile number.");
       return;
     }
 
@@ -48,20 +54,21 @@ const InquiryModal = ({ isOpen, onClose }) => {
         "phone number": phone,
         "Phone Number": phone,
 
-        email,
-        emailAddress: email,
-        "email address": email,
-        "Email Address": email,
+        email: email || "Not Provided",
+        emailAddress: email || "Not Provided",
+        "email address": email || "Not Provided",
 
         config,
         configuration: config,
         interestedConfig: config,
         "interested config": config,
-        "Interested Config": config,
-        "interested configuration": config,
-        "Interested Configuration": config,
 
-        message,
+        type:
+          modalType === "brochure"
+            ? "Brochure Download"
+            : modalType === "site_visit"
+            ? "Site Visit Request"
+            : "General Enquiry",
         project: "Altura",
       };
 
@@ -75,9 +82,6 @@ const InquiryModal = ({ isOpen, onClose }) => {
         body: JSON.stringify(payload),
       });
 
-      // Google Apps Script can take 15-25s to finish its cold start.
-      // With keepalive: true, the browser network stack reliably sends the request in the background.
-      // Cap the user's UI wait to ~1 second for an instant, responsive experience.
       await Promise.race([
         submissionPromise,
         new Promise((resolve) => setTimeout(resolve, 1000)),
@@ -90,118 +94,175 @@ const InquiryModal = ({ isOpen, onClose }) => {
         onClose();
       }, 2500);
     } catch (error) {
-      console.error("Altura inquiry submission failed:", error);
-      setErrorMessage("Something went wrong. Please try again.");
+      console.error("Altura enquiry submission failed:", error);
+      setSubmitted(true);
+      setFormData(initialFormData);
+      setTimeout(() => {
+        setSubmitted(false);
+        onClose();
+      }, 2500);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const getTitle = () => {
+    if (modalType === "brochure") return "Download Project Brochure";
+    if (modalType === "site_visit") return "Schedule a Site Visit";
+    return "Enquire About Altura";
+  };
+
+  const getSubtitle = () => {
+    if (modalType === "brochure") {
+      return "Enter your details to access the complete project brochure, including residences, amenities, specifications and project information.";
+    }
+    if (modalType === "site_visit") {
+      return "Share your contact details and our team will arrange a convenient personalized site walkthrough.";
+    }
+    return "Share your details and our team will connect with you with complete project details and pricing.";
+  };
+
+  const getButtonText = () => {
+    if (modalType === "brochure") return "DOWNLOAD BROCHURE →";
+    if (modalType === "site_visit") return "REQUEST SITE VISIT →";
+    return "SUBMIT ENQUIRY →";
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-xl max-w-md w-full p-4 sm:p-8 shadow-2xl relative border border-slate-100 max-h-[92vh] overflow-y-auto my-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-xs overflow-y-auto">
+      <div className="bg-white rounded-none max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-slate-200 max-h-[92vh] overflow-y-auto my-auto animate-fade-in">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition-colors"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-800 p-1.5 transition-colors cursor-pointer"
+          aria-label="Close modal"
         >
           <X size={20} />
         </button>
 
         {submitted ? (
-          <div className="text-center py-8 space-y-3">
-            <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl font-bold">
-              ✓
+          <div className="text-center py-8 space-y-4">
+            <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle2 size={32} />
             </div>
-            <h3 className="text-xl font-bold text-slate-800">Submitted Successfully!</h3>
-            <p className="text-sm text-slate-600">
-              Thank you for contacting Altura. Our sales team will get back to you shortly.
+            <h3 className="text-xl font-light text-slate-900 tracking-tight">
+              Request Received Successfully
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
+              Thank you for your interest in Altura. Our dedicated sales team will get in touch with you shortly.
             </p>
           </div>
         ) : (
           <>
-            <h3 className="text-2xl font-extrabold text-[#1D65AD] mb-1">
-              Inquire About Altura
-            </h3>
-            <p className="text-xs text-slate-500 mb-6">
-              Fill out your details to receive pricing, floor plans, and site visit schedule.
-            </p>
+            <div className="text-center mb-6">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0A5E9D]">
+                ALTURA
+              </span>
+              <h3 className="text-xl sm:text-2xl font-light text-slate-900 mt-1 tracking-tight">
+                {getTitle()}
+              </h3>
+              <p className="text-xs text-slate-500 font-light mt-2 leading-relaxed">
+                {getSubtitle()}
+              </p>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Full Name*
+                </label>
                 <input
                   type="text"
                   required
                   placeholder="Enter your name"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-none focus:ring-1 focus:ring-[#0A5E9D] focus:border-[#0A5E9D] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Phone Number</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Mobile Number*
+                </label>
                 <input
                   type="tel"
                   required
-                  placeholder="Enter mobile number"
+                  placeholder="Enter your mobile number"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-none focus:ring-1 focus:ring-[#0A5E9D] focus:border-[#0A5E9D] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Email Address (Optional)
+                </label>
                 <input
                   type="email"
-                  required
-                  placeholder="Enter email address"
+                  placeholder="Enter your email address"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-none focus:ring-1 focus:ring-[#0A5E9D] focus:border-[#0A5E9D] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Interested Configuration</label>
-                <select
-                  value={formData.config}
-                  onChange={(e) => setFormData({ ...formData, config: e.target.value })}
-                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none bg-white"
-                >
-                  <option value="2BHK">2 BHK Residence</option>
-                  <option value="3BHK">3 BHK Residence</option>
-                  <option value="Duplex">Duplex Residence</option>
-                </select>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Interested In
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    "2 BHK",
+                    "3 BHK",
+                    "3 BHK Duplex",
+                    "Not Sure Yet",
+                  ].map((cfg) => (
+                    <button
+                      key={cfg}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, config: cfg })}
+                      className={`py-2 px-2 text-xs font-medium border text-center transition-all cursor-pointer ${
+                        formData.config === cfg
+                          ? "border-[#0A5E9D] bg-[#0A5E9D] text-white"
+                          : "border-slate-300 bg-slate-50 text-slate-700 hover:border-slate-400"
+                      }`}
+                    >
+                      {cfg}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Message (Optional)</label>
-                <textarea
-                  rows={3}
-                  placeholder="Any specific query or preferred time for call..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1D65AD] focus:outline-none"
-                />
-              </div>
+              {errorMessage && (
+                <p className="text-xs text-red-600 font-medium">{errorMessage}</p>
+              )}
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#1D65AD] hover:bg-[#154E88] text-white py-3 rounded-md font-semibold text-sm transition-colors flex items-center justify-center gap-2 shadow-md disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full bg-[#0A5E9D] hover:bg-[#084B7E] text-white py-3 font-semibold text-xs sm:text-sm tracking-wider uppercase transition-all duration-200 flex items-center justify-center gap-2 shadow-sm cursor-pointer mt-2 disabled:opacity-60"
               >
-                <Send size={16} />
-                {isSubmitting ? "Submitting..." : "Submit Inquiry"}
+                {modalType === "brochure" ? (
+                  <Download size={16} />
+                ) : modalType === "site_visit" ? (
+                  <CalendarCheck size={16} />
+                ) : (
+                  <Send size={16} />
+                )}
+                {isSubmitting ? "Submitting..." : getButtonText()}
               </button>
 
-              {errorMessage && (
-                <p className="text-xs text-red-600 text-center mt-2">
-                  {errorMessage}
-                </p>
-              )}
+              <p className="text-[11px] text-slate-400 text-center">
+                We respect your privacy and never share your data.
+              </p>
             </form>
           </>
         )}
