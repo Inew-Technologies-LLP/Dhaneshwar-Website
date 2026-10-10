@@ -8,6 +8,7 @@ const initialFormData = {
   phone: "",
   email: "",
   config: "2 BHK",
+  date: "",
 };
 
 const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
@@ -33,9 +34,14 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
     const phone = formData.phone.trim();
     const email = formData.email.trim();
     const config = formData.config;
+    const date = formData.date;
 
-    if (!name || !phone) {
-      setErrorMessage("Please fill in your name and mobile number.");
+    if (!name || !phone || (modalType === "site_visit" && !date)) {
+      setErrorMessage(
+        modalType === "site_visit" && !date
+          ? "Please select your preferred visit date."
+          : "Please fill in your name and mobile number."
+      );
       return;
     }
 
@@ -62,6 +68,14 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
         configuration: config,
         interestedConfig: config,
         "interested config": config,
+
+        ...(modalType === "site_visit" && {
+          date,
+          visitDate: date,
+          "visit date": date,
+          "Visit Date": date,
+          "Preferred Date": date,
+        }),
 
         type:
           modalType === "brochure"
@@ -117,7 +131,7 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
       return "Enter your details to access the complete project brochure, including residences, amenities, specifications and project information.";
     }
     if (modalType === "site_visit") {
-      return "Share your contact details and our team will arrange a convenient personalized site walkthrough.";
+      return "Share your contact details and preferred date, and our team will arrange a convenient personalized site walkthrough.";
     }
     return "Share your details and our team will connect with you with complete project details and pricing.";
   };
@@ -214,6 +228,24 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
                 />
               </div>
 
+              {modalType === "site_visit" && (
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Preferred Visit Date*
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    min={new Date().toISOString().split("T")[0]}
+                    value={formData.date}
+                    onChange={(e) =>
+                      setFormData({ ...formData, date: e.target.value })
+                    }
+                    className="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-none focus:ring-1 focus:ring-[#0A5E9D] focus:border-[#0A5E9D] focus:outline-none"
+                  />
+                </div>
+              )}
+
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1">
                   Interested In
@@ -222,7 +254,7 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
                   {[
                     "2 BHK",
                     "3 BHK",
-                    "3 BHK Duplex",
+                    "3.5 BHK Duplex",
                     "Not Sure Yet",
                   ].map((cfg) => (
                     <button
@@ -259,10 +291,6 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
                 )}
                 {isSubmitting ? "Submitting..." : getButtonText()}
               </button>
-
-              <p className="text-[11px] text-slate-400 text-center">
-                We respect your privacy and never share your data.
-              </p>
             </form>
           </>
         )}

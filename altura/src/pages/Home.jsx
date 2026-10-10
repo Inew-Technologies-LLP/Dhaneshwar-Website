@@ -43,6 +43,7 @@ const Home = () => {
   };
 
   const handleOpenFloorPlan = (config = "2 BHK") => {
+    setIsFloorPlanUnlocked(false);
     setFloorPlanState({
       isOpen: true,
       selectedConfig: config,
@@ -51,6 +52,7 @@ const Home = () => {
 
   const handleCloseFloorPlan = () => {
     setFloorPlanState((prev) => ({ ...prev, isOpen: false }));
+    setIsFloorPlanUnlocked(false);
   };
 
   const handleUnlockFloorPlan = () => {
@@ -73,10 +75,7 @@ const Home = () => {
         {/* 4. Residences (Flat Config) Section */}
         <Residences onOpenFloorPlan={handleOpenFloorPlan} />
 
-        {/* 5. Feature Banner */}
-        <FeatureBanner />
-
-        {/* 6. Designed With Purpose (Architects Note) Section */}
+        {/* 5. Designed With Purpose (Architects Note) Section (50/50 Split with Image) */}
         <ArchitectsNote />
 
         {/* 7. Amenities Section */}

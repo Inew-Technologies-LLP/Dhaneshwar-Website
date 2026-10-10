@@ -1,4 +1,4 @@
-import elevationBg from "../images/webp gallary/01_Altura1.webp";
+import elevationBg from "../images/Main Building/ALTURA 01.webp";
 
 const VisitAltura = ({ onOpenInquiry }) => {
   return (
@@ -29,17 +29,17 @@ const VisitAltura = ({ onOpenInquiry }) => {
         </p>
 
         {/* Action Buttons */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5">
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-5">
           <button
             onClick={() => onOpenInquiry && onOpenInquiry({ type: "site_visit" })}
-            className="w-full sm:w-auto px-7 py-3.5 bg-white hover:bg-slate-100 text-[#0A5E9D] font-semibold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="w-[225px] sm:w-[240px] flex items-center justify-center py-2.5 sm:py-3.5 bg-white hover:bg-slate-100 text-[#0A5E9D] font-semibold text-[11px] sm:text-sm tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             SCHEDULE A SITE VISIT →
           </button>
 
           <button
             onClick={() => onOpenInquiry && onOpenInquiry({ type: "enquire" })}
-            className="w-full sm:w-auto px-7 py-3.5 bg-[#0A5E9D] hover:bg-[#084B7E] text-white border border-white/20 font-semibold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="w-[225px] sm:w-[240px] flex items-center justify-center py-2.5 sm:py-3.5 bg-[#0A5E9D] hover:bg-[#084B7E] text-white border border-white/20 font-semibold text-[11px] sm:text-sm tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             ENQUIRE NOW →
           </button>

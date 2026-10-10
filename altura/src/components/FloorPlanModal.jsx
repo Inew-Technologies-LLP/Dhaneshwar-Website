@@ -1,74 +1,193 @@
-import { useState, useEffect } from "react";
-import { X, CheckCircle2 } from "lucide-react";
-import apartment1 from "../images/apartment1.png";
-import apartment2 from "../images/apartment2.png";
-import apartment3 from "../images/apartment3.png";
+import { useState, useEffect, useRef } from "react";
+import { X, ChevronLeft, ChevronRight, ShieldAlert } from "lucide-react";
+
+import * as pdfjsLib from "pdfjs-dist";
+
+// Import 4 PDFs from flat_layouts folder
+import pdf2BHK from "../flat_layouts/260810_UNIT LAYOUTS-2BHK.pdf";
+import pdf3BHK from "../flat_layouts/260810_UNIT LAYOUTS-3BHK.pdf";
+import pdfDuplexL1 from "../flat_layouts/260810_UNIT LAYOUTS-DUPLEX L1.pdf";
+import pdfDuplexL2 from "../flat_layouts/260810_UNIT LAYOUTS-DUPLEX L2.pdf";
+
+// Configure worker src with unpkg CDN for pdfjs-dist
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version || "6.4.299"}/build/pdf.worker.min.mjs`;
 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
 
 const floorPlanData = {
   "2 BHK": {
-    name: "2 BHK Residence",
-    tagline: "Thoughtfully planned. Effortlessly liveable.",
-    carpetArea: "710 - 745 sq.ft.",
-    features: [
-      "Spacious living and dining with attached balcony",
-      "Well-ventilated master bedroom with ensuite bath",
-      "Functional kitchen with dedicated utility / dry balcony",
-      "Optimal privacy with zero wastage layout",
-    ],
-    image: apartment1,
-    rooms: [
-      { label: "Living & Dining", dim: "16'0\" × 10'6\"" },
-      { label: "Master Bedroom", dim: "12'0\" × 11'0\"" },
-      { label: "Bedroom 2", dim: "11'0\" × 10'0\"" },
-      { label: "Kitchen", dim: "9'0\" × 7'6\"" },
-      { label: "Balcony", dim: "10'6\" × 4'6\"" },
+    name: "2 BHK Unit Layout",
+    pdfs: [
+      { id: "2bhk", title: "2 BHK Unit Layout", levelLabel: "2 BHK Layout", url: pdf2BHK }
     ],
   },
   "3 BHK": {
-    name: "3 BHK Residence",
-    tagline: "More room for life.",
-    carpetArea: "960 - 1040 sq.ft.",
-    features: [
-      "Expansive living area with panoramic view balcony",
-      "Two master suites with dedicated attached bathrooms",
-      "Large modern kitchen layout with separate dry terrace",
-      "Cross-ventilation and natural daylight in all corners",
-    ],
-    image: apartment2,
-    rooms: [
-      { label: "Living & Dining", dim: "20'0\" × 12'0\"" },
-      { label: "Master Bedroom 1", dim: "13'6\" × 11'6\"" },
-      { label: "Master Bedroom 2", dim: "12'0\" × 11'0\"" },
-      { label: "Bedroom 3", dim: "11'0\" × 10'0\"" },
-      { label: "Kitchen & Utility", dim: "11'0\" × 8'0\"" },
+    name: "3 BHK Unit Layout",
+    pdfs: [
+      { id: "3bhk", title: "3 BHK Unit Layout", levelLabel: "3 BHK Layout", url: pdf3BHK }
     ],
   },
-  "3 BHK Duplex": {
-    name: "3 BHK Duplex Home",
-    tagline: "Two levels. One exceptional sense of home.",
-    carpetArea: "1350 - 1480 sq.ft.",
-    features: [
-      "Double-height living space with grand architectural feel",
-      "Private upper-level family lounge & master retreats",
-      "Select penthouse units with oversized private terraces",
-      "Exclusive low-density layout with 3-side open views",
-    ],
-    image: apartment3,
-    rooms: [
-      { label: "Double-Height Living", dim: "22'0\" × 14'0\"" },
-      { label: "Lower Guest Suite", dim: "12'6\" × 11'0\"" },
-      { label: "Upper Master Suite", dim: "15'0\" × 13'0\"" },
-      { label: "Upper Bedroom 2", dim: "12'6\" × 11'6\"" },
-      { label: "Private Terrace Deck", dim: "14'0\" × 8'0\"" },
+  "3.5 BHK Duplex": {
+    name: "3.5 BHK Duplex Layout",
+    pdfs: [
+      { id: "duplex_l1", title: "Duplex Level 1 (L1)", levelLabel: "Level 1 (L1)", url: pdfDuplexL1 },
+      { id: "duplex_l2", title: "Duplex Level 2 (L2)", levelLabel: "Level 2 (L2)", url: pdfDuplexL2 }
     ],
   },
+};
+
+// Canvas page renderer
+const PdfPageCanvas = ({ page }) => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    let renderTask = null;
+    const canvas = canvasRef.current;
+    if (!canvas || !page) return;
+
+    const context = canvas.getContext("2d");
+    const pixelRatio = window.devicePixelRatio || 1;
+    const containerWidth = canvas.parentElement ? canvas.parentElement.clientWidth - 16 : 1000;
+    const unscaledViewport = page.getViewport({ scale: 1.0 });
+    const scale = Math.min(Math.max((containerWidth / unscaledViewport.width) * pixelRatio, 1.2), 3.5);
+    
+    const viewport = page.getViewport({ scale });
+
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    canvas.style.width = `${viewport.width / pixelRatio}px`;
+    canvas.style.height = `${viewport.height / pixelRatio}px`;
+
+    const renderContext = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+
+    renderTask = page.render(renderContext);
+    renderTask.promise.catch((err) => {
+      if (err.name !== "RenderingCancelledException") {
+        console.error("Canvas render error:", err);
+      }
+    });
+
+    return () => {
+      if (renderTask) {
+        renderTask.cancel();
+      }
+    };
+  }, [page]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+      className="max-w-full h-auto object-contain shadow-xs select-none my-1 pointer-events-none rounded-none border border-slate-200/80"
+    />
+  );
+};
+
+// Protected PDF Viewer Component
+const PdfCanvasViewer = ({ pdfUrl }) => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [pages, setPages] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+    setError(false);
+    setErrorMessage("");
+    setPages([]);
+
+    const loadPdf = async () => {
+      try {
+        let loadingTask;
+        if (typeof pdfUrl === "string") {
+          const res = await fetch(pdfUrl);
+          if (!res.ok) throw new Error(`HTTP error ${res.status} fetching PDF file`);
+          const arrayBuffer = await res.arrayBuffer();
+          loadingTask = pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) });
+        } else {
+          loadingTask = pdfjsLib.getDocument(pdfUrl);
+        }
+
+        const pdf = await loadingTask.promise;
+        if (!isMounted) return;
+
+        const pagePromises = [];
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          pagePromises.push(pdf.getPage(pageNum));
+        }
+        const loadedPages = await Promise.all(pagePromises);
+        if (isMounted) {
+          setPages(loadedPages);
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error("Error loading PDF layout:", err);
+        if (isMounted) {
+          setError(true);
+          setErrorMessage(err?.message || "Error processing PDF canvas.");
+          setLoading(false);
+        }
+      }
+    };
+
+    if (pdfUrl) {
+      loadPdf();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [pdfUrl]);
+
+  return (
+    <div
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+      className="relative w-full flex flex-col items-center justify-center min-h-[340px] sm:min-h-[420px] bg-[#F8FAFC] border border-slate-200 select-none overflow-hidden p-2 sm:p-4 rounded-none"
+    >
+      {loading && (
+        <div className="flex flex-col items-center justify-center p-12 text-slate-500 space-y-3">
+          <div className="w-8 h-8 border-3 border-[#0A5E9D] border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs font-medium tracking-wide uppercase text-slate-600">
+            Rendering Unit Layout PDF...
+          </span>
+        </div>
+      )}
+
+      {error && (
+        <div className="text-center p-8 text-slate-500 space-y-2">
+          <p className="text-sm font-semibold text-slate-700">Unable to load unit layout PDF.</p>
+          <p className="text-xs text-slate-500">{errorMessage || "Please try refreshing or contact our sales team."}</p>
+        </div>
+      )}
+
+      {!loading && !error && (
+        <div className="w-full flex flex-col items-center justify-center overflow-y-auto max-h-[65vh] scrollbar-thin">
+          {pages.map((page, index) => (
+            <PdfPageCanvas key={index} page={page} />
+          ))}
+        </div>
+      )}
+
+      {/* Security Overlay to prevent right-click / drag / saving */}
+      <div
+        className="absolute inset-0 z-20 bg-transparent select-none"
+        onContextMenu={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
+      />
+    </div>
+  );
 };
 
 const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked = false, onUnlockSuccess }) => {
   const [currentConfig, setCurrentConfig] = useState(selectedConfig);
   const [unlocked, setUnlocked] = useState(isUnlocked);
+  const [activePdfIndex, setActivePdfIndex] = useState(0);
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
@@ -79,8 +198,8 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
   useEffect(() => {
     if (selectedConfig) {
       if (selectedConfig.includes("Duplex") || selectedConfig === "Duplex") {
-        setCurrentConfig("3 BHK Duplex");
-        setInterestedIn("3 BHK Duplex");
+        setCurrentConfig("3.5 BHK Duplex");
+        setInterestedIn("3.5 BHK Duplex");
       } else if (selectedConfig.includes("3")) {
         setCurrentConfig("3 BHK");
         setInterestedIn("3 BHK");
@@ -92,8 +211,66 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
   }, [selectedConfig]);
 
   useEffect(() => {
-    setUnlocked(isUnlocked);
-  }, [isUnlocked]);
+    setName("");
+    setMobile("");
+    setEmail("");
+    setErrorMessage("");
+    if (!isOpen) {
+      setUnlocked(false);
+    } else {
+      setUnlocked(isUnlocked);
+    }
+  }, [isOpen, isUnlocked]);
+
+  // Reset active PDF index whenever configuration changes
+  useEffect(() => {
+    setActivePdfIndex(0);
+  }, [currentConfig]);
+
+  // Strict shortcut protection (Disable Print, Save, Inspect, Select All)
+  useEffect(() => {
+    if (!isOpen || !unlocked) return;
+
+    const handleKeyDown = (e) => {
+      // Disable Ctrl+P / Cmd+P
+      if ((e.ctrlKey || e.metaKey) && (e.key === "p" || e.key === "P")) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      // Disable Ctrl+S / Cmd+S
+      if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "S")) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      // Disable Ctrl+U / Cmd+U
+      if ((e.ctrlKey || e.metaKey) && (e.key === "u" || e.key === "U")) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      // Disable Ctrl+Shift+I / Cmd+Option+I / F12
+      if (
+        e.key === "F12" ||
+        ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === "I" || e.key === "i")) ||
+        ((e.ctrlKey || e.metaKey) && e.altKey && (e.key === "i" || e.key === "I"))
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+      // Disable Ctrl+A / Cmd+A
+      if ((e.ctrlKey || e.metaKey) && (e.key === "a" || e.key === "A")) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown, true);
+    return () => window.removeEventListener("keydown", handleKeyDown, true);
+  }, [isOpen, unlocked]);
 
   if (!isOpen) return null;
 
@@ -121,6 +298,9 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
         type: "Floor Plan Request",
         project: "Altura",
       };
+
+      // Set configuration to user selection strictly
+      setCurrentConfig(interestedIn);
 
       const submissionPromise = fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
@@ -153,22 +333,42 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
   };
 
   const activePlan = floorPlanData[currentConfig] || floorPlanData["2 BHK"];
+  const currentPdf = activePlan.pdfs[activePdfIndex] || activePlan.pdfs[0];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/70 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white rounded-none max-w-4xl w-full p-5 sm:p-8 shadow-2xl relative border border-slate-200 max-h-[94vh] overflow-y-auto my-auto animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-xs overflow-y-auto select-none"
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+    >
+      {/* Dynamic print blocking CSS */}
+      {unlocked && (
+        <style>{`
+          @media print {
+            body { display: none !important; }
+          }
+        `}</style>
+      )}
+
+      <div
+        className={`bg-white rounded-none w-full shadow-2xl relative border border-slate-200 overflow-y-auto my-auto animate-fade-in ${
+          !unlocked
+            ? "max-w-md p-6 sm:p-8 max-h-[92vh]"
+            : "max-w-3xl lg:max-w-4xl p-4 sm:p-6 max-h-[90vh]"
+        }`}
+      >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-800 p-1.5 transition-colors cursor-pointer z-10"
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-800 p-1.5 transition-colors cursor-pointer z-30"
           aria-label="Close modal"
         >
           <X size={22} />
         </button>
 
         {!unlocked ? (
-          /* Lead Gatekeeper Pop-up as per Feedback */
-          <div className="max-w-lg mx-auto py-2 sm:py-4">
+          /* Lead Gatekeeper Pop-up */
+          <div className="w-full">
             <div className="text-center mb-6">
               <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0A5E9D]">
                 Altura Residences
@@ -228,7 +428,7 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
                   Interested In:
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {["2 BHK", "3 BHK", "3 BHK Duplex"].map((cfg) => (
+                  {["2 BHK", "3 BHK", "3.5 BHK Duplex"].map((cfg) => (
                     <button
                       key={cfg}
                       type="button"
@@ -259,105 +459,77 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
               >
                 {isSubmitting ? "UNLOCKING..." : "VIEW FLOOR PLAN →"}
               </button>
-
-              <p className="text-[11px] text-slate-400 text-center">
-                Instant access. We respect your privacy.
-              </p>
             </form>
           </div>
         ) : (
-          /* Unlocked Instant Floor Plan Viewer */
-          <div className="space-y-6">
-            {/* Header & Tabs */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+          /* Unlocked Protected PDF Floor Plan Viewer Only */
+          <div className="space-y-3">
+            {/* Header Title */}
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3 pr-8">
               <div>
                 <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0A5E9D]">
-                  Floor Plans &amp; Layouts
+                  Official Architectural Layout
                 </span>
-                <h3 className="text-2xl font-light text-slate-900 tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-light text-slate-900 tracking-tight">
                   {activePlan.name}
                 </h3>
-                <p className="text-xs text-slate-500">{activePlan.tagline}</p>
               </div>
-
-              {/* Configuration Switcher */}
-              <div className="flex items-center gap-1 bg-slate-100 p-1 border border-slate-200">
-                {Object.keys(floorPlanData).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => setCurrentConfig(key)}
-                    className={`px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer ${
-                      currentConfig === key
-                        ? "bg-[#0A5E9D] text-white shadow-xs"
-                        : "text-slate-600 hover:text-slate-900"
-                    }`}
-                  >
-                    {key}
-                  </button>
-                ))}
+              <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium bg-slate-100 px-3 py-1 border border-slate-200">
+                <ShieldAlert size={14} className="text-[#0A5E9D]" />
+                <span>Protected Viewer</span>
               </div>
             </div>
 
-            {/* Layout Grid: Image Viewer + Details */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              {/* Floor Plan Image Canvas */}
-              <div className="lg:col-span-7 bg-[#F9FBFC] border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[320px] relative group">
-                <img
-                  src={activePlan.image}
-                  alt={`${activePlan.name} Floor Plan`}
-                  className="max-h-[320px] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="mt-4 text-center">
-                  <span className="text-[11px] text-slate-400">
-                    *Schematic representation. Dimensions subject to construction tolerances.
-                  </span>
+            {/* Level / PDF Navigation Controls for Duplex (with Arrows) */}
+            {activePlan.pdfs.length > 1 && (
+              <div className="flex items-center justify-between bg-[#F0F7FD] p-2 border border-[#BADFFB] rounded-none">
+                <button
+                  onClick={() =>
+                    setActivePdfIndex((prev) =>
+                      prev > 0 ? prev - 1 : activePlan.pdfs.length - 1
+                    )
+                  }
+                  className="p-1.5 rounded-full bg-white border border-slate-300 hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer flex items-center justify-center"
+                  aria-label="Previous Level"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+
+                <div className="flex items-center gap-2">
+                  {activePlan.pdfs.map((pdf, idx) => (
+                    <button
+                      key={pdf.id}
+                      onClick={() => setActivePdfIndex(idx)}
+                      className={`px-4 py-1 text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                        activePdfIndex === idx
+                          ? "bg-[#0A5E9D] text-white shadow-xs"
+                          : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
+                      }`}
+                    >
+                      {pdf.levelLabel || `Level ${idx + 1}`}
+                    </button>
+                  ))}
                 </div>
+
+                <button
+                  onClick={() =>
+                    setActivePdfIndex((prev) =>
+                      prev < activePlan.pdfs.length - 1 ? prev + 1 : 0
+                    )
+                  }
+                  className="p-1.5 rounded-full bg-white border border-slate-300 hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer flex items-center justify-center"
+                  aria-label="Next Level"
+                >
+                  <ChevronRight size={18} />
+                </button>
               </div>
+            )}
 
-              {/* Plan Specifications & Highlights */}
-              <div className="lg:col-span-5 space-y-4">
-                <div className="bg-[#F0F7FD] p-4 border-l-3 border-[#0A5E9D]">
-                  <p className="text-xs text-slate-500 uppercase tracking-wider">Estimated Carpet Area</p>
-                  <p className="text-lg font-bold text-slate-900">{activePlan.carpetArea}</p>
-                </div>
+            {/* Full-width PDF Canvas Renderer */}
+            <PdfCanvasViewer pdfUrl={currentPdf.url} />
 
-                <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-                    Key Highlights
-                  </h4>
-                  <ul className="space-y-2">
-                    {activePlan.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 leading-relaxed">
-                        <CheckCircle2 size={14} className="text-[#0A5E9D] shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-2 border-t border-slate-100">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-                    Approximate Dimensions
-                  </h4>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    {activePlan.rooms.map((room, idx) => (
-                      <div key={idx} className="bg-slate-50 p-2 border border-slate-200/60">
-                        <p className="text-slate-500 text-[11px]">{room.label}</p>
-                        <p className="font-semibold text-slate-800">{room.dim}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <button
-                    onClick={onClose}
-                    className="w-full bg-[#0A5E9D] hover:bg-[#084B7E] text-white py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer text-center"
-                  >
-                    Close Viewer
-                  </button>
-                </div>
-              </div>
+            <div className="text-center text-[11px] text-slate-400 pt-1">
+              *Official architectural unit layout representation for {currentConfig}. Downloading and printing disabled.
             </div>
           </div>
         )}

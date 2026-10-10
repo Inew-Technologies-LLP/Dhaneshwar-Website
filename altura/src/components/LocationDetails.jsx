@@ -5,13 +5,10 @@ const LocationDetails = () => {
   const embedUrl = "https://maps.google.com/maps?q=18.674055,73.885872&t=&z=16&ie=UTF8&iwloc=&output=embed";
 
   return (
-    <section id="location" className="px-3 pb-8 sm:px-6 sm:pb-12 lg:px-9 lg:pb-16 pt-4 sm:pt-6 bg-white">
+    <section id="location" className="px-3 pb-8 sm:px-6 sm:pb-12 lg:px-9 lg:pb-16 pt-0 bg-white">
       <div className="mx-auto max-w-[1440px] overflow-hidden">
-        {/* Header matching Dhaneshwar site */}
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-xl font-medium text-[#192B3C] sm:text-2xl">
-            Location &amp; Directions
-          </h3>
+        {/* Directions Link */}
+        <div className="mb-3 flex items-center justify-end">
           <a
             href={mapUrl}
             target="_blank"

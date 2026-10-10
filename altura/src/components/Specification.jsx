@@ -1,10 +1,21 @@
 import { useState } from "react";
-import { Plus, Minus, Download } from "lucide-react";
+import {
+  Plus,
+  Minus,
+  Download,
+  Building2,
+  Grid,
+  Utensils,
+  Bath,
+  DoorClosed,
+  Zap,
+  Paintbrush,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const specCategories = [
   {
-    num: "01",
+    icon: Building2,
     title: "STRUCTURE",
     items: [
       "Earthquake-resistant RCC framed structure",
@@ -12,7 +23,7 @@ const specCategories = [
     ],
   },
   {
-    num: "02",
+    icon: Grid,
     title: "FLOORING & TILING",
     items: [
       "1200 × 600 mm vitrified tiles in living and dining areas",
@@ -23,7 +34,7 @@ const specCategories = [
     ],
   },
   {
-    num: "03",
+    icon: Utensils,
     title: "KITCHEN",
     items: [
       "Granite kitchen platform with stainless-steel sink",
@@ -35,7 +46,7 @@ const specCategories = [
     ],
   },
   {
-    num: "04",
+    icon: Bath,
     title: "BATHROOMS",
     items: [
       "Anti-skid tile flooring",
@@ -48,7 +59,7 @@ const specCategories = [
     ],
   },
   {
-    num: "05",
+    icon: DoorClosed,
     title: "DOORS & WINDOWS",
     items: [
       "Laminated main entrance door with premium fittings",
@@ -61,7 +72,7 @@ const specCategories = [
     ],
   },
   {
-    num: "06",
+    icon: Zap,
     title: "ELECTRICAL & SECURITY",
     items: [
       "Concealed fire-resistant copper wiring",
@@ -75,7 +86,7 @@ const specCategories = [
     ],
   },
   {
-    num: "07",
+    icon: Paintbrush,
     title: "WALLS & FINISHES",
     items: [
       "Smooth internal wall finish with premium emulsion paint",
@@ -85,14 +96,14 @@ const specCategories = [
 ];
 
 const Specification = ({ onOpenInquiry }) => {
-  const [openIndex, setOpenIndex] = useState(2); // Default open 03 KITCHEN as in mockup
+  const [openIndex, setOpenIndex] = useState(null); // All accordions closed by default
 
   const toggleSection = (idx) => {
     setOpenIndex(openIndex === idx ? null : idx);
   };
 
   return (
-    <section id="specifications" className="py-14 sm:py-20 lg:py-24 bg-white">
+    <section id="specifications" className="py-14 sm:py-20 lg:py-24 bg-[#F2F7FB] border-y border-[#D6E6F5]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
@@ -111,9 +122,10 @@ const Specification = ({ onOpenInquiry }) => {
         <div className="space-y-3 mb-12">
           {specCategories.map((spec, idx) => {
             const isOpen = openIndex === idx;
+            const Icon = spec.icon;
             return (
               <div
-                key={spec.num}
+                key={spec.title}
                 className="border-b border-slate-200 transition-colors duration-200 overflow-hidden"
               >
                 <button
@@ -121,9 +133,7 @@ const Specification = ({ onOpenInquiry }) => {
                   className="w-full py-4.5 px-2 flex items-center justify-between text-left group cursor-pointer transition-colors select-none"
                 >
                   <div className="flex items-center gap-4 sm:gap-6">
-                    <span className="text-xs sm:text-sm font-light text-slate-400 group-hover:text-[#0A5E9D] transition-colors">
-                      {spec.num}
-                    </span>
+                    <Icon size={20} className="text-[#0A5E9D] group-hover:text-[#084B7E] transition-colors shrink-0" />
                     <span className="text-sm sm:text-base font-medium tracking-wider text-slate-800 group-hover:text-[#0A5E9D] transition-colors">
                       {spec.title}
                     </span>
