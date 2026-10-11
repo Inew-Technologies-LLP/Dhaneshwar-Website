@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const faqData = [
   {
     q: "1. What home configurations are available at Altura?",
-    a: "Altura offers 2 BHK and 3 BHK residences, along with select 3 BHK duplex homes designed for those looking for a more expansive living experience.",
+    a: "Altura offers 2 BHK and 3 BHK residences, along with select 3.5 BHK duplex homes designed for those looking for a more expansive living experience.",
   },
   {
     q: "2. Where exactly is Altura located?",

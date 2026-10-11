@@ -17,8 +17,8 @@ const Residences = ({ onOpenFloorPlan }) => {
       image: apartment2,
     },
     {
-      type: "3 BHK Duplex",
-      title: "3 BHK DUPLEX",
+      type: "3.5 BHK Duplex",
+      title: "3.5 BHK DUPLEX",
       tagline: "Two levels. One exceptional sense of home.",
       image: apartment3,
     },
