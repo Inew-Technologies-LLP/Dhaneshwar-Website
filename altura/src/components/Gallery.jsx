@@ -1,8 +1,8 @@
 import { useState, useRef, useMemo } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Automatically import all images from webp gallery folder
-const imageModules = import.meta.glob("../images/webp gallary/*.{webp,png,jpg,jpeg}", {
+// Automatically import all images from images folder
+const imageModules = import.meta.glob("../images/**/*.{webp,png,jpg,jpeg}", {
   eager: true,
   import: "default",
 });
@@ -11,7 +11,7 @@ const galleryItemsData = [
   {
     id: 1,
     num: "01",
-    filename: "01_Altura1.webp",
+    filename: "ALTURA 01.webp",
     categories: ["ARCHITECTURE"],
     position: "center 30%",
   },
@@ -32,7 +32,7 @@ const galleryItemsData = [
   {
     id: 4,
     num: "04",
-    filename: "02_Altura.webp",
+    filename: "ALTURA 02.webp",
     categories: ["ARCHITECTURE"],
     position: "center 30%",
   },
@@ -106,12 +106,105 @@ const galleryItemsData = [
     categories: ["ARCHITECTURE"],
     position: "center 90%",
   },
+  // Flat Interior
+  {
+    id: 15,
+    num: "15",
+    filename: "LIVING ROOM 1.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 16,
+    num: "16",
+    filename: "LIVING ROOM 2.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 17,
+    num: "17",
+    filename: "BEDROOM.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 18,
+    num: "18",
+    filename: "BEDROOM 2.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 19,
+    num: "19",
+    filename: "KITCHEN.webp",
+    categories: ["RESIDENCES"],
+    position: "center 50%",
+  },
+  {
+    id: 20,
+    num: "20",
+    filename: "FINAL BALCONY.webp",
+    categories: ["RESIDENCES", "LIFESTYLE"],
+    position: "center 50%",
+  },
+  // Amenity Building (excluding SWIMMING POOL, GYM, and COMMUNITY HALL)
+  {
+    id: 21,
+    num: "21",
+    filename: "AMPHITHEATER.webp",
+    categories: ["AMENITIES", "LIFESTYLE"],
+    position: "center 50%",
+  },
+  {
+    id: 22,
+    num: "22",
+    filename: "COMMUNITY HALL 2.webp",
+    categories: ["AMENITIES"],
+    position: "center 50%",
+  },
+  {
+    id: 23,
+    num: "23",
+    filename: "CO WORKING SPACE.webp",
+    categories: ["AMENITIES", "LIFESTYLE"],
+    position: "center 50%",
+  },
+  {
+    id: 24,
+    num: "24",
+    filename: "LIBRARY & CO WORKING.webp",
+    categories: ["AMENITIES"],
+    position: "center 50%",
+  },
+  {
+    id: 25,
+    num: "25",
+    filename: "LOUNGE SEATING.webp",
+    categories: ["AMENITIES", "LIFESTYLE"],
+    position: "center 50%",
+  },
+  {
+    id: 26,
+    num: "26",
+    filename: "SNOOKER TABLE.webp",
+    categories: ["AMENITIES", "LIFESTYLE"],
+    position: "center 50%",
+  },
+  {
+    id: 27,
+    num: "27",
+    filename: "TERRACE.webp",
+    categories: ["AMENITIES", "LIFESTYLE"],
+    position: "center 50%",
+  },
 ];
 
 // Map with resolved image URLs
 const populatedGalleryItems = galleryItemsData.map((item) => {
   const matchKey = Object.keys(imageModules).find((path) =>
-    path.endsWith(item.filename)
+    path.toLowerCase().endsWith(item.filename.toLowerCase())
   );
   return {
     ...item,
@@ -207,18 +300,18 @@ const Gallery = () => {
   };
 
   return (
-    <section id="gallery" className="py-14 sm:py-20 lg:py-24 bg-white w-full overflow-hidden">
+    <section id="gallery" className="py-14 sm:py-20 lg:py-24 bg-white w-full overflow-hidden border-t border-slate-200">
       {/* Full Width Wrapper */}
       <div className="w-full px-3 sm:px-6 lg:px-10 xl:px-14">
         {/* Centered Top Tag, Title & Subtitle */}
         <div className="mb-8 sm:mb-10 text-center max-w-3xl mx-auto">
-          <span className="text-xs sm:text-sm font-semibold tracking-[0.25em] text-[#0A5E9D] uppercase block mb-1">
+          <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#0A5E9D] uppercase">
             GALLERY
           </span>
-          <h2 className="font-serif-display text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 mt-2 mb-4 tracking-tight">
             A Glimpse of Altura.
           </h2>
-          <p className="text-xs sm:text-sm md:text-base text-slate-500 font-light mt-2 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base font-light leading-relaxed max-w-2xl mx-auto">
             Explore the architecture, spaces and experiences envisioned for Altura.
           </p>
         </div>
@@ -245,8 +338,8 @@ const Gallery = () => {
             })}
           </div>
 
-          {/* Right-Side Carousel Controls (Counter & Arrows) */}
-          <div className="flex items-center gap-3 self-center md:self-auto">
+          {/* Right-Side Carousel Controls (Counter & Arrows - Desktop Only) */}
+          <div className="hidden xl:flex items-center gap-3 self-center md:self-auto">
             <button
               onClick={handlePrev}
               className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-[#0A5E9D] hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer active:scale-95"
@@ -279,38 +372,12 @@ const Gallery = () => {
             className="w-full lg:col-span-8 relative h-[300px] sm:h-[460px] md:h-[560px] lg:h-[720px] xl:h-[760px] overflow-hidden bg-slate-100 group shadow-xs touch-pan-y select-none"
           >
             {mainItem && (
-              <>
-                <img
-                  src={mainItem.url}
-                  alt={`Altura View ${currentIdx + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  style={{ objectPosition: mainItem.position }}
-                />
-
-                {/* Mobile Touch Swipe Arrow Overlay */}
-                <div className="lg:hidden">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrev();
-                    }}
-                    className="absolute left-2.5 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#0A5E9D] text-white p-2 rounded-full backdrop-blur-xs transition-colors z-20"
-                    aria-label="Previous image"
-                  >
-                    <ChevronLeft size={20} />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNext();
-                    }}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-[#0A5E9D] text-white p-2 rounded-full backdrop-blur-xs transition-colors z-20"
-                    aria-label="Next image"
-                  >
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-              </>
+              <img
+                src={mainItem.url}
+                alt={`Altura View ${currentIdx + 1}`}
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                style={{ objectPosition: mainItem.position }}
+              />
             )}
           </div>
 
@@ -380,15 +447,6 @@ const Gallery = () => {
                     style={{ objectPosition: item.position }}
                   />
                 </div>
-                <span
-                  className={`text-[11px] sm:text-xs mt-1.5 transition-colors ${
-                    isSelected
-                      ? "text-[#0A5E9D] font-bold"
-                      : "text-slate-400 group-hover:text-slate-600 font-light"
-                  }`}
-                >
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
               </div>
             );
           })}

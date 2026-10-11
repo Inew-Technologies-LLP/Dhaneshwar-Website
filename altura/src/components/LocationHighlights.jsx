@@ -82,10 +82,10 @@ const LocationHighlights = () => {
   const rightColumn = items.slice(midPoint);
 
   return (
-    <section id="location" className="py-14 sm:py-20 lg:py-24 bg-white">
+    <section id="location" className="pt-14 sm:pt-20 lg:pt-24 pb-4 sm:pb-6 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#0A5E9D] uppercase">
             LOCATION
           </span>
@@ -97,9 +97,9 @@ const LocationHighlights = () => {
           </p>
         </div>
 
-        {/* Category Tabs with Icons */}
-        <div className="flex justify-start md:justify-center overflow-x-auto scrollbar-hide mb-10 pb-2 border-b border-slate-200">
-          <div className="flex gap-2 sm:gap-4 md:gap-6 min-w-max mx-auto px-2">
+        {/* Category Tabs with Equal Sizes & Icons Above Text */}
+        <div className="w-full max-w-6xl mx-auto mb-8 pb-1 border-b border-slate-200">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
             {categories.map((cat) => {
               const Icon = cat.icon;
               const isActive = activeTab === cat.id;
@@ -108,29 +108,31 @@ const LocationHighlights = () => {
                 <button
                   key={cat.id}
                   onClick={() => setActiveTab(cat.id)}
-                  className={`flex items-center gap-2 px-3.5 py-2.5 text-xs sm:text-sm font-bold tracking-wider transition-all duration-200 cursor-pointer border-b-2 uppercase ${
+                  className={`flex flex-col items-center justify-center gap-2 px-2 py-3.5 sm:py-4 text-center transition-all duration-200 cursor-pointer border-b-2 uppercase w-full ${
                     isActive
                       ? "border-[#0A5E9D] text-[#0A5E9D] bg-[#F0F7FD]"
                       : "border-transparent text-slate-500 hover:text-slate-900 hover:bg-slate-50"
                   }`}
                 >
-                  <Icon size={16} className={isActive ? "text-[#0A5E9D]" : "text-slate-400"} />
-                  <span>{cat.label}</span>
+                  <Icon size={22} className={isActive ? "text-[#0A5E9D]" : "text-slate-400"} />
+                  <span className="text-[11px] sm:text-xs font-bold tracking-wide text-center leading-tight">
+                    {cat.label}
+                  </span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Centered 2-Column Table */}
-        <div className="max-w-4xl mx-auto bg-[#F9FBFE] border border-slate-200 p-6 sm:p-10 shadow-xs">
+        {/* Card showing all locations - increased width, blue bg, no border */}
+        <div className="max-w-6xl mx-auto bg-[#F0F7FD] p-6 sm:p-10 rounded-none">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 lg:gap-x-16 gap-y-4 relative">
             {/* Left Column */}
             <div className="space-y-4">
               {leftColumn.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-baseline justify-between border-b border-slate-200/70 pb-3 gap-4"
+                  className="flex items-baseline justify-between border-b border-[#0A5E9D]/15 pb-3 gap-4"
                 >
                   <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-wide">
                     {item.name}
@@ -143,14 +145,14 @@ const LocationHighlights = () => {
             </div>
 
             {/* Vertical Divider for desktop */}
-            <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-slate-200" />
+            <div className="hidden md:block absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-[#0A5E9D]/15" />
 
             {/* Right Column */}
             <div className="space-y-4">
               {rightColumn.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-baseline justify-between border-b border-slate-200/70 pb-3 gap-4"
+                  className="flex items-baseline justify-between border-b border-[#0A5E9D]/15 pb-3 gap-4"
                 >
                   <span className="text-xs sm:text-sm font-bold text-slate-800 tracking-wide">
                     {item.name}

@@ -15,6 +15,10 @@ import meditationDeckImg from "../images/amenities/meditationdeck.png";
 import oxygenTrailImg from "../images/amenities/oxygentrail.png";
 import societyOfficeImg from "../images/amenities/societyoffice.png";
 
+import amenityRender1 from "../images/Amenity Building/SWIMMING POOL.webp";
+import amenityRender2 from "../images/Amenity Building/GYM.webp";
+import amenityRender3 from "../images/Amenity Building/COMMUNITY HALL.webp";
+
 const amenitiesList = [
   { id: 1, title: "Gymnasium", icon: gymnasiumImg },
   { id: 2, title: "Swimming Pool", icon: swimmingPoolImg },
@@ -37,7 +41,7 @@ const amenitiesList = [
 const Amenities = () => {
   return (
     <section id="amenities" className="py-14 sm:py-20 lg:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#0A5E9D] uppercase">
@@ -53,14 +57,14 @@ const Amenities = () => {
             <p>
               Whether its time spent staying active, being together or simply slowing down, each space is designed to make everyday living feel more fulfilling.
             </p>
-            <p className="font-normal text-slate-800 text-xs sm:text-sm uppercase tracking-wider pt-1">
+            <p className="font-bold text-slate-900 text-xs sm:text-sm uppercase tracking-wider pt-1">
               More ways to spend your time. More ways to enjoy every day.
             </p>
           </div>
         </div>
 
         {/* 4x4 Amenities Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 md:gap-10 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-6 md:gap-8 max-w-7xl mx-auto">
           {amenitiesList.map((item) => (
             <div
               key={item.id}
@@ -75,6 +79,31 @@ const Amenities = () => {
                 />
               </div>
               <p className="text-xs sm:text-sm font-medium text-slate-800 group-hover:text-[#0A5E9D] transition-colors duration-300 leading-snug">
+                {item.title}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* 3 Image Placeholders / Renders below Amenities Grid */}
+        <div className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full mx-auto">
+          {[
+            { img: amenityRender1, title: "Swimming Pool & Deck" },
+            { img: amenityRender2, title: "Fitness Gymnasium" },
+            { img: amenityRender3, title: "Community Hall & Lounge" },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="group relative aspect-[16/10] sm:aspect-[4/3] rounded-sm overflow-hidden bg-slate-100 border border-slate-200 shadow-xs hover:shadow-md transition-all duration-300"
+            >
+              <img
+                src={item.img}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-90 transition-opacity" />
+              <p className="absolute bottom-3.5 left-4 right-4 text-xs sm:text-sm font-medium text-white tracking-wide">
                 {item.title}
               </p>
             </div>
