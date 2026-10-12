@@ -383,60 +383,83 @@ const Gallery = () => {
         </div>
 
         {/* Gallery Image Display (Clean Images Without Text Overlays) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 mb-8 items-stretch w-full">
-          {/* Main Large Image (Full width on Mobile, 8 cols on Desktop) */}
-          <div
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            className="w-full lg:col-span-8 relative h-[300px] sm:h-[460px] md:h-[560px] lg:h-[720px] xl:h-[760px] overflow-hidden bg-slate-100 group shadow-xs touch-pan-y select-none"
+        <div className="relative group/gallery mb-8 w-full">
+          {/* Previous Image Arrow (Center Left) */}
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Previous gallery image"
+            className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/70 text-white shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/arrow focus:outline-none focus:ring-2 focus:ring-white/40 opacity-90 hover:opacity-100"
           >
-            {mainItem && (
-              <img
-                src={mainItem.url}
-                alt={`Altura View ${currentIdx + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                style={{ objectPosition: mainItem.position }}
-              />
-            )}
+            <ChevronLeft size={22} className="sm:w-6 sm:h-6 transition-transform group-hover/arrow:-translate-x-0.5" />
+          </button>
+
+          {/* Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch w-full">
+            {/* Main Large Image (Full width on Mobile, 8 cols on Desktop) */}
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              className="w-full lg:col-span-8 relative h-[300px] sm:h-[460px] md:h-[560px] lg:h-[720px] xl:h-[760px] overflow-hidden bg-slate-100 group shadow-xs touch-pan-y select-none"
+            >
+              {mainItem && (
+                <img
+                  src={mainItem.url}
+                  alt={`Altura View ${currentIdx + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  style={{ objectPosition: mainItem.position }}
+                />
+              )}
+            </div>
+
+            {/* Right Column Stack (ONLY visible on Desktop `lg:`, hidden on mobile) */}
+            <div className="hidden lg:flex lg:col-span-4 flex-col gap-4 sm:gap-5 h-full">
+              {/* Top Right Card */}
+              {sideItem1 && (
+                <div
+                  onClick={() =>
+                    handleSelectThumbnail((currentIdx + 1) % items.length)
+                  }
+                  className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
+                >
+                  <img
+                    src={sideItem1.url}
+                    alt="Companion View 1"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    style={{ objectPosition: sideItem1.position }}
+                  />
+                </div>
+              )}
+
+              {/* Bottom Right Card */}
+              {sideItem2 && (
+                <div
+                  onClick={() =>
+                    handleSelectThumbnail((currentIdx + 2) % items.length)
+                  }
+                  className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
+                >
+                  <img
+                    src={sideItem2.url}
+                    alt="Companion View 2"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    style={{ objectPosition: sideItem2.position }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Right Column Stack (ONLY visible on Desktop `lg:`, hidden on mobile) */}
-          <div className="hidden lg:flex lg:col-span-4 flex-col gap-4 sm:gap-5 h-full">
-            {/* Top Right Card */}
-            {sideItem1 && (
-              <div
-                onClick={() =>
-                  handleSelectThumbnail((currentIdx + 1) % items.length)
-                }
-                className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
-              >
-                <img
-                  src={sideItem1.url}
-                  alt="Companion View 1"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  style={{ objectPosition: sideItem1.position }}
-                />
-              </div>
-            )}
-
-            {/* Bottom Right Card */}
-            {sideItem2 && (
-              <div
-                onClick={() =>
-                  handleSelectThumbnail((currentIdx + 2) % items.length)
-                }
-                className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
-              >
-                <img
-                  src={sideItem2.url}
-                  alt="Companion View 2"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  style={{ objectPosition: sideItem2.position }}
-                />
-              </div>
-            )}
-          </div>
+          {/* Next Image Arrow (Center Right) */}
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next gallery image"
+            className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/70 text-white shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/arrow focus:outline-none focus:ring-2 focus:ring-white/40 opacity-90 hover:opacity-100"
+          >
+            <ChevronRight size={22} className="sm:w-6 sm:h-6 transition-transform group-hover/arrow:translate-x-0.5" />
+          </button>
         </div>
 
         {/* Full Width Numbered Thumbnail Strip with Navigation Arrows */}

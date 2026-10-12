@@ -34,8 +34,8 @@ const AboutStory = () => {
 
             {/* --- Quote Box (Centered, sized to text width) --- */}
             <section className="px-4 pt-2 pb-8 sm:pt-3 sm:pb-12 lg:pt-4 lg:pb-14">
-                <div className="mx-auto w-fit max-w-4xl bg-[#FAF9F6] border border-[#192B3C]/10 rounded-sm px-6 py-6 sm:px-10 sm:py-8 text-center shadow-xs">
-                    <blockquote className="text-lg sm:text-2xl lg:text-[26px] font-normal leading-relaxed text-[#192B3C] italic">
+                <div className="mx-auto w-fit max-w-4xl bg-[#FAF9F6] border border-[#192B3C]/10 border-l-4 border-l-[#B08A1E] rounded-sm px-6 py-6 sm:px-10 sm:py-8 text-center shadow-xs">
+                    <blockquote className="text-lg sm:text-2xl lg:text-[26px] font-normal leading-relaxed text-[#192B3C]">
                         From understanding how places are built, to thinking deeply about how they are lived in.
                     </blockquote>
                 </div>
