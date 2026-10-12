@@ -78,24 +78,31 @@ const AboutValues = () => {
                         </h3>
                     </div>
 
-                    {/* 4 Equal Columns with Icons */}
+                    {/* 4 Equal Columns with Icons above the line and in center */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
                         {values.map((item, index) => {
                             const Icon = item.icon;
                             return (
                                 <div
                                     key={index}
-                                    className="group space-y-3 border-t-2 border-[#192B3C]/10 pt-5 transition-all duration-300 hover:border-[#B08A1E]"
+                                    className="group text-center"
                                 >
-                                    <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#192B3C]/5 text-[#B08A1E] transition-colors duration-300 group-hover:bg-[#B08A1E] group-hover:text-white">
-                                        <Icon className="w-5 h-5" strokeWidth={1.75} />
+                                    {/* Icon above the line and in center */}
+                                    <div className="flex justify-center pb-4">
+                                        <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-[#192B3C]/5 text-[#B08A1E] transition-all duration-300 group-hover:bg-[#B08A1E] group-hover:text-white group-hover:scale-105 shadow-sm">
+                                            <Icon className="w-5 h-5" strokeWidth={1.75} />
+                                        </div>
                                     </div>
-                                    <h4 className="text-xs sm:text-sm lg:text-[15px] font-bold text-[#192B3C] tracking-wider uppercase">
-                                        {item.title}
-                                    </h4>
-                                    <p className="text-xs sm:text-sm leading-relaxed text-gray-700">
-                                        {item.desc}
-                                    </p>
+
+                                    {/* Line below icon */}
+                                    <div className="border-t-2 border-[#192B3C]/10 pt-5 space-y-3 transition-colors duration-300 group-hover:border-[#B08A1E]">
+                                        <h4 className="text-xs sm:text-sm lg:text-[15px] font-bold text-[#192B3C] tracking-wider uppercase">
+                                            {item.title}
+                                        </h4>
+                                        <p className="text-xs sm:text-sm leading-relaxed text-gray-700">
+                                            {item.desc}
+                                        </p>
+                                    </div>
                                 </div>
                             );
                         })}

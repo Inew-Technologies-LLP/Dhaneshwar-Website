@@ -5,7 +5,7 @@ const AboutStory = () => {
     return (
         <>
             {/* --- 1. OUR STORY --- */}
-            <section className="px-3 py-10 sm:px-6 sm:py-16 lg:px-9 lg:py-20">
+            <section className="px-3 pt-10 pb-4 sm:px-6 sm:pt-16 sm:pb-6 lg:px-9 lg:pt-20 lg:pb-8">
                 <div className="mx-auto max-w-[1440px]">
                     <div className="w-full">
                         <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B08A1E]">
@@ -32,66 +32,61 @@ const AboutStory = () => {
                 </div>
             </section>
 
-            {/* --- Full-Width Quote Banner (Styled like Closing Statements) --- */}
-            <section className="w-full bg-[#FAF9F6] border-y border-[#192B3C]/5 py-8 sm:py-10 lg:py-12 px-4 sm:px-8 lg:px-12 text-center relative overflow-hidden">
-                <div className="mx-auto max-w-4xl relative z-10">
-                    <blockquote className="text-lg sm:text-2xl lg:text-[28px] font-normal leading-relaxed text-[#192B3C] italic">
+            {/* --- Quote Box (Centered, sized to text width) --- */}
+            <section className="px-4 pt-2 pb-8 sm:pt-3 sm:pb-12 lg:pt-4 lg:pb-14">
+                <div className="mx-auto w-fit max-w-4xl bg-[#FAF9F6] border border-[#192B3C]/10 rounded-sm px-6 py-6 sm:px-10 sm:py-8 text-center shadow-xs">
+                    <blockquote className="text-lg sm:text-2xl lg:text-[26px] font-normal leading-relaxed text-[#192B3C] italic">
                         From understanding how places are built, to thinking deeply about how they are lived in.
                     </blockquote>
-                    <div className="mt-4 sm:mt-5 flex items-center justify-center gap-3">
-                        <div className="h-[1px] w-8 bg-[#B08A1E]/40" />
-                        <span className="text-xs sm:text-sm font-semibold tracking-widest text-[#B08A1E] uppercase">
-                            Dhaneshwar Realty
-                        </span>
-                        <div className="h-[1px] w-8 bg-[#B08A1E]/40" />
-                    </div>
                 </div>
             </section>
 
-            {/* --- 2. OUR BELIEF (Full Width 50/50 Split like Altura Architectural Philosophy) --- */}
-            <section className="w-full bg-[#FAF9F6] border-y border-[#192B3C]/5 overflow-hidden">
-                <div className="w-full grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[500px] lg:min-h-[600px]">
-                    {/* Left Side: 50% Image */}
-                    <div className="relative w-full h-[350px] sm:h-[450px] lg:h-auto min-h-full overflow-hidden bg-[#192B3C] group">
-                        <img
-                            src={about_belief}
-                            alt="Buildings Create Spaces. Life Gives Them Meaning."
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                        />
-                        <img
-                            src={design}
-                            alt=""
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none opacity-30"
-                        />
-                    </div>
+            {/* --- 2. OUR BELIEF (Contained Card) --- */}
+            <section className="px-3 py-8 sm:px-6 sm:py-12 lg:px-9 lg:py-16">
+                <div className="mx-auto max-w-[1440px]">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 bg-[#FAF9F6] border border-[#192B3C]/10 rounded-sm overflow-hidden shadow-sm items-stretch">
+                        {/* Left Side: Image */}
+                        <div className="relative w-full h-[350px] sm:h-[450px] lg:h-auto min-h-[360px] lg:min-h-[520px] overflow-hidden bg-[#192B3C] group">
+                            <img
+                                src={about_belief}
+                                alt="Buildings Create Spaces. Life Gives Them Meaning."
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            />
+                            <img
+                                src={design}
+                                alt=""
+                                aria-hidden="true"
+                                className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none opacity-30"
+                            />
+                        </div>
 
-                    {/* Right Side: 50% Text Content */}
-                    <div className="flex flex-col justify-center p-6 sm:p-12 lg:p-16 xl:p-20">
-                        <div className="max-w-xl">
-                            {/* Main Section Heading */}
-                            <div className="mb-2">
-                                <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#B08A1E] uppercase">
-                                    OUR BELIEF
-                                </span>
-                            </div>
+                        {/* Right Side: Text Content */}
+                        <div className="flex flex-col justify-center p-6 sm:p-10 lg:p-14 xl:p-16">
+                            <div className="max-w-xl">
+                                {/* Main Section Heading */}
+                                <div className="mb-2">
+                                    <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#B08A1E] uppercase">
+                                        OUR BELIEF
+                                    </span>
+                                </div>
 
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C] mb-6 tracking-tight leading-tight">
-                                Buildings Create Spaces. <br className="hidden sm:inline" />
-                                Life Gives Them Meaning.
-                            </h2>
+                                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C] mb-6 tracking-tight leading-tight">
+                                    Buildings Create Spaces. <br className="hidden sm:inline" />
+                                    Life Gives Them Meaning.
+                                </h2>
 
-                            {/* Note Body Text */}
-                            <div className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-4 font-normal">
-                                <p>
-                                    A building becomes more than concrete, steel and glass when people begin to make it their own.
-                                </p>
-                                <p>
-                                    It becomes the setting for everyday routines, conversations, celebrations and memories. That is why we think beyond the structure itself &mdash; considering how the places we create can encourage connection, well-being and a stronger sense of belonging.
-                                </p>
-                                <p className="font-medium text-[#192B3C]">
-                                    Because ultimately, the value of a place is not only in how it is built, but in the life it enables.
-                                </p>
+                                {/* Note Body Text */}
+                                <div className="text-gray-700 text-sm sm:text-base leading-relaxed space-y-4 font-normal">
+                                    <p>
+                                        A building becomes more than concrete, steel and glass when people begin to make it their own.
+                                    </p>
+                                    <p>
+                                        It becomes the setting for everyday routines, conversations, celebrations and memories. That is why we think beyond the structure itself &mdash; considering how the places we create can encourage connection, well-being and a stronger sense of belonging.
+                                    </p>
+                                    <p className="font-medium text-[#192B3C]">
+                                        Because ultimately, the value of a place is not only in how it is built, but in the life it enables.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
