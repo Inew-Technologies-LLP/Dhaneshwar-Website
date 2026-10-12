@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Automatically import all images from images folder
@@ -226,6 +226,8 @@ const Gallery = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const thumbnailsRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const filteredItems = useMemo(() => {
     if (activeFilter === "ALL") return populatedGalleryItems;
@@ -240,6 +242,47 @@ const Gallery = () => {
   const mainItem = items[currentIdx];
   const sideItem1 = items[(currentIdx + 1) % items.length];
   const sideItem2 = items[(currentIdx + 2) % items.length];
+
+  const checkScrollability = () => {
+    if (thumbnailsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = thumbnailsRef.current;
+      setCanScrollLeft(scrollLeft > 6);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 6);
+    }
+  };
+
+  useEffect(() => {
+    checkScrollability();
+    const el = thumbnailsRef.current;
+    if (!el) return;
+
+    el.addEventListener("scroll", checkScrollability, { passive: true });
+    window.addEventListener("resize", checkScrollability);
+
+    const timer = setTimeout(checkScrollability, 300);
+
+    return () => {
+      el.removeEventListener("scroll", checkScrollability);
+      window.removeEventListener("resize", checkScrollability);
+      clearTimeout(timer);
+    };
+  }, [items, activeFilter]);
+
+  const handleSlideLeft = () => {
+    if (thumbnailsRef.current) {
+      const containerWidth = thumbnailsRef.current.clientWidth;
+      const scrollAmount = Math.max(Math.floor(containerWidth * 0.7), 220);
+      thumbnailsRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  const handleSlideRight = () => {
+    if (thumbnailsRef.current) {
+      const containerWidth = thumbnailsRef.current.clientWidth;
+      const scrollAmount = Math.max(Math.floor(containerWidth * 0.7), 220);
+      thumbnailsRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   const handleFilterChange = (filterId) => {
     setActiveFilter(filterId);
@@ -317,7 +360,7 @@ const Gallery = () => {
         </div>
 
         {/* Controls & Filter Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 border-b border-slate-100 pb-4">
+        <div className="flex items-center justify-center md:justify-start gap-4 mb-6 sm:mb-8 border-b border-slate-100 pb-4">
           {/* Filter Pills with Altura Theme Blue */}
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 justify-center md:justify-start">
             {filterTabs.map((tab) => {
@@ -337,119 +380,154 @@ const Gallery = () => {
               );
             })}
           </div>
-
-          {/* Right-Side Carousel Controls (Counter & Arrows - Desktop Only) */}
-          <div className="hidden xl:flex items-center gap-3 self-center md:self-auto">
-            <button
-              onClick={handlePrev}
-              className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-[#0A5E9D] hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer active:scale-95"
-              aria-label="Previous"
-            >
-              <ChevronLeft size={16} />
-            </button>
-
-            <span className="text-xs sm:text-sm font-medium text-slate-600 min-w-[45px] text-center tracking-wider">
-              {currentIdx + 1} / {items.length}
-            </span>
-
-            <button
-              onClick={handleNext}
-              className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-[#0A5E9D] hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer active:scale-95"
-              aria-label="Next"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
         </div>
 
         {/* Gallery Image Display (Clean Images Without Text Overlays) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 mb-8 items-stretch w-full">
-          {/* Main Large Image (Full width on Mobile, 8 cols on Desktop) */}
-          <div
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            className="w-full lg:col-span-8 relative h-[300px] sm:h-[460px] md:h-[560px] lg:h-[720px] xl:h-[760px] overflow-hidden bg-slate-100 group shadow-xs touch-pan-y select-none"
+        <div className="relative group/gallery mb-8 w-full">
+          {/* Previous Image Arrow (Center Left) */}
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Previous gallery image"
+            className="absolute left-2 sm:left-4 lg:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/70 text-white shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/arrow focus:outline-none focus:ring-2 focus:ring-white/40 opacity-90 hover:opacity-100"
           >
-            {mainItem && (
-              <img
-                src={mainItem.url}
-                alt={`Altura View ${currentIdx + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                style={{ objectPosition: mainItem.position }}
-              />
-            )}
-          </div>
+            <ChevronLeft size={22} className="sm:w-6 sm:h-6 transition-transform group-hover/arrow:-translate-x-0.5" />
+          </button>
 
-          {/* Right Column Stack (ONLY visible on Desktop `lg:`, hidden on mobile) */}
-          <div className="hidden lg:flex lg:col-span-4 flex-col gap-4 sm:gap-5 h-full">
-            {/* Top Right Card */}
-            {sideItem1 && (
-              <div
-                onClick={() =>
-                  handleSelectThumbnail((currentIdx + 1) % items.length)
-                }
-                className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
-              >
+          {/* Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-stretch w-full">
+            {/* Main Large Image (Full width on Mobile, 8 cols on Desktop) */}
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              className="w-full lg:col-span-8 relative h-[300px] sm:h-[460px] md:h-[560px] lg:h-[720px] xl:h-[760px] overflow-hidden bg-slate-100 group shadow-xs touch-pan-y select-none"
+            >
+              {mainItem && (
                 <img
-                  src={sideItem1.url}
-                  alt="Companion View 1"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  style={{ objectPosition: sideItem1.position }}
+                  src={mainItem.url}
+                  alt={`Altura View ${currentIdx + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                  style={{ objectPosition: mainItem.position }}
                 />
-              </div>
-            )}
+              )}
+            </div>
 
-            {/* Bottom Right Card */}
-            {sideItem2 && (
-              <div
-                onClick={() =>
-                  handleSelectThumbnail((currentIdx + 2) % items.length)
-                }
-                className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
-              >
-                <img
-                  src={sideItem2.url}
-                  alt="Companion View 2"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  style={{ objectPosition: sideItem2.position }}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Full Width Numbered Thumbnail Strip */}
-        <div
-          ref={thumbnailsRef}
-          className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 snap-x scrollbar-hide pt-2 w-full"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {items.map((item, idx) => {
-            const isSelected = currentIdx === idx;
-            return (
-              <div
-                key={`${item.id}-${idx}`}
-                onClick={() => handleSelectThumbnail(idx)}
-                className="flex-shrink-0 flex flex-col items-start cursor-pointer group snap-start"
-              >
+            {/* Right Column Stack (ONLY visible on Desktop `lg:`, hidden on mobile) */}
+            <div className="hidden lg:flex lg:col-span-4 flex-col gap-4 sm:gap-5 h-full">
+              {/* Top Right Card */}
+              {sideItem1 && (
                 <div
-                  className={`w-[130px] sm:w-[170px] md:w-[200px] lg:w-[220px] aspect-[16/10] overflow-hidden transition-all duration-200 relative ${
-                    isSelected
-                      ? "ring-2 ring-[#0A5E9D] scale-[1.02]"
-                      : "opacity-75 group-hover:opacity-100"
-                  }`}
+                  onClick={() =>
+                    handleSelectThumbnail((currentIdx + 1) % items.length)
+                  }
+                  className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
                 >
                   <img
-                    src={item.url}
-                    alt={`Thumbnail ${idx + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    style={{ objectPosition: item.position }}
+                    src={sideItem1.url}
+                    alt="Companion View 1"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    style={{ objectPosition: sideItem1.position }}
                   />
                 </div>
-              </div>
-            );
-          })}
+              )}
+
+              {/* Bottom Right Card */}
+              {sideItem2 && (
+                <div
+                  onClick={() =>
+                    handleSelectThumbnail((currentIdx + 2) % items.length)
+                  }
+                  className="relative flex-1 min-h-[200px] sm:min-h-[250px] lg:min-h-0 lg:h-[calc(50%-10px)] overflow-hidden bg-slate-100 group cursor-pointer shadow-xs"
+                >
+                  <img
+                    src={sideItem2.url}
+                    alt="Companion View 2"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    style={{ objectPosition: sideItem2.position }}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Next Image Arrow (Center Right) */}
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Next gallery image"
+            className="absolute right-2 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/45 hover:bg-black/70 text-white shadow-lg hover:shadow-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/arrow focus:outline-none focus:ring-2 focus:ring-white/40 opacity-90 hover:opacity-100"
+          >
+            <ChevronRight size={22} className="sm:w-6 sm:h-6 transition-transform group-hover/arrow:translate-x-0.5" />
+          </button>
+        </div>
+
+        {/* Full Width Numbered Thumbnail Strip with Navigation Arrows */}
+        <div className="relative w-full group/slidebar">
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={handleSlideLeft}
+            disabled={!canScrollLeft}
+            aria-label="Scroll thumbnails left"
+            className={`absolute -left-1 sm:left-1 top-[calc(50%-4px)] -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 flex items-center justify-center transition-all duration-200 cursor-pointer hover:bg-[#0A5E9D] hover:text-white hover:border-[#0A5E9D] active:scale-90 disabled:opacity-0 disabled:pointer-events-none`}
+          >
+            <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
+          </button>
+
+          {/* Left subtle gradient fade */}
+          {canScrollLeft && (
+            <div className="pointer-events-none absolute left-0 top-0 bottom-4 w-8 sm:w-14 bg-gradient-to-r from-white to-transparent z-10" />
+          )}
+
+          {/* Horizontal Thumbnail Track */}
+          <div
+            ref={thumbnailsRef}
+            className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 snap-x scrollbar-hide pt-2 w-full px-1 sm:px-2 scroll-smooth"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {items.map((item, idx) => {
+              const isSelected = currentIdx === idx;
+              return (
+                <div
+                  key={`${item.id}-${idx}`}
+                  onClick={() => handleSelectThumbnail(idx)}
+                  className="flex-shrink-0 flex flex-col items-start cursor-pointer group snap-start"
+                >
+                  <div
+                    className={`w-[130px] sm:w-[170px] md:w-[200px] lg:w-[220px] aspect-[16/10] overflow-hidden transition-all duration-200 relative ${
+                      isSelected
+                        ? "ring-2 ring-[#0A5E9D] scale-[1.02]"
+                        : "opacity-75 group-hover:opacity-100"
+                    }`}
+                  >
+                    <img
+                      src={item.url}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      style={{ objectPosition: item.position }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Right subtle gradient fade */}
+          {canScrollRight && (
+            <div className="pointer-events-none absolute right-0 top-0 bottom-4 w-8 sm:w-14 bg-gradient-to-l from-white to-transparent z-10" />
+          )}
+
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={handleSlideRight}
+            disabled={!canScrollRight}
+            aria-label="Scroll thumbnails right"
+            className={`absolute -right-1 sm:right-1 top-[calc(50%-4px)] -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 flex items-center justify-center transition-all duration-200 cursor-pointer hover:bg-[#0A5E9D] hover:text-white hover:border-[#0A5E9D] active:scale-90 disabled:opacity-0 disabled:pointer-events-none`}
+          >
+            <ChevronRight size={18} className="sm:w-5 sm:h-5" />
+          </button>
         </div>
       </div>
     </section>

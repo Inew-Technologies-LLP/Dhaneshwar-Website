@@ -142,9 +142,10 @@ const Navbar = () => {
                                                     to={project.externalLink ? project.externalLink : `/projects?project=${project.id}`}
                                                     onClick={() => setShowProjects(false)}
                                                     {...(project.externalLink ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                                                    className="mt-5 inline-block text-sm text-white underline underline-offset-4"
+                                                    className="mt-6 inline-flex h-9 items-center gap-1.5 rounded-sm bg-[#B08A1E] px-5 text-xs font-medium tracking-wider text-white shadow-sm transition-all duration-300 hover:brightness-110 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
                                                 >
-                                                    View More
+                                                    <span>VIEW MORE</span>
+                                                    <span className="text-sm font-light leading-none">&rarr;</span>
                                                 </NavLink>
                                             </div>
                                         </div>

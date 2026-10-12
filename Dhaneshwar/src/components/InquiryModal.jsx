@@ -1,16 +1,12 @@
 import { useState } from "react";
 
 import Modal from "./Modal";
-import projects from "../data/projects";
 import { submitLead } from "../api/leads";
 
 const initialFormData = {
     name: "",
-    email: "",
-    country: "India",
-    city: "",
     phone: "",
-    project: "",
+    email: "",
     message: "",
     consent: false,
 };
@@ -18,9 +14,14 @@ const initialFormData = {
 const InquiryModal = ({ open, onClose }) => {
     const [formData, setFormData] = useState(initialFormData);
     const [status, setStatus] = useState("idle");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
+
+        if (status !== "idle") {
+            setStatus("idle");
+        }
 
         setFormData((prev) => ({
             ...prev,
@@ -31,22 +32,35 @@ const InquiryModal = ({ open, onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const name = formData.name.trim();
+        const phone = formData.phone.trim();
+        const email = formData.email.trim();
+        const message = formData.message.trim();
+
+        if (!name || !phone) {
+            setStatus("error");
+            setErrorMessage("Please fill in all required fields.");
+            return;
+        }
+
         if (!formData.consent) {
+            setStatus("error");
+            setErrorMessage("Please confirm that you have read and agree to the Privacy Policy.");
             return;
         }
 
         setStatus("submitting");
+        setErrorMessage("");
 
         try {
             await submitLead({
                 type: "inquiry",
-                name: formData.name,
-                email: formData.email,
-                country: formData.country,
-                city: formData.city,
-                phone: formData.phone,
-                project: formData.project,
-                message: formData.message,
+                name,
+                phone,
+                email: email || "Not Provided",
+                message,
+                project: "General Inquiry",
+                city: "Pune",
             });
 
             setStatus("success");
@@ -54,6 +68,7 @@ const InquiryModal = ({ open, onClose }) => {
         } catch (error) {
             console.error("Inquiry submission failed:", error);
             setStatus("error");
+            setErrorMessage("Something went wrong. Please try again.");
         }
     };
 
@@ -63,6 +78,7 @@ const InquiryModal = ({ open, onClose }) => {
         }
 
         setStatus("idle");
+        setErrorMessage("");
         onClose();
     };
 
@@ -71,14 +87,12 @@ const InquiryModal = ({ open, onClose }) => {
             open={open}
             onClose={handleClose}
         >
-            <h2 className="mb-6 sm:mb-12 text-center text-2xl sm:text-[32px] md:text-[36px] font-medium text-[#192B3C]">
+            <h2 className="mb-6 sm:mb-8 text-center text-2xl sm:text-[32px] md:text-[36px] font-medium text-[#192B3C]">
                 Request a call back
             </h2>
 
             {status === "success" ? (
-
                 <div className="py-8 sm:py-10 text-center">
-
                     <h3 className="text-xl sm:text-[24px] font-medium text-[#192B3C]">
                         Thank you!
                     </h3>
@@ -103,243 +117,158 @@ const InquiryModal = ({ open, onClose }) => {
                     >
                         Close
                     </button>
-
                 </div>
-
             ) : (
-
                 <form
                     onSubmit={handleSubmit}
-                    className="space-y-4 sm:space-y-6"
+                    className="space-y-5 sm:space-y-6"
                 >
-
                     {/* Name */}
+                    <div>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            placeholder="Name *"
+                            required
+                            className="
+                                w-full
+                                border-b
+                                border-gray-400
+                                pb-2
+                                text-[15px]
+                                text-[#192B3C]
+                                outline-none
+                                transition
+                                focus:border-[#192B3C]
+                            "
+                        />
+                    </div>
 
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="Name"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
+                    {/* Mobile Number */}
+                    <div>
+                        <input
+                            type="tel"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            placeholder="Mobile Number *"
+                            required
+                            className="
+                                w-full
+                                border-b
+                                border-gray-400
+                                pb-2
+                                text-[15px]
+                                text-[#192B3C]
+                                outline-none
+                                transition
+                                focus:border-[#192B3C]
+                            "
+                        />
+                    </div>
 
-                    {/* Email */}
-
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="E-mail ID"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
-
-                    {/* Country */}
-
-                    <select
-                        name="country"
-                        value={formData.country}
-                        onChange={handleChange}
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            bg-white
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                        "
-                    >
-                        <option value="India">
-                            India
-                        </option>
-                    </select>
-
-                    {/* City */}
-
-                    <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        placeholder="City"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
-
-                    {/* Project */}
-
-                    <select
-                        name="project"
-                        value={formData.project}
-                        onChange={handleChange}
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            bg-white
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                        "
-                    >
-                        <option value="">
-                            Select Project
-                        </option>
-
-                        {projects.map((project) => (
-                            <option
-                                key={project.id}
-                                value={project.name}
-                            >
-                                {project.name}
-                            </option>
-                        ))}
-                    </select>
-
-                    {/* Phone */}
-
-                    <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="+91 Enter Mobile Number*"
-                        required
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                        "
-                    />
+                    {/* Email (Optional) */}
+                    <div>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            placeholder="Email (Optional)"
+                            className="
+                                w-full
+                                border-b
+                                border-gray-400
+                                pb-2
+                                text-[15px]
+                                text-[#192B3C]
+                                outline-none
+                                transition
+                                focus:border-[#192B3C]
+                            "
+                        />
+                    </div>
 
                     {/* Message (Optional) */}
-
-                    <textarea
-                        name="message"
-                        rows={2}
-                        value={formData.message}
-                        onChange={handleChange}
-                        placeholder="Message (Optional)"
-                        className="
-                            w-full
-                            border-b
-                            border-gray-400
-                            pb-2
-                            text-[15px]
-                            text-[#192B3C]
-                            outline-none
-                            transition
-                            focus:border-[#192B3C]
-                            resize-none
-                        "
-                    />
-
-                    {/* Consent */}
-
-                    <label className="flex items-start gap-3 text-[13px] leading-5 text-gray-600">
-                        <input
-                            type="checkbox"
-                            name="consent"
-                            checked={formData.consent}
+                    <div>
+                        <textarea
+                            name="message"
+                            rows={3}
+                            value={formData.message}
                             onChange={handleChange}
-                            required
-                            className="peer sr-only"
-                        />
-
-                        <span
+                            placeholder="Message (Optional)"
                             className="
-            mt-0.5
-            flex
-            h-4
-            w-4
-            shrink-0
-            items-center
-            justify-center
-            border
-            border-[#192B3C]
-            bg-white
-            text-[11px]
-            text-white
-            transition
-            peer-checked:bg-[#192B3C]
-            peer-checked:after:content-['✓']
-        "
+                                w-full
+                                border-b
+                                border-gray-400
+                                pb-2
+                                text-[15px]
+                                text-[#192B3C]
+                                outline-none
+                                transition
+                                focus:border-[#192B3C]
+                                resize-none
+                            "
                         />
+                    </div>
 
-                        <span>
-                            I agree to the Privacy Policy and consent to being contacted
-                            regarding my inquiry.
-                        </span>
-                    </label>
+                    {/* Policy Read Checkbox */}
+                    <div>
+                        <label className="flex items-start gap-3 text-[13px] leading-5 text-gray-600 cursor-pointer select-none">
+                            <input
+                                type="checkbox"
+                                name="consent"
+                                checked={formData.consent}
+                                onChange={handleChange}
+                                required
+                                className="peer sr-only"
+                            />
+                            <span
+                                className="
+                                    mt-0.5
+                                    flex
+                                    h-4
+                                    w-4
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    border
+                                    border-[#192B3C]
+                                    bg-white
+                                    text-[11px]
+                                    text-white
+                                    transition
+                                    peer-checked:bg-[#192B3C]
+                                    peer-checked:after:content-['✓']
+                                "
+                            />
+                            <span>
+                                I have read and agree to the Privacy Policy and consent to being contacted regarding my inquiry.
+                            </span>
+                        </label>
+                    </div>
 
                     {/* Error */}
-
                     {status === "error" && (
                         <p className="text-center text-[14px] text-red-600">
-                            Something went wrong. Please try again.
+                            {errorMessage || "Something went wrong. Please try again."}
                         </p>
                     )}
 
                     {/* Submit */}
-
-                    <div className="flex justify-center pt-6">
-
+                    <div className="flex justify-center pt-4">
                         <button
                             type="submit"
-                            disabled={
-                                status === "submitting" ||
-                                !formData.consent
-                            }
+                            disabled={status === "submitting" || !formData.consent}
                             className="
                                 h-[42px]
-                                w-[120px]
+                                w-[130px]
                                 bg-[#2C3148]
                                 text-white
                                 transition
-                                hover:bg-[#23273A]
+                                hover:bg-[#192B3C]
                                 disabled:cursor-not-allowed
                                 disabled:opacity-50
                             "
@@ -348,13 +277,9 @@ const InquiryModal = ({ open, onClose }) => {
                                 ? "Sending..."
                                 : "Submit"}
                         </button>
-
                     </div>
-
                 </form>
-
             )}
-
         </Modal>
     );
 };

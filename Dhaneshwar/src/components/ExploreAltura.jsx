@@ -25,7 +25,7 @@ const ExploreAltura = () => {
         <section className="px-3 py-6 sm:px-6 sm:py-10 lg:px-9 lg:py-14">
             <div className="mx-auto max-w-[1440px]">
                 {/* Main Card */}
-                <div className="grid overflow-hidden bg-white shadow-sm lg:grid-cols-[1.15fr_0.85fr]">
+                <div className="grid overflow-hidden bg-white shadow-sm lg:grid-cols-2">
                     {/* Left: Image */}
                     <div className="group relative overflow-hidden bg-[#192B3C]">
                         <img

@@ -48,13 +48,18 @@ const Residences = ({ onOpenFloorPlan }) => {
               className="relative flex flex-col items-center justify-between p-6 sm:p-8 text-center group transition-all duration-300 min-h-[360px]"
             >
               {/* Apartment Image Box */}
-              <div className="w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] mb-6 relative flex items-center justify-center bg-white transition-transform duration-500 ease-out group-hover:-translate-y-2">
+              <button
+                type="button"
+                onClick={() => onOpenFloorPlan && onOpenFloorPlan(item.type)}
+                className="w-[180px] h-[180px] sm:w-[200px] sm:h-[200px] mb-6 relative flex items-center justify-center bg-white transition-transform duration-500 ease-out group-hover:-translate-y-2 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A5E9D] rounded-lg"
+                aria-label={`View floor plan for ${item.title}`}
+              >
                 <img
                   src={item.image}
                   alt={`${item.title} Layout`}
                   className="w-full h-full object-contain transition-all duration-300 group-hover:drop-shadow-lg"
                 />
-              </div>
+              </button>
 
               {/* Title & Tagline */}
               <div className="space-y-2 mb-6 flex-1 flex flex-col justify-center">

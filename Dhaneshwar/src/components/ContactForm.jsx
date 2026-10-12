@@ -7,6 +7,7 @@ const initialFormData = {
      email: "",
      phone: "",
      message: "",
+     consent: false,
 };
 
 const ContactForm = () => {
@@ -15,7 +16,7 @@ const ContactForm = () => {
      const [errorMessage, setErrorMessage] = useState("");
 
      const handleChange = (e) => {
-          const { name, value } = e.target;
+          const { name, value, type, checked } = e.target;
 
           if (status !== "idle") {
                setStatus("idle");
@@ -23,7 +24,7 @@ const ContactForm = () => {
 
           setFormData((prev) => ({
                ...prev,
-               [name]: value,
+               [name]: type === "checkbox" ? checked : value,
           }));
      };
 
@@ -35,9 +36,15 @@ const ContactForm = () => {
           const phone = formData.phone.trim();
           const message = formData.message.trim();
 
-          if (!name || !email || !phone) {
+          if (!name || !phone) {
                setStatus("error");
                setErrorMessage("Please fill in all required fields.");
+               return;
+          }
+
+          if (!formData.consent) {
+               setStatus("error");
+               setErrorMessage("Please confirm that you have read and agree to the Privacy Policy.");
                return;
           }
 
@@ -54,7 +61,7 @@ const ContactForm = () => {
                     },
                     body: JSON.stringify({
                          name,
-                         email,
+                         email: email || "Not Provided",
                          phone,
                          project: "General Inquiry",
                          city: "Pune",
@@ -82,11 +89,11 @@ const ContactForm = () => {
 
                     <form
                          onSubmit={handleSubmit}
-                         className="grid grid-cols-1 gap-y-5 sm:gap-x-8 sm:gap-y-8 sm:grid-cols-3 lg:gap-x-12"
+                         className="flex flex-col gap-y-5 sm:gap-y-6 max-w-3xl mx-auto"
                     >
 
                          {/* Name */}
-                         <div className="min-w-0">
+                         <div className="w-full">
                               <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    Name <span className="text-red-500">*</span>
                               </label>
@@ -115,7 +122,7 @@ const ContactForm = () => {
                          </div>
 
                          {/* Mobile number */}
-                         <div className="min-w-0">
+                         <div className="w-full">
                               <label htmlFor="contact-phone" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    Mobile Number <span className="text-red-500">*</span>
                               </label>
@@ -144,9 +151,9 @@ const ContactForm = () => {
                          </div>
 
                          {/* Email */}
-                         <div className="min-w-0">
+                         <div className="w-full">
                               <label htmlFor="contact-email" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
-                                   Email <span className="text-red-500">*</span>
+                                   Email <span className="text-gray-500 font-normal">(Optional)</span>
                               </label>
 
                               <input
@@ -156,7 +163,6 @@ const ContactForm = () => {
                                    placeholder="you@example.com"
                                    value={formData.email}
                                    onChange={handleChange}
-                                   required
                                    className="
                                 h-11
                                 w-full
@@ -173,7 +179,7 @@ const ContactForm = () => {
                          </div>
 
                          {/* Message (Optional) */}
-                         <div className="col-span-full">
+                         <div className="w-full">
                               <label htmlFor="contact-message" className="mb-1.5 block text-sm font-medium text-[#192B3C] sm:mb-2 sm:text-[16px]">
                                    Message <span className="text-gray-500 font-normal">(Optional)</span>
                               </label>
@@ -199,11 +205,47 @@ const ContactForm = () => {
                               />
                          </div>
 
+                         {/* Policy Read Checkbox */}
+                         <div className="w-full">
+                              <label className="flex items-start gap-3 text-sm text-[#192B3C]/80 cursor-pointer select-none">
+                                   <input
+                                        type="checkbox"
+                                        name="consent"
+                                        checked={formData.consent}
+                                        onChange={handleChange}
+                                        required
+                                        className="peer sr-only"
+                                   />
+                                   <span
+                                        className="
+                                            mt-0.5
+                                            flex
+                                            h-4
+                                            w-4
+                                            shrink-0
+                                            items-center
+                                            justify-center
+                                            border
+                                            border-[#192B3C]
+                                            bg-white
+                                            text-[11px]
+                                            text-white
+                                            transition
+                                            peer-checked:bg-[#192B3C]
+                                            peer-checked:after:content-['✓']
+                                        "
+                                   />
+                                   <span>
+                                        I have read and agree to the Privacy Policy and consent to being contacted regarding my inquiry.
+                                   </span>
+                              </label>
+                         </div>
+
                          {/* Submit */}
-                         <div className="col-span-full pt-2">
+                         <div className="w-full pt-2">
                               <button
                                    type="submit"
-                                   disabled={status === "submitting"}
+                                   disabled={status === "submitting" || !formData.consent}
                                    className="
                                 h-11
                                 w-full

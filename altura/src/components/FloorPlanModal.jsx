@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { X, ChevronLeft, ChevronRight, ShieldAlert } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ShieldAlert, ZoomIn, ZoomOut } from "lucide-react";
 
 import * as pdfjsLib from "pdfjs-dist";
 
@@ -36,7 +36,7 @@ const floorPlanData = {
   },
 };
 
-// Canvas page renderer
+// Canvas page renderer with high-density scale for crisp zoom
 const PdfPageCanvas = ({ page }) => {
   const canvasRef = useRef(null);
 
@@ -46,17 +46,26 @@ const PdfPageCanvas = ({ page }) => {
     if (!canvas || !page) return;
 
     const context = canvas.getContext("2d");
-    const pixelRatio = window.devicePixelRatio || 1;
-    const containerWidth = canvas.parentElement ? canvas.parentElement.clientWidth - 16 : 1000;
+    const deviceRatio = window.devicePixelRatio || 1;
+    const renderScaleMultiplier = Math.max(deviceRatio, 2);
+    
+    // Fit cleanly within parent container dimensions without pushing content off-screen
+    const container = canvas.closest(".pdf-viewer-container");
+    const containerWidth = container ? container.clientWidth - 24 : 800;
+    const containerHeight = container ? container.clientHeight - 24 : 500;
     const unscaledViewport = page.getViewport({ scale: 1.0 });
-    const scale = Math.min(Math.max((containerWidth / unscaledViewport.width) * pixelRatio, 1.2), 3.5);
+
+    const widthScale = containerWidth / unscaledViewport.width;
+    const heightScale = containerHeight / unscaledViewport.height;
+    const fitScale = Math.min(widthScale, heightScale, 1.4);
+    const scale = Math.min(Math.max(fitScale * renderScaleMultiplier, 1.8), 4.5);
     
     const viewport = page.getViewport({ scale });
 
     canvas.height = viewport.height;
     canvas.width = viewport.width;
-    canvas.style.width = `${viewport.width / pixelRatio}px`;
-    canvas.style.height = `${viewport.height / pixelRatio}px`;
+    canvas.style.width = `${viewport.width / renderScaleMultiplier}px`;
+    canvas.style.height = `${viewport.height / renderScaleMultiplier}px`;
 
     const renderContext = {
       canvasContext: context,
@@ -82,17 +91,183 @@ const PdfPageCanvas = ({ page }) => {
       ref={canvasRef}
       onContextMenu={(e) => e.preventDefault()}
       onDragStart={(e) => e.preventDefault()}
-      className="max-w-full h-auto object-contain shadow-xs select-none my-1 pointer-events-none rounded-none border border-slate-200/80"
+      className="max-w-full max-h-[58vh] w-auto h-auto object-contain select-none pointer-events-none block"
     />
   );
 };
 
-// Protected PDF Viewer Component
+const MIN_ZOOM = 1;
+const MAX_ZOOM = 3.5;
+const ZOOM_STEP = 0.25;
+
+// Protected PDF Viewer Component with Zoom & Pan Features
 const PdfCanvasViewer = ({ pdfUrl }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [pages, setPages] = useState([]);
+
+  // Zoom & Pan State
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef(null);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const panStartRef = useRef({ x: 0, y: 0 });
+  const touchDistanceRef = useRef(null);
+
+  // Reset zoom and pan whenever the viewed layout or level changes
+  useEffect(() => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, [pdfUrl]);
+
+  const clampPan = (newPan, currentZoom) => {
+    if (currentZoom <= 1) return { x: 0, y: 0 };
+    const container = containerRef.current;
+    const w = container ? container.clientWidth : 800;
+    const h = container ? container.clientHeight : 500;
+    const maxPanX = Math.max(((w * (currentZoom - 1)) / 2) + 80, 40);
+    const maxPanY = Math.max(((h * (currentZoom - 1)) / 2) + 80, 40);
+    return {
+      x: Math.max(-maxPanX, Math.min(maxPanX, newPan.x)),
+      y: Math.max(-maxPanY, Math.min(maxPanY, newPan.y)),
+    };
+  };
+
+  const handleZoomIn = () => {
+    setZoom((prev) => {
+      const nextZoom = Math.min(Number((prev + ZOOM_STEP).toFixed(2)), MAX_ZOOM);
+      setPan((p) => clampPan(p, nextZoom));
+      return nextZoom;
+    });
+  };
+
+  const handleZoomOut = () => {
+    setZoom((prev) => {
+      const nextZoom = Math.max(Number((prev - ZOOM_STEP).toFixed(2)), MIN_ZOOM);
+      if (nextZoom <= MIN_ZOOM) {
+        setPan({ x: 0, y: 0 });
+      } else {
+        setPan((p) => clampPan(p, nextZoom));
+      }
+      return nextZoom;
+    });
+  };
+
+  // Mouse drag handlers for panning
+  const handleMouseDown = (e) => {
+    if (e.button !== 0) return;
+    setIsDragging(true);
+    dragStartRef.current = { x: e.clientX, y: e.clientY };
+    panStartRef.current = { ...pan };
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMouseMove = (e) => {
+      const dx = e.clientX - dragStartRef.current.x;
+      const dy = e.clientY - dragStartRef.current.y;
+      const newPan = {
+        x: panStartRef.current.x + dx,
+        y: panStartRef.current.y + dy,
+      };
+      setPan(clampPan(newPan, zoom));
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, zoom]);
+
+  // Wheel zoom handler
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.2 : -0.2;
+      setZoom((prev) => {
+        const nextZoom = Math.min(Math.max(Number((prev + delta).toFixed(2)), MIN_ZOOM), MAX_ZOOM);
+        if (nextZoom <= MIN_ZOOM) {
+          setPan({ x: 0, y: 0 });
+        } else {
+          setPan((p) => clampPan(p, nextZoom));
+        }
+        return nextZoom;
+      });
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => container.removeEventListener("wheel", handleWheel);
+  }, []);
+
+  // Touch handlers for mobile pinch & pan
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      dragStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      panStartRef.current = { ...pan };
+      setIsDragging(true);
+    } else if (e.touches.length === 2) {
+      setIsDragging(false);
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      touchDistanceRef.current = dist;
+    }
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const onTouchMove = (e) => {
+      if (e.touches.length === 1 && isDragging && zoom > 1) {
+        if (e.cancelable) e.preventDefault();
+        const dx = e.touches[0].clientX - dragStartRef.current.x;
+        const dy = e.touches[0].clientY - dragStartRef.current.y;
+        setPan(clampPan({
+          x: panStartRef.current.x + dx,
+          y: panStartRef.current.y + dy,
+        }, zoom));
+      } else if (e.touches.length === 2 && touchDistanceRef.current) {
+        if (e.cancelable) e.preventDefault();
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const delta = (dist - touchDistanceRef.current) * 0.007;
+        touchDistanceRef.current = dist;
+        setZoom((prev) => {
+          const nextZoom = Math.min(Math.max(Number((prev + delta).toFixed(2)), MIN_ZOOM), MAX_ZOOM);
+          if (nextZoom <= MIN_ZOOM) {
+            setPan({ x: 0, y: 0 });
+          } else {
+            setPan((p) => clampPan(p, nextZoom));
+          }
+          return nextZoom;
+        });
+      }
+    };
+
+    container.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => container.removeEventListener("touchmove", onTouchMove);
+  }, [isDragging, zoom]);
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+    touchDistanceRef.current = null;
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -146,9 +321,16 @@ const PdfCanvasViewer = ({ pdfUrl }) => {
 
   return (
     <div
+      ref={containerRef}
+      onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       onContextMenu={(e) => e.preventDefault()}
       onDragStart={(e) => e.preventDefault()}
-      className="relative w-full flex flex-col items-center justify-center min-h-[340px] sm:min-h-[420px] bg-[#F8FAFC] border border-slate-200 select-none overflow-hidden p-2 sm:p-4 rounded-none"
+      className={`pdf-viewer-container relative w-full flex flex-col items-center justify-center h-[54vh] sm:h-[62vh] max-h-[62vh] bg-white border border-slate-200 select-none overflow-hidden p-1 sm:p-2 rounded-none ${
+        zoom > 1 ? (isDragging ? "cursor-grabbing" : "cursor-grab") : "cursor-default"
+      }`}
+      style={{ touchAction: zoom > 1 ? "none" : "pan-y" }}
     >
       {loading && (
         <div className="flex flex-col items-center justify-center p-12 text-slate-500 space-y-3">
@@ -167,16 +349,54 @@ const PdfCanvasViewer = ({ pdfUrl }) => {
       )}
 
       {!loading && !error && (
-        <div className="w-full flex flex-col items-center justify-center overflow-y-auto max-h-[65vh] scrollbar-thin">
+        <div
+          className="w-full h-full flex flex-col items-center justify-center will-change-transform select-none"
+          style={{
+            transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom})`,
+            transformOrigin: "center center",
+            transition: isDragging ? "none" : "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
+          }}
+        >
           {pages.map((page, index) => (
             <PdfPageCanvas key={index} page={page} />
           ))}
         </div>
       )}
 
-      {/* Security Overlay to prevent right-click / drag / saving */}
+      {/* Floating Zoom Controls Bar: Zoom In and Zoom Out buttons */}
+      {!loading && !error && (
+        <div
+          className="absolute bottom-3 right-3 z-30 flex items-center bg-white border border-slate-300 shadow-md text-slate-700 text-xs select-none"
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+        >
+          <button
+            type="button"
+            onClick={handleZoomOut}
+            disabled={zoom <= MIN_ZOOM}
+            className="p-2 sm:p-2.5 hover:bg-slate-100 active:bg-slate-200 disabled:opacity-35 disabled:hover:bg-transparent transition-colors cursor-pointer disabled:cursor-not-allowed border-r border-slate-200"
+            title="Zoom Out"
+            aria-label="Zoom Out"
+          >
+            <ZoomOut size={18} />
+          </button>
+          <button
+            type="button"
+            onClick={handleZoomIn}
+            disabled={zoom >= MAX_ZOOM}
+            className="p-2 sm:p-2.5 hover:bg-slate-100 active:bg-slate-200 disabled:opacity-35 disabled:hover:bg-transparent transition-colors cursor-pointer disabled:cursor-not-allowed"
+            title="Zoom In"
+            aria-label="Zoom In"
+          >
+            <ZoomIn size={18} />
+          </button>
+        </div>
+      )}
+
+      {/* Security Overlay (pointer-events-none so pan and zoom are not blocked) */}
       <div
-        className="absolute inset-0 z-20 bg-transparent select-none"
+        className="absolute inset-0 z-20 bg-transparent select-none pointer-events-none"
         onContextMenu={(e) => e.preventDefault()}
         onDragStart={(e) => e.preventDefault()}
       />
@@ -351,10 +571,10 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
       )}
 
       <div
-        className={`bg-white rounded-none w-full shadow-2xl relative border border-slate-200 overflow-y-auto my-auto animate-fade-in ${
+        className={`bg-white rounded-none w-full shadow-2xl relative border border-slate-200 my-auto animate-fade-in ${
           !unlocked
-            ? "max-w-md p-6 sm:p-8 max-h-[92vh]"
-            : "max-w-3xl lg:max-w-4xl p-4 sm:p-6 max-h-[90vh]"
+            ? "max-w-md p-6 sm:p-8 max-h-[92vh] overflow-y-auto"
+            : "max-w-3xl lg:max-w-4xl p-3 sm:p-5 max-h-[94vh] flex flex-col overflow-hidden"
         }`}
       >
         {/* Close Button */}
@@ -463,9 +683,9 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
           </div>
         ) : (
           /* Unlocked Protected PDF Floor Plan Viewer Only */
-          <div className="space-y-3">
+          <div className="space-y-2.5 flex-1 flex flex-col min-h-0">
             {/* Header Title */}
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3 pr-8">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2.5 pr-8 shrink-0">
               <div>
                 <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0A5E9D]">
                   Official Architectural Layout
@@ -482,7 +702,7 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
 
             {/* Level / PDF Navigation Controls for Duplex (with Arrows) */}
             {activePlan.pdfs.length > 1 && (
-              <div className="flex items-center justify-between bg-[#F0F7FD] p-2 border border-[#BADFFB] rounded-none">
+              <div className="flex items-center justify-between bg-[#F0F7FD] p-1.5 border border-[#BADFFB] rounded-none shrink-0">
                 <button
                   onClick={() =>
                     setActivePdfIndex((prev) =>
@@ -526,9 +746,11 @@ const FloorPlanModal = ({ isOpen, onClose, selectedConfig = "2 BHK", isUnlocked 
             )}
 
             {/* Full-width PDF Canvas Renderer */}
-            <PdfCanvasViewer pdfUrl={currentPdf.url} />
+            <div className="flex-1 min-h-0 flex flex-col">
+              <PdfCanvasViewer pdfUrl={currentPdf.url} />
+            </div>
 
-            <div className="text-center text-[11px] text-slate-400 pt-1">
+            <div className="text-center text-[11px] text-slate-400 pt-0.5 shrink-0">
               *Official architectural unit layout representation for {currentConfig}. Downloading and printing disabled.
             </div>
           </div>

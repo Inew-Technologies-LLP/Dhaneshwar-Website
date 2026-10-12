@@ -66,7 +66,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="pt-6 border-t border-[#000000]/10 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-[#000000]/80">
+        <div className="pt-6 border-t border-[#000000]/10 grid grid-cols-1 lg:grid-cols-3 items-center gap-4 text-xs text-[#000000]/80">
           {/* Left: Copyright */}
           <div className="text-center lg:text-left order-2 lg:order-1">
             <p className="text-xs text-[#000000]/75 font-medium">
@@ -74,7 +74,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Center: Project by Dhaneshwar Realty (Clickable) */}
+          {/* Center: Project by Dhaneshwar Realty (Dead-Center on Screen) */}
           <div className="text-center order-1 lg:order-2">
             <p className="text-xs text-[#000000]/90 font-medium">
               Project by{" "}
@@ -90,7 +90,7 @@ const Footer = () => {
           </div>
 
           {/* Right: Social Media Icons */}
-          <div className="flex gap-3 items-center justify-center order-3">
+          <div className="flex gap-3 items-center justify-center lg:justify-end order-3">
             {[
               { Icon: FaFacebookF, label: "Facebook" },
               { Icon: FaXTwitter, label: "Twitter" },
