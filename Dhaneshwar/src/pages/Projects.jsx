@@ -131,7 +131,7 @@ const Projects = () => {
                     {/* 2. Sai Platina */}
                     <article
                         id="project-2"
-                        className="grid overflow-hidden bg-white shadow-sm lg:grid-cols-[0.85fr_1.15fr]"
+                        className="grid overflow-hidden bg-white shadow-sm lg:grid-cols-2"
                     >
                         {/* Content */}
                         <div className="flex flex-col justify-between px-5 py-8 sm:px-10 sm:py-12 lg:px-12 order-2 lg:order-1">
@@ -195,16 +195,18 @@ const Projects = () => {
                     </article>
 
                 </div>
+            </section>
 
-                {/* Closing Statement Banner */}
-                <div className="mt-16 sm:mt-24 mx-auto max-w-[1440px] bg-[#192B3C] text-white p-8 sm:p-14 lg:p-16 text-center relative overflow-hidden shadow-sm">
-                    <span className="text-xs uppercase tracking-widest text-[#BFECE8] font-semibold block mb-2">
+            {/* Closing Statement Banner - Full Width */}
+            <section className="w-full bg-[#FAF9F6] border-y border-[#192B3C]/5 py-14 sm:py-20 lg:py-24 px-4 sm:px-8 lg:px-12 text-center relative overflow-hidden">
+                <div className="mx-auto max-w-3xl">
+                    <span className="text-xs uppercase tracking-[0.25em] text-[#B08A1E] font-semibold block mb-2">
                         LOOKING AHEAD
                     </span>
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-white mb-4">
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C] mb-4">
                         The Journey Continues.
                     </h3>
-                    <p className="text-xs sm:text-sm lg:text-[16px] leading-relaxed text-white/80 max-w-3xl mx-auto">
+                    <p className="text-xs sm:text-sm lg:text-[16px] leading-relaxed text-gray-700">
                         As Dhaneshwar Realty grows, we look forward to creating new spaces shaped by thoughtful planning, responsible development and a clear understanding of how people want to live.
                     </p>
                 </div>

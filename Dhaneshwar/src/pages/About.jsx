@@ -14,7 +14,6 @@ const About = () => {
                 title="Places That Become Part of Life."
                 description="Thoughtfully created for the way people live, grow and connect."
                 image={about_hero}
-                maxWidth="max-w-[1440px]"
                 height="h-[460px] sm:h-[560px] lg:h-[660px]"
             />
 

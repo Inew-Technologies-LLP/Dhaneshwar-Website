@@ -6,8 +6,7 @@ const ContactMap = () => {
 
             <div className="mx-auto max-w-[1440px] overflow-hidden">
 
-                <div className="mb-4 flex items-center justify-between">
-                    <h3 className="text-xl font-medium text-[#192B3C] sm:text-2xl">Location &amp; Directions</h3>
+                <div className="mb-4 flex items-center justify-end">
                     <a
                         href="https://maps.app.goo.gl/hRWDPBT9r2PqtfdQA"
                         target="_blank"
