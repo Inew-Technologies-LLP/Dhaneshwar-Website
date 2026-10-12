@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Automatically import all images from images folder
@@ -226,6 +226,8 @@ const Gallery = () => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   const thumbnailsRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const filteredItems = useMemo(() => {
     if (activeFilter === "ALL") return populatedGalleryItems;
@@ -240,6 +242,47 @@ const Gallery = () => {
   const mainItem = items[currentIdx];
   const sideItem1 = items[(currentIdx + 1) % items.length];
   const sideItem2 = items[(currentIdx + 2) % items.length];
+
+  const checkScrollability = () => {
+    if (thumbnailsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = thumbnailsRef.current;
+      setCanScrollLeft(scrollLeft > 6);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 6);
+    }
+  };
+
+  useEffect(() => {
+    checkScrollability();
+    const el = thumbnailsRef.current;
+    if (!el) return;
+
+    el.addEventListener("scroll", checkScrollability, { passive: true });
+    window.addEventListener("resize", checkScrollability);
+
+    const timer = setTimeout(checkScrollability, 300);
+
+    return () => {
+      el.removeEventListener("scroll", checkScrollability);
+      window.removeEventListener("resize", checkScrollability);
+      clearTimeout(timer);
+    };
+  }, [items, activeFilter]);
+
+  const handleSlideLeft = () => {
+    if (thumbnailsRef.current) {
+      const containerWidth = thumbnailsRef.current.clientWidth;
+      const scrollAmount = Math.max(Math.floor(containerWidth * 0.7), 220);
+      thumbnailsRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  const handleSlideRight = () => {
+    if (thumbnailsRef.current) {
+      const containerWidth = thumbnailsRef.current.clientWidth;
+      const scrollAmount = Math.max(Math.floor(containerWidth * 0.7), 220);
+      thumbnailsRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   const handleFilterChange = (filterId) => {
     setActiveFilter(filterId);
@@ -317,7 +360,7 @@ const Gallery = () => {
         </div>
 
         {/* Controls & Filter Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 border-b border-slate-100 pb-4">
+        <div className="flex items-center justify-center md:justify-start gap-4 mb-6 sm:mb-8 border-b border-slate-100 pb-4">
           {/* Filter Pills with Altura Theme Blue */}
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 justify-center md:justify-start">
             {filterTabs.map((tab) => {
@@ -336,29 +379,6 @@ const Gallery = () => {
                 </button>
               );
             })}
-          </div>
-
-          {/* Right-Side Carousel Controls (Counter & Arrows - Desktop Only) */}
-          <div className="hidden xl:flex items-center gap-3 self-center md:self-auto">
-            <button
-              onClick={handlePrev}
-              className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-[#0A5E9D] hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer active:scale-95"
-              aria-label="Previous"
-            >
-              <ChevronLeft size={16} />
-            </button>
-
-            <span className="text-xs sm:text-sm font-medium text-slate-600 min-w-[45px] text-center tracking-wider">
-              {currentIdx + 1} / {items.length}
-            </span>
-
-            <button
-              onClick={handleNext}
-              className="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:border-[#0A5E9D] hover:bg-[#0A5E9D] hover:text-white transition-colors cursor-pointer active:scale-95"
-              aria-label="Next"
-            >
-              <ChevronRight size={16} />
-            </button>
           </div>
         </div>
 
@@ -419,37 +439,72 @@ const Gallery = () => {
           </div>
         </div>
 
-        {/* Full Width Numbered Thumbnail Strip */}
-        <div
-          ref={thumbnailsRef}
-          className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 snap-x scrollbar-hide pt-2 w-full"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {items.map((item, idx) => {
-            const isSelected = currentIdx === idx;
-            return (
-              <div
-                key={`${item.id}-${idx}`}
-                onClick={() => handleSelectThumbnail(idx)}
-                className="flex-shrink-0 flex flex-col items-start cursor-pointer group snap-start"
-              >
+        {/* Full Width Numbered Thumbnail Strip with Navigation Arrows */}
+        <div className="relative w-full group/slidebar">
+          {/* Left Arrow Button */}
+          <button
+            type="button"
+            onClick={handleSlideLeft}
+            disabled={!canScrollLeft}
+            aria-label="Scroll thumbnails left"
+            className={`absolute -left-1 sm:left-1 top-[calc(50%-4px)] -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 flex items-center justify-center transition-all duration-200 cursor-pointer hover:bg-[#0A5E9D] hover:text-white hover:border-[#0A5E9D] active:scale-90 disabled:opacity-0 disabled:pointer-events-none`}
+          >
+            <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
+          </button>
+
+          {/* Left subtle gradient fade */}
+          {canScrollLeft && (
+            <div className="pointer-events-none absolute left-0 top-0 bottom-4 w-8 sm:w-14 bg-gradient-to-r from-white to-transparent z-10" />
+          )}
+
+          {/* Horizontal Thumbnail Track */}
+          <div
+            ref={thumbnailsRef}
+            className="flex gap-3 sm:gap-4 overflow-x-auto pb-4 snap-x scrollbar-hide pt-2 w-full px-1 sm:px-2 scroll-smooth"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {items.map((item, idx) => {
+              const isSelected = currentIdx === idx;
+              return (
                 <div
-                  className={`w-[130px] sm:w-[170px] md:w-[200px] lg:w-[220px] aspect-[16/10] overflow-hidden transition-all duration-200 relative ${
-                    isSelected
-                      ? "ring-2 ring-[#0A5E9D] scale-[1.02]"
-                      : "opacity-75 group-hover:opacity-100"
-                  }`}
+                  key={`${item.id}-${idx}`}
+                  onClick={() => handleSelectThumbnail(idx)}
+                  className="flex-shrink-0 flex flex-col items-start cursor-pointer group snap-start"
                 >
-                  <img
-                    src={item.url}
-                    alt={`Thumbnail ${idx + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    style={{ objectPosition: item.position }}
-                  />
+                  <div
+                    className={`w-[130px] sm:w-[170px] md:w-[200px] lg:w-[220px] aspect-[16/10] overflow-hidden transition-all duration-200 relative ${
+                      isSelected
+                        ? "ring-2 ring-[#0A5E9D] scale-[1.02]"
+                        : "opacity-75 group-hover:opacity-100"
+                    }`}
+                  >
+                    <img
+                      src={item.url}
+                      alt={`Thumbnail ${idx + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      style={{ objectPosition: item.position }}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          {/* Right subtle gradient fade */}
+          {canScrollRight && (
+            <div className="pointer-events-none absolute right-0 top-0 bottom-4 w-8 sm:w-14 bg-gradient-to-l from-white to-transparent z-10" />
+          )}
+
+          {/* Right Arrow Button */}
+          <button
+            type="button"
+            onClick={handleSlideRight}
+            disabled={!canScrollRight}
+            aria-label="Scroll thumbnails right"
+            className={`absolute -right-1 sm:right-1 top-[calc(50%-4px)] -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 flex items-center justify-center transition-all duration-200 cursor-pointer hover:bg-[#0A5E9D] hover:text-white hover:border-[#0A5E9D] active:scale-90 disabled:opacity-0 disabled:pointer-events-none`}
+          >
+            <ChevronRight size={18} className="sm:w-5 sm:h-5" />
+          </button>
         </div>
       </div>
     </section>
