@@ -3,17 +3,17 @@ import heroBg from "../images/02_Altura_upscayl_3x_ultrasharp-4x_website.png";
 
 const Hero = () => {
   return (
-    <section id="home" className="relative w-full h-[calc(100vh-4rem)] sm:h-[calc(100vh-6rem)] min-h-[520px] sm:min-h-[600px] overflow-hidden group">
+    <section id="home" className="relative w-full h-[calc(100vh-4rem)] sm:h-[calc(100vh-6rem)] min-h-[520px] sm:min-h-[600px] overflow-hidden group bg-black">
       {/* Full Hero Render Image */}
       <img
         src={heroBg}
         alt="Altura Architectural Building Render"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+        className="absolute inset-0 w-full h-full -translate-y-24 sm:translate-y-0 object-cover transition-transform duration-700 ease-out sm:group-hover:scale-[1.02]"
         style={{ objectPosition: "center 60%" }}
       />
 
       {/* Contrast Gradient Overlay for Readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/25 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black sm:from-black/85 via-black/40 to-black/25 pointer-events-none" />
 
       {/* Content Overlay: Bottom-Left on Mobile (<sm), Top-Left on Desktop (sm+) */}
       <div className="absolute bottom-4 left-5 sm:top-16 sm:bottom-auto sm:left-14 md:left-20 max-w-[calc(100%-2.5rem)] sm:max-w-2xl z-10 text-white space-y-3 sm:space-y-6">

@@ -1,34 +1,45 @@
+import { Eye, Target, HeartHandshake, Compass, ShieldCheck, DraftingCompass } from "lucide-react";
+
 const values = [
     {
         title: "THOUGHTFULNESS",
         desc: "Every decision begins with understanding how it will be experienced.",
+        icon: HeartHandshake,
     },
     {
         title: "PURPOSE",
         desc: "Every element should have a reason for being there.",
+        icon: Compass,
     },
     {
         title: "RESPONSIBILITY",
         desc: "We consider the impact of what we create today and over time.",
+        icon: ShieldCheck,
     },
     {
         title: "CRAFTSMANSHIP",
         desc: "Care in execution is as important as the idea behind it.",
+        icon: DraftingCompass,
     },
 ];
 
 const AboutValues = () => {
     return (
-        <section className="px-3 py-10 sm:px-6 sm:py-16 lg:px-9 lg:py-20 bg-[#F7F8FA]">
+        <section className="w-full bg-[#FAF9F6] border-y border-[#192B3C]/5 px-3 py-12 sm:px-6 sm:py-16 lg:px-9 lg:py-20">
             <div className="mx-auto max-w-[1440px]">
 
                 {/* Vision & Mission Side-by-Side */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 pb-12 sm:pb-16 border-b border-gray-200">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16 pb-12 sm:pb-16 border-b border-[#192B3C]/10">
                     {/* Vision */}
-                    <div className="space-y-3 sm:space-y-4">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-[#B08A1E]">
-                            OUR VISION
-                        </span>
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#B08A1E]/10 text-[#B08A1E]">
+                                <Eye className="w-5 h-5" strokeWidth={1.75} />
+                            </div>
+                            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B08A1E]">
+                                OUR VISION
+                            </span>
+                        </div>
                         <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C]">
                             Vision
                         </h3>
@@ -38,10 +49,15 @@ const AboutValues = () => {
                     </div>
 
                     {/* Mission */}
-                    <div className="space-y-3 sm:space-y-4 md:border-l md:border-gray-200 md:pl-12 lg:pl-16">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-[#B08A1E]">
-                            OUR MISSION
-                        </span>
+                    <div className="space-y-4 md:border-l md:border-[#192B3C]/10 md:pl-12 lg:pl-16">
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#B08A1E]/10 text-[#B08A1E]">
+                                <Target className="w-5 h-5" strokeWidth={1.75} />
+                            </div>
+                            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B08A1E]">
+                                OUR MISSION
+                            </span>
+                        </div>
                         <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C]">
                             Mission
                         </h3>
@@ -54,7 +70,7 @@ const AboutValues = () => {
                 {/* Values Section */}
                 <div className="pt-12 sm:pt-16">
                     <div className="mb-8 sm:mb-12">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-[#B08A1E]">
+                        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B08A1E]">
                             CORE PRINCIPLES
                         </span>
                         <h3 className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C]">
@@ -62,18 +78,34 @@ const AboutValues = () => {
                         </h3>
                     </div>
 
-                    {/* 4 Equal Columns without numbering */}
+                    {/* 4 Equal Columns with Icons above the line and in center */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-                        {values.map((item, index) => (
-                            <div key={index} className="space-y-2 border-t-2 border-[#192B3C]/10 pt-4 transition-all duration-300 hover:border-[#B08A1E]">
-                                <h4 className="text-xs sm:text-sm lg:text-[15px] font-bold text-[#192B3C] tracking-wider uppercase">
-                                    {item.title}
-                                </h4>
-                                <p className="text-xs sm:text-sm leading-relaxed text-gray-600">
-                                    {item.desc}
-                                </p>
-                            </div>
-                        ))}
+                        {values.map((item, index) => {
+                            const Icon = item.icon;
+                            return (
+                                <div
+                                    key={index}
+                                    className="group text-center"
+                                >
+                                    {/* Icon above the line and in center */}
+                                    <div className="flex justify-center pb-4">
+                                        <div className="flex h-11 w-11 items-center justify-center rounded-sm bg-[#192B3C]/5 text-[#B08A1E] transition-all duration-300 group-hover:bg-[#B08A1E] group-hover:text-white group-hover:scale-105 shadow-sm">
+                                            <Icon className="w-5 h-5" strokeWidth={1.75} />
+                                        </div>
+                                    </div>
+
+                                    {/* Line below icon */}
+                                    <div className="border-t-2 border-[#192B3C]/10 pt-5 space-y-3 transition-colors duration-300 group-hover:border-[#B08A1E]">
+                                        <h4 className="text-xs sm:text-sm lg:text-[15px] font-bold text-[#192B3C] tracking-wider uppercase">
+                                            {item.title}
+                                        </h4>
+                                        <p className="text-xs sm:text-sm leading-relaxed text-gray-700">
+                                            {item.desc}
+                                        </p>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
 

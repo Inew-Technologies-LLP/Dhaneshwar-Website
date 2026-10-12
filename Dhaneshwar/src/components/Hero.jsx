@@ -3,61 +3,44 @@ import design from "../images/design.png";
 
 const Hero = () => {
      return (
-          <section className="px-3 pt-3 sm:px-6 sm:pt-6 lg:px-9">
-               <div
-                    className="
-                         group
-                         relative
-                         mx-auto
-                         max-w-[1440px]
-                         h-[520px]
-                         sm:h-[640px]
-                         md:h-[700px]
-                         lg:h-[780px]
-                         overflow-hidden
-                    "
-               >
-                    {/* Background Image */}
+          <section
+               className="
+                    group
+                    relative
+                    w-full
+                    h-[calc(100vh-72px)]
+                    sm:h-[calc(100vh-82px)]
+                    min-h-[560px]
+                    sm:min-h-[640px]
+                    overflow-hidden
+                    bg-[#192B3C]
+               "
+          >
+               {/* Background Image */}
 
-                    <img
-                         src={photo1}
-                         alt="Hero"
-                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
+               <img
+                    src={photo1}
+                    alt="Hero"
+                    className="absolute inset-0 h-full w-full object-cover object-[72%_center] sm:object-center transition-transform duration-700 ease-out group-hover:scale-105"
+               />
 
-                    {/* Contrast Gradient Overlay for Readability */}
+               {/* Contrast Gradient Overlay for Readability */}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/15" />
+               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/15" />
 
-                    {/* Decorative Pattern Overlay */}
-                    <img
-                         src={design}
-                         alt=""
-                         aria-hidden="true"
-                         className="pointer-events-none absolute -bottom-32 left-1/2 block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none"
-                    />
+               {/* Decorative Pattern Overlay */}
+               <img
+                    src={design}
+                    alt=""
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -bottom-32 left-1/2 hidden sm:block h-auto w-[220%] max-w-none -translate-x-1/2 scale-[1.15] object-cover select-none opacity-25"
+               />
 
-                    {/* Content */}
+               {/* Content */}
 
-                    <div className="absolute inset-0 flex items-end animate-fade-in">
-                         <div
-                              className="
-                                   max-w-[640px]
-                                   w-full
-                                   mx-auto
-                                   sm:mx-0
-                                   text-center
-                                   sm:text-left
-                                   px-4
-                                   pb-6
-                                   sm:px-10
-                                   sm:pb-10
-                                   md:px-14
-                                   md:pb-14
-                                   lg:px-20
-                                   lg:pb-20
-                              "
-                         >
+               <div className="absolute inset-0 flex items-end animate-fade-in">
+                    <div className="mx-auto w-full max-w-[1440px] px-5 pb-8 sm:px-10 sm:pb-12 md:px-14 md:pb-14 lg:px-20 lg:pb-20">
+                         <div className="max-w-[640px] text-left">
                               <h1
                                    className="
                                         mb-3
