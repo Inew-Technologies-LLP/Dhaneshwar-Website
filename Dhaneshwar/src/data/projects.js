@@ -1,5 +1,6 @@
 import photo3 from "../images/photo3.png";
 import photo2 from "../images/photo2.png";
+import alturaHomePage from "../images/AlturaHomePage.webp";
 
 const projects = [
     {
@@ -17,7 +18,8 @@ const projects = [
         price: "1.6 Cr. onwards",
         possession: "July 2027",
         dateLabel: "Possession Date",
-        image: photo3,
+        image: alturaHomePage,
+        imagePosition: "40% center",
         description:
             "A thoughtfully planned residential development bringing together contemporary architecture, well-designed homes and meaningful shared spaces to create a more considered way of living.",
         type: "Residential",

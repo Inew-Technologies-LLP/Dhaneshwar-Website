@@ -72,8 +72,6 @@ const ProjectOverview = () => {
 
         {/* Project Key Details Footer Lines */}
         <div className="mt-12 pt-6 border-t border-slate-200 text-xs sm:text-sm font-light text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <p>Premium 2, 3 BHK &amp; 3.5 Duplex Homes</p>
-          <p>MahaRERA Registration: P52100052298, PR1261012502532</p>
         </div>
       </div>
     </section>

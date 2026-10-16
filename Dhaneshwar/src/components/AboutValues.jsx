@@ -1,4 +1,4 @@
-import { Eye, Target, HeartHandshake, Compass, ShieldCheck, DraftingCompass } from "lucide-react";
+import { Eye, Target, HeartHandshake, Compass, ShieldCheck, DraftingCompass, Sparkles } from "lucide-react";
 
 const values = [
     {
@@ -69,11 +69,16 @@ const AboutValues = () => {
 
                 {/* Values Section */}
                 <div className="pt-12 sm:pt-16">
-                    <div className="mb-8 sm:mb-12">
-                        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B08A1E]">
-                            CORE PRINCIPLES
-                        </span>
-                        <h3 className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C]">
+                    <div className="mb-8 sm:mb-12 flex flex-col items-center text-center">
+                        <div className="flex items-center justify-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#B08A1E]/10 text-[#B08A1E]">
+                                <Sparkles className="w-5 h-5" strokeWidth={1.75} />
+                            </div>
+                            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B08A1E]">
+                                CORE PRINCIPLES
+                            </span>
+                        </div>
+                        <h3 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-medium text-[#192B3C]">
                             Values
                         </h3>
                     </div>

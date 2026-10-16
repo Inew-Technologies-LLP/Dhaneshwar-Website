@@ -67,8 +67,11 @@ const Promise = () => {
                                         !isLast ? "md:border-r md:border-[#B08A1E]/50" : ""
                                     }`}
                                 >
-                                    <IconComponent className="w-7 h-7 sm:w-8 sm:h-8 text-[#B08A1E] stroke-[1.5]" />
-                                    <h3 className="mt-3 text-xs sm:text-sm font-bold tracking-[0.2em] text-white uppercase">
+                                    <IconComponent
+                                        className="w-10 h-10 sm:w-12 sm:h-12 text-[#B08A1E] transition-transform duration-300 hover:scale-110"
+                                        strokeWidth={1.75}
+                                    />
+                                    <h3 className="mt-3.5 text-xs sm:text-sm font-bold tracking-[0.2em] text-white uppercase">
                                         {item.title}
                                     </h3>
                                     <div className="h-[1px] w-7 bg-[#B08A1E] my-2 sm:my-2.5" />

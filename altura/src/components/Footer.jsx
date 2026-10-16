@@ -3,7 +3,7 @@ import {
   FaInstagram,
   FaXTwitter,
 } from "react-icons/fa6";
-import AlturaLogo from "./AlturaLogo";
+import altura03Img from "../images/Altura-03.png";
 
 const Footer = () => {
   return (
@@ -20,10 +20,11 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10">
           {/* Mobile-Only Logo Block */}
           <div className="lg:hidden">
-            <AlturaLogo className="w-[140px] sm:w-[180px] h-auto mb-1" />
-            <p className="text-sm font-normal text-[#000000]/85 italic mt-0.5">
-              The Sky Belongs to All.
-            </p>
+            <img
+              src={altura03Img}
+              alt="Altura - The Sky Belongs To All"
+              className="w-[180px] sm:w-[220px] h-auto object-contain"
+            />
           </div>
 
           {/* Left Column: Address & Sales Enquiries */}
@@ -58,10 +59,11 @@ const Footer = () => {
 
           {/* Desktop-Only Logo & Tagline (Positioned Bottom-Right of Upper Section) */}
           <div className="hidden lg:flex flex-col items-end text-right">
-            <AlturaLogo className="w-[200px] xl:w-[230px] h-auto mb-1" />
-            <p className="text-sm font-normal text-[#000000]/85 italic mt-0.5">
-              The Sky Belongs to All.
-            </p>
+            <img
+              src={altura03Img}
+              alt="Altura - The Sky Belongs To All"
+              className="w-[220px] xl:w-[260px] h-auto object-contain"
+            />
           </div>
         </div>
 

@@ -54,6 +54,7 @@ const ProjectCard = ({ project }) => {
                               lg:aspect-auto
                               lg:h-[590px]
                          "
+                         style={project.imagePosition ? { objectPosition: project.imagePosition } : undefined}
                     />
 
                     <img

@@ -74,7 +74,6 @@ const Hero = () => {
             MahaRERA Registration
           </p>
           <p className="text-sm font-semibold text-white tracking-wide mt-0.5">
-            P52100052298
           </p>
         </div>
       </div>

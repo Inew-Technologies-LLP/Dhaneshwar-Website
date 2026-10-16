@@ -49,6 +49,7 @@ const Projects = () => {
                                 src={projects[0].image}
                                 alt="Altura"
                                 className="w-full aspect-[4/5] sm:aspect-auto sm:h-[480px] lg:h-[620px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                                style={{ objectPosition: "40% center" }}
                             />
                             <img
                                 src={design}

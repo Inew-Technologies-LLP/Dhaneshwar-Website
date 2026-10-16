@@ -19,17 +19,19 @@ const ArchitectsNote = () => {
 
         {/* Right Side: 50% Text Content */}
         <div className="flex flex-col justify-center p-6 sm:p-12 lg:p-16 xl:p-20">
-          <div className="max-w-xl">
+          <div className="max-w-xl mx-auto lg:mx-0 w-full">
             {/* Main Section Heading */}
-            <div className="mb-2">
-              <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#0A5E9D] uppercase">
-                ARCHITECTURAL PHILOSOPHY
-              </span>
-            </div>
+            <div className="text-center lg:text-left mb-6">
+              <div className="mb-2">
+                <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#0A5E9D] uppercase">
+                  ARCHITECTURAL PHILOSOPHY
+                </span>
+              </div>
 
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 mb-6 tracking-tight">
-              Designed With Purpose.
-            </h2>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-normal text-slate-900 tracking-tight">
+                Designed With Purpose.
+              </h2>
+            </div>
 
             {/* Note Body Text */}
             <div className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 font-light">
