@@ -1,4 +1,4 @@
-import photo3 from "../images/photo3.png";
+import alturaHomePage from "../images/AlturaHomePage.webp";
 import design from "../images/design.png";
 
 const highlights = [
@@ -29,9 +29,10 @@ const ExploreAltura = () => {
                     {/* Left: Image */}
                     <div className="group relative overflow-hidden bg-[#192B3C]">
                         <img
-                            src={photo3}
+                            src={alturaHomePage}
                             alt="Altura - Dudulgaon, Pune"
                             className="w-full aspect-[4/5] sm:aspect-auto sm:h-[480px] lg:h-[620px] object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                            style={{ objectPosition: "40% center" }}
                         />
                         <img
                             src={design}
