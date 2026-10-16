@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import PageHero from "../components/PageHero";
 import projects from "../data/projects";
-import photo3 from "../images/photo3.png";
+import projects_hero from "../images/projects_hero.jpg";
 import design from "../images/design.png";
 
 const Projects = () => {
@@ -30,7 +30,7 @@ const Projects = () => {
             <PageHero
                 title="Places Taking Shape."
                 description="A growing portfolio shaped by thoughtful planning, considered design and the way people experience the places they call home."
-                image={photo3}
+                image={projects_hero}
                 height="h-[480px] sm:h-[600px] lg:h-[700px]"
             />
 

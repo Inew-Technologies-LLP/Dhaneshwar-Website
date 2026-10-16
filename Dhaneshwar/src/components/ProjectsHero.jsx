@@ -1,3 +1,4 @@
+import projects_hero from "../images/projects_hero.jpg";
 import design from "../images/design.png";
 
 const ProjectsHero = () => {
@@ -7,7 +8,7 @@ const ProjectsHero = () => {
             <div className="group relative mx-auto h-[360px] sm:h-[440px] max-w-[1440px] overflow-hidden">
 
                 <img
-                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1800"
+                    src={projects_hero}
                     alt="Projects"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
