@@ -126,6 +126,7 @@ const Navbar = () => {
                                                 src={project.image}
                                                 alt={project.name}
                                                 className="h-[360px] w-[260px] shrink-0 object-cover"
+                                                style={project.imagePosition ? { objectPosition: project.imagePosition } : undefined}
                                             />
 
                                             <div className="text-white">
