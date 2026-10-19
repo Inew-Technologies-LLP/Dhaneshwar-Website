@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
     FaFacebookF,
     FaInstagram,
@@ -73,6 +74,9 @@ const Footer = () => {
                     </p>
 
                     <div className="flex flex-wrap justify-center items-center gap-6">
+                        <Link to="/blogs" className="hover:text-white cursor-pointer transition">
+                            Blogs
+                        </Link>
                         <span className="hover:text-white cursor-pointer transition">Privacy Policy</span>
                         <span className="hover:text-white cursor-pointer transition">Terms &amp; Conditions</span>
                         <span className="hover:text-white cursor-pointer transition">Statutory Disclaimer</span>

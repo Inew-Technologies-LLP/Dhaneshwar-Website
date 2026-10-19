@@ -13,11 +13,13 @@ const PageHero = ({
     return (
         <section className={`group relative w-full ${heightClass} overflow-hidden bg-[#192B3C]`}>
 
-            <img
-                src={image}
-                alt={title}
-                className={`absolute inset-0 h-full w-full ${objectFit} transition-transform duration-700 ease-out group-hover:scale-105 ${imageClassName}`}
-            />
+            {image && (
+                <img
+                    src={image}
+                    alt={title}
+                    className={`absolute inset-0 h-full w-full ${objectFit} transition-transform duration-700 ease-out group-hover:scale-105 ${imageClassName}`}
+                />
+            )}
 
             <div className="absolute inset-0 bg-gradient-to-t from-[#192B3C] via-[#192B3C]/50 to-transparent" />
 

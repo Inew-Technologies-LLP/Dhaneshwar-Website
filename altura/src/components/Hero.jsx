@@ -1,5 +1,6 @@
-import { QrCode, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import heroBg from "../images/02_Altura_upscayl_3x_ultrasharp-4x_website.png";
+import reraNumberImg from "../images/rera_number.jpg";
 
 const Hero = () => {
   return (
@@ -47,35 +48,24 @@ const Hero = () => {
         </div>
 
         {/* Mobile-Only MahaRERA QR Box (Bottom-Left on Mobile) */}
-        <div className="pt-1 sm:hidden">
-          <div className="inline-flex items-center gap-3 bg-[#0A5E9D]/95 backdrop-blur-xs text-white px-3 py-2 shadow-2xl border border-white/15">
-            <div className="bg-white p-1 rounded-none shrink-0 shadow-xs">
-              <QrCode size={22} className="text-[#0A5E9D]" />
-            </div>
-            <div className="text-left leading-tight pr-1">
-              <p className="text-[9px] font-light text-white/90 uppercase tracking-wider">
-                MahaRERA Registration
-              </p>
-              <p className="text-xs font-semibold text-white tracking-wide mt-0.5">
-                P52100052298
-              </p>
-            </div>
+        <div className="pt-2 sm:hidden">
+          <div className="inline-block bg-white rounded-xs shadow-xl border border-white/40 overflow-hidden">
+            <img
+              src={reraNumberImg}
+              alt="MahaRERA Registration No. PM1260002602348 - Altura"
+              className="h-11 xs:h-12 w-auto max-w-[280px] object-contain block"
+            />
           </div>
         </div>
       </div>
 
-      {/* Desktop-Only Bottom-Right QR Code and MahaRERA Box */}
-      <div className="hidden sm:flex absolute bottom-6 right-6 z-20 bg-[#0A5E9D]/95 backdrop-blur-xs text-white px-5 py-3.5 items-center gap-4 shadow-2xl border border-white/15">
-        <div className="bg-white p-1.5 rounded-none shrink-0 shadow-xs">
-          <QrCode size={36} className="text-[#0A5E9D]" />
-        </div>
-        <div className="text-left leading-tight">
-          <p className="text-xs font-light text-white/90 uppercase tracking-wider">
-            MahaRERA Registration
-          </p>
-          <p className="text-sm font-semibold text-white tracking-wide mt-0.5">
-          </p>
-        </div>
+      {/* Desktop-Only Bottom-Right MahaRERA Registration Card */}
+      <div className="hidden sm:inline-block absolute bottom-6 right-6 z-20 bg-white rounded-xs shadow-2xl border border-white/40 overflow-hidden">
+        <img
+          src={reraNumberImg}
+          alt="MahaRERA Registration No. PM1260002602348 - Altura"
+          className="h-16 md:h-20 lg:h-[84px] w-auto object-contain block"
+        />
       </div>
     </section>
   );
