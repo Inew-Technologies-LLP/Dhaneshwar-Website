@@ -1,7 +1,30 @@
 import { useState, useEffect } from "react";
 import { X, Send, Download, CalendarCheck, CheckCircle2 } from "lucide-react";
+import alturaBrochurePdf from "../flat_layouts/Altura_EBrochure.pdf";
 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+
+const triggerBackgroundDownload = async (url, filename = "Altura_EBrochure.pdf") => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => window.URL.revokeObjectURL(blobUrl), 10000);
+  } catch {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+};
 
 const initialFormData = {
   name: "",
@@ -47,6 +70,16 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
 
     setIsSubmitting(true);
     setErrorMessage("");
+
+    // If brochure download form: open PDF first and automatically download in background
+    if (modalType === "brochure") {
+      try {
+        window.open(alturaBrochurePdf, "_blank", "noopener,noreferrer");
+      } catch (err) {
+        console.error("Failed to open PDF:", err);
+      }
+      triggerBackgroundDownload(alturaBrochurePdf, "Altura_EBrochure.pdf");
+    }
 
     try {
       const payload = {
@@ -103,18 +136,20 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
 
       setSubmitted(true);
       setFormData(initialFormData);
+      const closeDelay = modalType === "brochure" ? 3500 : 2500;
       setTimeout(() => {
         setSubmitted(false);
         onClose();
-      }, 2500);
+      }, closeDelay);
     } catch (error) {
       console.error("Altura enquiry submission failed:", error);
       setSubmitted(true);
       setFormData(initialFormData);
+      const closeDelay = modalType === "brochure" ? 3500 : 2500;
       setTimeout(() => {
         setSubmitted(false);
         onClose();
-      }, 2500);
+      }, closeDelay);
     } finally {
       setIsSubmitting(false);
     }
@@ -160,11 +195,27 @@ const InquiryModal = ({ isOpen, onClose, initialData = {} }) => {
               <CheckCircle2 size={32} />
             </div>
             <h3 className="text-xl font-light text-slate-900 tracking-tight">
-              Request Received Successfully
+              {modalType === "brochure"
+                ? "Brochure Ready"
+                : "Request Received Successfully"}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
-              Thank you for your interest in Altura. Our dedicated sales team will get in touch with you shortly.
+              {modalType === "brochure"
+                ? "Your brochure has opened in a new tab and your download will start automatically in the background."
+                : "Thank you for your interest in Altura. Our dedicated sales team will get in touch with you shortly."}
             </p>
+            {modalType === "brochure" && (
+              <div className="pt-2">
+                <a
+                  href={alturaBrochurePdf}
+                  download="Altura_EBrochure.pdf"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#0A5E9D] hover:underline font-semibold"
+                >
+                  <Download size={14} />
+                  <span>Click here if the download didn't start automatically</span>
+                </a>
+              </div>
+            )}
           </div>
         ) : (
           <>
